@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="GUI.Views.UserControls.NhapKhachHangForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="500">
+    <UserControl.Resources>
+        <Style x:Key="RoundedTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+   
+
+    <Grid>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Mã khách hàng -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã khách hàng"
+                       VerticalAlignment="Top" FontSize="16" Margin="0,13,0,0" />
+            <TextBox Grid.Row="0" Grid.Column="0"  
+                     Margin="0,43,10,72" Height="35" Padding="2" FontSize="16" Grid.RowSpan="2" Style="{StaticResource RoundedTextBoxStyle}"/>
+
+            <!-- Tên khách hàng -->
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Tên khách hàng"
+                       VerticalAlignment="Top" FontSize="16" Margin="10,13,0,0" />
+            <TextBox Grid.Row="0" Grid.Column="1" 
+                     Margin="10,43,0,72" Height="35" Padding="2" FontSize="16" Grid.RowSpan="2" Style="{StaticResource RoundedTextBoxStyle}"/>
+
+            <!-- Số điện thoại -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Số điện thoại"
+                       VerticalAlignment="Center" FontSize="16" />
+            <TextBox Grid.Row="1" Grid.Column="0" 
+                     Margin="0,77,10,3" Height="35" Padding="2" FontSize="16" Style="{StaticResource RoundedTextBoxStyle}"/>
+
+            <!-- Email -->
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="Email"
+                       VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0" />
+            <TextBox Grid.Row="1" Grid.Column="1"
+                     Margin="10,77,0,3" Height="35" Padding="2" FontSize="16" Style="{StaticResource RoundedTextBoxStyle}" />
+
+            <!-- Địa chỉ -->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Địa chỉ"
+                       VerticalAlignment="Top" FontSize="16" />
+            <TextBox Grid.Row="2" Grid.ColumnSpan="2"
+                     Margin="0,30,0,10" Height="35" Padding="2" FontSize="16" Style="{StaticResource RoundedTextBoxStyle}"/>
+        </Grid>
+    </Grid>
+</UserControl>

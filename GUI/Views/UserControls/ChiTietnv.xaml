@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="GUI.Views.UserControls.ChiTietnv"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GUI.Views.UserControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="330" d:DesignWidth="640">
+
+    <Grid>
+        <Border 
+               Width="640"
+               Height="300"
+               CornerRadius="10"
+               Background="#A7BFFC">
+            <Grid>
+                <TextBox Width="160"
+                         Height="30" Margin="89,92,405,178"/>
+                <TextBlock Text="Mã nhân viên" 
+                                   FontSize="15" 
+                                   Margin="89,69,415,211"/>
+                <TextBox Width="150"
+                         Height="30" Margin="255,92,235,178"/>
+                <TextBlock Text="Tên nhân viên" 
+                                   FontSize="15" 
+                                   Margin="260,69,3,211"/>
+                <TextBox Width="316"
+            Height="30" Margin="14,15,160,0"/>
+                <TextBlock Text="Gmail" 
+                      FontSize="15" 
+                      Margin="89,122,471,162"/>
+                <TextBox Width="160"
+             Height="30" Margin="89,200,405,70"/>
+                <TextBlock Text="Ngày bắt đầu" 
+                       FontSize="15" 
+                       Margin="89,178,415,103"/>
+                <TextBox Width="150"
+             Height="30" Margin="255,200,235,70"/>
+                <TextBlock Text="Chức vụ" 
+                       FontSize="15" 
+                       Margin="260,179,300,102"/>
+
+                <StackPanel Height="130"
+                            Width="110"
+                            Margin="500,0,0,150">
+                    <Image x:Name="ImagePreview" Height="100" Width="100" Stretch="Uniform" />
+                    <Button 
+                      BorderBrush="Transparent"
+                      FontFamily="Segoe MDL2 Assets" 
+                      Content="&#xE722;" 
+                      FontSize="26" 
+                      Foreground="#FFF" 
+                      Background="Transparent"
+                      HorizontalAlignment="Left" 
+                      VerticalAlignment="Top" 
+                      Margin="80,0,0,0" Click="Anh_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <!-- Tắt mọi trạng thái mặc định -->
+                                <Setter Property="OverridesDefaultStyle" Value="True" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+                <TextBlock Text="Ảnh nhân viên" 
+                       FontSize="12" 
+                       Margin="543,145,6,139"/>
+                <Button Width="100"
+                        Height="30"
+                        Margin="550,100,0,0"
+                        Background="#DFEBF8" 
+                        Content="Sửa"
+                        Foreground="Red"
+                        FontSize="15" Click="Sua_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <!-- Tắt mọi trạng thái mặc định -->
+                            <Setter Property="OverridesDefaultStyle" Value="True"  />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+BorderBrush="{TemplateBinding BorderBrush}"
+BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="15,0,0,15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Width="100"
+                        Height="30"
+                        Margin="550,170,0,0"
+                        Background="#DFEBF8" 
+                        Content="Xoá"
+                        Foreground="Red"
+                        FontSize="15" Click="Xoa_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <!-- Tắt mọi trạng thái mặc định -->
+                            <Setter Property="OverridesDefaultStyle" Value="True"  />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+BorderBrush="{TemplateBinding BorderBrush}"
+BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="15,0,0,15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Width="100"
+                        Height="30"
+                        Margin="550,240,0,0"
+                        Background="#DFEBF8" 
+                        Content="Gửi mail"
+                        Foreground="Red"
+                        FontSize="15" Click="GuiMail_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <!-- Tắt mọi trạng thái mặc định -->
+                            <Setter Property="OverridesDefaultStyle" Value="True"  />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+BorderBrush="{TemplateBinding BorderBrush}"
+BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15,0,0,15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

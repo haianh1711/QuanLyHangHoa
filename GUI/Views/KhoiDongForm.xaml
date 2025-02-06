@@ -1,0 +1,52 @@
+﻿<Window x:Class="GUI.Views.KhoiDongForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI.Views"
+        mc:Ignorable="d"
+        Title="KhoiDongForm" Height="616" Width="546.4" 
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Border  Background="#0A0E18" CornerRadius="15" >
+        <Grid>
+            <Ellipse Fill="#0B142A" StrokeThickness="2" Margin="-45,44,88,50"/>
+            <Ellipse Fill="#0F1422"  StrokeThickness="2" Margin="-61,302,273,-56"/>
+            <Ellipse Fill="#FF151C30" StrokeThickness="2" Margin="-78,330,258,-82" RenderTransformOrigin="0.5,0.5">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.14"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.373"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Fill="#161D31" Margin="237,-39,-31,303"/>
+            <Ellipse Fill="#14203C"  Margin="289,-39,-64,303"/>
+            <Image x:Name="Ustock" 
+                Source="/Views/ustock-removebg-preview.png" 
+                Width="266.32"
+                Height="227"
+                Margin="140,89,140,160"/>
+
+            <Border Width="300" Height="10" 
+        Background="#FFF" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,40" BorderBrush="Transparent" BorderThickness="1">
+                <ProgressBar x:Name="ProgressBarLoading" 
+                 Width="300" 
+                 Height="20" 
+                 HorizontalAlignment="Center" 
+                 VerticalAlignment="Bottom" 
+                 Foreground="Gray" 
+                 Background="Transparent" 
+                 Minimum="0" 
+                 Maximum="100" 
+                 ValueChanged="ProgressBarLoading_ValueChanged"
+                 Cursor="Arrow"  Margin="0,0,0,-7"/>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

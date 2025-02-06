@@ -1,0 +1,66 @@
+﻿<Window x:Class="GUI.Views.GmailForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:GuiFormC="clr-namespace:GUI.Views.UserControls"
+        xmlns:local="clr-namespace:GUI.Views"
+        mc:Ignorable="d"
+        Title="GmailForm"      
+        Height="600.25" 
+        Width="1002.7"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Border Background="Transparent">
+        <Grid>
+            <Border
+            Height="530"
+            Width="900"
+            Background="#DFEBF8" 
+            CornerRadius="20" 
+            BorderBrush="Transparent">
+                <Border.Effect>
+                    <DropShadowEffect 
+                        Color="Black" 
+                        ShadowDepth="10" 
+                        BlurRadius="20" 
+                        Opacity="0.5" />
+                </Border.Effect>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="118"/>
+                        <RowDefinition Height="331"/>
+                        <RowDefinition Height="81"/>
+                    </Grid.RowDefinitions>
+                    
+                     <!--Tiêu đề-->
+                    <TextBlock Text="Gửi email"
+                            Foreground="Black"
+                            FontSize="47"
+                            FontWeight="Bold"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Height="68" Width="226"/>
+                    
+                    <!--BtnGui-->
+                    <Button Grid.Row="2" Width="150" Height="50" Background="#7090DD" BorderBrush="Transparent" BorderThickness="1"
+                           Content="Gửi email"
+                           Foreground="White"
+                           FontSize="25" Margin="26,7,18,7">    
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="13">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    
+                    <!--Form nhập -->
+                    <GuiFormC:GmailNhapForm Grid.Row="1" Margin="58,0,58,12"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="GUI.Views.KhachhangForm"
+             xmlns:viewModels="clr-namespace:GUI.ViewModels"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.Views"
+             mc:Ignorable="d" 
+             Height="665" Width="678">
+
+    <UserControl.DataContext>
+        <viewModels:KhachHangViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Nút tìm kiếm -->
+        <ContentControl Grid.Row="0"
+                      Margin="0, 0, 0, 10"
+                      Style="{StaticResource SearchTextBox}"
+                      Tag="Nhập mã hoặc tên khách hàng..."></ContentControl>
+
+        <!-- Bảng chứa thông tin khách-->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 
+                Style="{StaticResource DataGridStyle}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã Khách hàng" Binding="{Binding MaKhachHang}" Width="*"  />
+                <DataGridTextColumn Header="Tên Khách hàng" Binding="{Binding TenKhachHang}"  Width="*" />
+                <DataGridTextColumn Header="Số điện thoại" Binding="{Binding SoDienThoai}"  Width="*" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Gmail}"  Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

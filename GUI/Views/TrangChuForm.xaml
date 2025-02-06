@@ -1,0 +1,27 @@
+﻿<Window x:Class="GUI.Views.TrangChuForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:TrangChuMenuC="clr-namespace:GUI.Views.UserControls"
+        xmlns:HienThiTKC="clr-namespace:GUI.Views.UserControls"
+        xmlns:local="clr-namespace:GUI.Views"
+        mc:Ignorable="d"
+        Title="TrangChuForm" 
+         Height="655.25" 
+          Width="1002.7"
+          WindowStyle="None"
+          Background="Transparent"
+          AllowsTransparency="True"
+          WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="325"/>
+            <ColumnDefinition Width="678" />
+        </Grid.ColumnDefinitions>
+        <TrangChuMenuC:TrangChuMenu/>
+        <HienThiTKC:TrangChuHienThiTKForm Grid.Column="1" Height="655.25"/>
+
+
+    </Grid>
+</Window>
