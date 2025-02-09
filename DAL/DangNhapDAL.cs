@@ -16,49 +16,13 @@ namespace DAL
     {
         private DatabaseHelper dbHelper = new DatabaseHelper();
 
-        public TaiKhoanDTO? DangNhap(string tenTaiKhoan, string matKhau)
-        {
-            string query = "SELECT * FROM TaiKhoan WHERE TenTaiKhoan = @TenTaiKhoan AND MatKhau = @MatKhau";
-            try
-            {
-                SqlParameter[] parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@TenTaiKhoan", SqlDbType.NVarChar) { Value = tenTaiKhoan },
-                    new SqlParameter("@MatKhau", SqlDbType.NVarChar) { Value = matKhau }
-                };
-
-                using (SqlDataReader reader = dbHelper.ExecuteReader(query, parameters))
-                {
-                    if (reader.Read())
-                    {
-                        return new TaiKhoanDTO
-                        {
-                            TaiKhoanID = reader["TaiKhoanID"].ToString(),
-                            TenTaiKhoan = reader["TenTaiKhoan"].ToString(),
-                            MatKhau = reader["MatKhau"].ToString(),
-                            MaNhanVien = reader["MaNhanVien"].ToString(),
-                            Gmail = reader["Gmail"].ToString()
-                        };
-                    }
-                }
-
-                return null; // Không tìm thấy tài khoản
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi: " + ex.Message);
-                return null;
-            }
-        }
-
         public TaiKhoanDTO? DangNhapGmail(string gmail)
         {
             string query = "SELECT * FROM TaiKhoan WHERE Gmail = @Gmail";
             try
             {
-                SqlParameter[] parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Gmail", SqlDbType.NVarChar) { Value = gmail },
+                SqlParameter[] parameters = {
+                    new SqlParameter("@Gmail", SqlDbType.NVarChar) { Value = gmail }
                 };
 
                 using (SqlDataReader reader = dbHelper.ExecuteReader(query, parameters))
@@ -68,25 +32,18 @@ namespace DAL
                         return new TaiKhoanDTO
                         {
                             TaiKhoanID = reader["TaiKhoanID"].ToString(),
-                            TenTaiKhoan = reader["TenTaiKhoan"].ToString(),
-                            MatKhau = reader["MatKhau"].ToString(),
-                            MaNhanVien = reader["MaNhanVien"].ToString(),
-                            Gmail = reader["Gmail"].ToString()
+                            Gmail = reader["Gmail"].ToString(),
+                            MatKhau = reader["MatKhau"].ToString() // Giữ lại nếu cần kiểm tra
                         };
                     }
                 }
-
                 return null; // Không tìm thấy tài khoản
             }
             catch (Exception ex)
-            {                Console.WriteLine("Lỗi: " + ex.Message);
+            {
+                Console.WriteLine("Lỗi, kiểm tra lại email hoặc mật khẩu: " + ex.Message);
                 return null;
             }
         }
-
-        
-
     }
-
-
 }

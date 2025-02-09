@@ -14,12 +14,11 @@ namespace DAL
 
         public bool DoiMatKhau(string tenTaiKhoan, string matKhauCu, string matKhauMoi)
         {
-            string query = "UPDATE TaiKhoan SET MatKhau = @MatKhauMoi WHERE TenTaiKhoan = @TenTaiKhoan AND MatKhau = @MatKhauCu";
+            string query = "UPDATE TaiKhoan SET MatKhau = @MatKhauMoi WHERE Gmail = @Gmail AND MatKhau = @MatKhauCu";
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
                 {
-                    new SqlParameter("@TenTaiKhoan", SqlDbType.NVarChar) { Value = tenTaiKhoan },
                     new SqlParameter("@MatKhauCu", SqlDbType.NVarChar) { Value = matKhauCu },
                     new SqlParameter("@MatKhauMoi", SqlDbType.NVarChar) { Value = matKhauMoi }
                 };

@@ -21,14 +21,7 @@ namespace BLL
     {
         private DangNhapDAL dangNhapDAL = new DangNhapDAL();
 
-        public TaiKhoanDTO? DangNhap(string tenTaiKhoan, string matKhau)
-        {
-
-            var taiKhoan = dangNhapDAL.DangNhap(tenTaiKhoan, matKhau);
-            return taiKhoan;
-        }
-
-        // hàm bất đồng bộ, khi gán biến nhớ dùng await
+        // Hàm đăng nhập Gmail bất đồng bộ
         public async Task<TaiKhoanDTO?> DangNhapGmail()
         {
             ClientSecrets clientSecrets = new ClientSecrets
@@ -47,10 +40,8 @@ namespace BLL
                     clientSecrets,
                     Scopes,
                     "user",
-                    CancellationToken.None,
-                    new NullDataStore()
+                    CancellationToken.None
                 );
-
 
                 var service = new GmailService(new BaseClientService.Initializer()
                 {
@@ -60,15 +51,14 @@ namespace BLL
 
                 var profile = await service.Users.GetProfile("me").ExecuteAsync();
 
+                // Kiểm tra Gmail có tồn tại trong hệ thống không
                 return dangNhapDAL.DangNhapGmail(profile.EmailAddress);
-
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi đăng nhập: " + ex.Message);
+                Console.WriteLine("Lỗi đăng nhập Gmail: " + ex.Message);
                 return null;
             }
-
         }
     }
 }
