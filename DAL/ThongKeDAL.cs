@@ -80,6 +80,33 @@ namespace DAL
             }
             return phieuNhapList;
         }
+        public NhanVienDTO GetThongTinNhanVien(string Info)
+        {
+            string query = @"Select top 1 MaNhanVien, TenNhanVien from NhanVien
+                            Where MaNhanVien = @Info or TenNhanVien = @Info";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter ("@Info", Info)
+            };
+            try
+            {
+                var dataTable = dbHelper.ExecuteQuery(query);
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    return new NhanVienDTO
+                    {
+                        MaNhanVien = row["MaNhanVien"].ToString().ToUpper(),
+                        TenNhanVien = row["TenNhanVien"].ToString()
+                    };
+                }
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine("Lỗi: " + ex.Message);
+            }
+            return null;
+        }
         public List<PhieuNhapDTO> GetThongKePhieuNhapSanPhamData()
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();

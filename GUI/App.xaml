@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:GUI"
              xmlns:views="clr-namespace:GUI.Views"
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
-             StartupUri="Views\ThongKeSPNhapForm.xaml">
+             StartupUri="Views\DangNhapForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
