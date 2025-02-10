@@ -12,13 +12,13 @@ namespace BLL
     {
         private KhachHangDAL khachHangDAL = new KhachHangDAL();
 
-        public List<KhachHangDTO> GetAllKhachHang()
+        public List<KhachHangDTO> HienThiDanhSachKH()
         {
-            return khachHangDAL.GetAllKhachHang();
+            return khachHangDAL.HienThiDanhSachKH();
         }
 
 
-        public bool UpdateKhachHang(KhachHangDTO khachHang)
+        public bool SuaKhachHang(KhachHangDTO khachHang)
         {
             if (string.IsNullOrEmpty(khachHang.MaKhachHang))
                 return false;
@@ -33,18 +33,13 @@ namespace BLL
 
             return khachHangDAL.XoaKhachHang(maKhachHang);
         }
-        public List<KhachHangDTO> SearchKhachHang(string maKhachHang, string tenKhachHang)
+        public List<KhachHangDTO> TimKiem(string maKhachHang, string tenKhachHang)
         {
-            return khachHangDAL.SearchKhachHang(maKhachHang, tenKhachHang);
+            return khachHangDAL.TimKiem(maKhachHang, tenKhachHang);
         }
         public KhachHangBLL()
         {
             khachHangDAL = new KhachHangDAL();
-        }
-
-        public KhachHangDTO? GetKhachHangById(string maKhachHang)
-        {
-            return khachHangDAL.GetKhachHangById(maKhachHang);
         }
     }
 }
