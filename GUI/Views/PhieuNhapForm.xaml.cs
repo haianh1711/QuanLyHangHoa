@@ -25,5 +25,12 @@ namespace GUI.Views
             InitializeComponent();
         }
 
+        private void dgPhieuNhap_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is DataGrid dataGrid && dataGrid.SelectedItem != null)
+            {
+                dataGrid.ScrollIntoView(dataGrid.SelectedItem);
+            }
+        }
     }
 }

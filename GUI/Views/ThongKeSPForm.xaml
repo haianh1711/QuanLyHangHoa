@@ -21,11 +21,39 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
-        <!-- Nút tìm kiếm -->
-        <ContentControl Grid.Row="0"
-                        Margin="0, 0, 0, 10"
-                        Style="{StaticResource SearchTextBox}"
-                        Tag="Nhập mã hoặc tên nhân viên..."></ContentControl>
+        <!-- filter & Nút tìm kiếm -->
+        <Grid Margin="0, 0, 0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Style="{StaticResource FilterComboBoxStyle}"  Margin="0, 0, 10, 0"
+                SelectedIndex="0">
+                <ComboBoxItem>Tuần</ComboBoxItem>
+                <ComboBoxItem>Tháng</ComboBoxItem>
+                <ComboBoxItem>Năm</ComboBoxItem>
+            </ComboBox>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0"
+                         Text="{Binding ThongTinTimKiem}" 
+                         Tag="Nhập mã hoặc tên hàng hóa..." 
+                         Style="{StaticResource SearchTextBox}" 
+                         HorizontalAlignment="Stretch"/>
+
+                <Button Grid.Column="1"
+                        Command="{Binding TimKiemCommand}" 
+                        Style="{StaticResource SearchButton}"/>
+            </Grid>
+
+        </Grid>
+
 
         <!-- Bảng chứa thông tin sản phẩm -->
         <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 

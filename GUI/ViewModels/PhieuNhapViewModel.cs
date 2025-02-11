@@ -10,116 +10,117 @@ using System.Collections.ObjectModel;
 using BLL;
 using System.Windows;
 using System.Transactions;
-
+using GUI.ViewModels.UserControls;
+using GUI.Views.UserControls;
 
 namespace GUI.ViewModels
 {
     internal partial class PhieuNhapViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
+
         private PhieuNhapBLL phieuNhapBLL = new();
-        private ChiTietPhieuNhapBLL chiTietPhieuNhapBLL = new();
-        private SanPhamBLL sanPhamBLL= new();
-        
+
         // dataGrid
         [ObservableProperty]
-        private ObservableCollection<ChiTietPhieuNhapDTO> chiTietPhieuNhaps = [];
+        private ObservableCollection<PhieuNhapDTO> phieuNhaps = [];
 
         // Thuộc tính của phieu nhạp
         [ObservableProperty]
-        private PhieuNhapDTO? phieuNhap;
+        private PhieuNhapDTO? selectedPhieuNhap;
 
-        // Thuộc tính của chi tiết phiếu nhập
+        // Tìm kiếm
         [ObservableProperty]
-        private ChiTietPhieuNhapDTO? selectedChiTiet = new();
-
-
-        // ComboBox
-        [ObservableProperty]
-        private List<SanPhamDTO> sanPhams;
-
-        [ObservableProperty]
-        private SanPhamDTO? selectedSanPham;
-
+        private string? maTimKiem;
 
         public PhieuNhapViewModel()
         {
-            sanPhams = sanPhamBLL.GetMaVaTenSP();
-
-            phieuNhap = new()
-            {
-                MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
-                NgayNhap = DateTime.Today.ToString("dd-MM-yyyy"),
-                MaNhanVien = "NV001", // để tạm
-                TongTien = 0
-            };
+            LoadDanhSachPhieuNhap();
+            SelectedPhieuNhap = new();
         }
 
-        partial void OnSelectedSanPhamChanged(SanPhamDTO? value)
+        private void LoadDanhSachPhieuNhap()
         {
-            if(value != null && SelectedChiTiet != null)
-            {
-                SelectedChiTiet.MaSanPham = value.MaSanPham;
-
-                SelectedChiTiet.TenSanPham = value.TenSanPham;
-                // Lỗi không biết: không thể tự động cập nhập tên sp thay đổi
-                // giải pháp code thủ công để thông báo cho giao diện
-                OnPropertyChanged(nameof(SelectedChiTiet));
-            }
+            PhieuNhaps.Clear();
+            PhieuNhaps = new ObservableCollection<PhieuNhapDTO>(phieuNhapBLL.HienThiDanhSachPhieuNhap());
         }
 
         [RelayCommand]
-        private void ThemChiTiet()
-        {
-            if(ChiTietPhieuNhaps!= null && SelectedChiTiet != null && PhieuNhap != null)
-            {
-                SelectedChiTiet.GiaNhap = Convert.ToDecimal(SelectedChiTiet.GiaNhap);
-                SelectedChiTiet.SoLuongNhap = Convert.ToInt32(SelectedChiTiet.SoLuongNhap);
-
-                var chiTietMoi = new ChiTietPhieuNhapDTO
-                {
-                    MaCTPN = chiTietPhieuNhapBLL.TaoMaCTPNMoi(),
-                    MaPhieuNhap = PhieuNhap.MaPhieuNhap,
-                    MaSanPham = SelectedChiTiet.MaSanPham,
-                    TenSanPham = SelectedChiTiet.TenSanPham,
-                    GiaNhap = SelectedChiTiet.GiaNhap,
-                    SoLuongNhap = SelectedChiTiet.SoLuongNhap,
-                    ThanhTien = SelectedChiTiet.GiaNhap * SelectedChiTiet.SoLuongNhap
-                };
-
-                ChiTietPhieuNhaps.Add(chiTietMoi);
-
-
-                PhieuNhap.TongTien = phieuNhapBLL.TinhTongTien(ChiTietPhieuNhaps.ToList());
-                OnPropertyChanged(nameof(PhieuNhap));
-            }
-        }
-
-        [RelayCommand]
-        private void XoaPhieu()
-        {
-            if (ChiTietPhieuNhaps != null && SelectedChiTiet != null && PhieuNhap != null)
-            {
-                ChiTietPhieuNhaps.Clear();
-                SelectedChiTiet = new();
-                PhieuNhap = new();
-            }
-        }
-
-        [RelayCommand]
-        private void LuuPhieu()
+        private async Task ThemPhieuNhap()
         {
             try
             {
-                if (phieuNhapBLL.LuuPhieu(PhieuNhap, ChiTietPhieuNhaps.ToList()))
+                if (SelectedPhieuNhap != null)
                 {
-                    MessageBox.Show("Lưu thành công");
+                    PhieuNhapDTO phieuNhapDTO = new()
+                    {
+                        MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
+                        MaNhanVien = "NV002",
+                        NgayNhap = DateTime.Now.ToString(),
+                        TongTien = '0',
+                    };
+
+                    bool result = phieuNhapBLL.ThemPhieuNhap(phieuNhapDTO);
+                    if (result)
+                    {
+                        await ThongBaoVM.MessageOK("Thêm phiếu nhập thành công");
+                        LoadDanhSachPhieuNhap();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                await ThongBaoVM.MessageOK(ex.ToString());
+            }
+        }
+
+        [RelayCommand]
+        private async Task XoaPhieuNhap()
+        {
+            try
+            {
+                if (SelectedPhieuNhap != null)
+                {
+                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa phiếu nhập này? Dữ liệu sẽ bị mất vĩnh viễn.");
+                    if (isXoaPhieuNhap)
+                    {
+                        bool result = phieuNhapBLL.XoaPhieuNhap(SelectedPhieuNhap.MaPhieuNhap);
+                        if (result)
+                        {
+                            await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
+                            LoadDanhSachPhieuNhap();
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                await ThongBaoVM.MessageOK(ex.ToString());
+            }
+
+        }
+
+        [RelayCommand]
+        private async Task TimKiem()
+        {
+            if (string.IsNullOrWhiteSpace(MaTimKiem))
+            {
+                await ThongBaoVM.MessageOK("Vui lòng nhập mã phiếu nhập để tìm kiếm.");
+                return;
+            }
+
+            if (phieuNhapBLL != null)
+            {
+                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == MaTimKiem.ToUpper());
+                if (SelectedPhieuNhap == null)
+                {
+                    await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
                 }
 
-            }catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
             }
-            
         }
     }
 }

@@ -18,9 +18,9 @@ namespace GUI.Views
     /// <summary>
     /// Interaction logic for SanPhamForm.xaml
     /// </summary>
-    public partial class SanPhamForm : UserControl
+    public partial class HangHoaForm : UserControl
     {
-        public SanPhamForm()
+        public HangHoaForm()
         {
             InitializeComponent();
         }

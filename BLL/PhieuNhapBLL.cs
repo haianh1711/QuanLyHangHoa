@@ -14,35 +14,34 @@ namespace BLL
         private PhieuNhapDAL phieuNhapDAL = new PhieuNhapDAL();
         private ChiTietPhieuNhapBLL chiTietPhieuNhapBLL = new ChiTietPhieuNhapBLL();
 
-        public bool ThemPhieuNhap(PhieuNhapDTO phieuNhapDTO)
+        public bool ThemPhieuNhap(PhieuNhapDTO phieuNhap)
         {
-            return phieuNhapDAL.ThemPhieuNhap(phieuNhapDTO);
+            return phieuNhapDAL.ThemPhieuNhap(phieuNhap);
+
         }
 
-        public bool LuuPhieu(PhieuNhapDTO phieuNhap, List<ChiTietPhieuNhapDTO> chiTietPhieuNhaps)
+
+        public bool XoaPhieuNhap(string maPhieuNhap)
         {
             using (TransactionScope transaction = new())
             {
-                try
+                if (chiTietPhieuNhapBLL.XoaTatCaChiTietCuaPhieuNhap(maPhieuNhap))
                 {
-                    if (phieuNhap != null && ThemPhieuNhap(phieuNhap))
+                    if (phieuNhapDAL.XoaPhieuNhap(maPhieuNhap))
                     {
-                        foreach (var chiTiet in chiTietPhieuNhaps)
-                        {
-                            bool saved = chiTietPhieuNhapBLL.ThemCTPN(chiTiet);
-                            if (!saved) return false;
-                        }
+                        transaction.Complete(); return true;
                     }
+                }
 
-                    transaction.Complete();
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Lỗi khi lưu phiếu nhập: " + ex.Message, ex);
-                }
+                return false;
             }
         }
+
+        public List<PhieuNhapDTO> HienThiDanhSachPhieuNhap()
+        {
+            return phieuNhapDAL.HienThiDanhSachPhieuNhap();
+        }
+
 
         public decimal? TinhTongTien(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
         {
