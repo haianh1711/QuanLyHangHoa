@@ -12,7 +12,7 @@ namespace DAL
     {
         private DatabaseHelper dbHelper = new DatabaseHelper();
 
-        public bool DoiMatKhau(string tenTaiKhoan, string matKhauCu, string matKhauMoi)
+        public bool DoiMatKhau(string Gmail, string matKhauCu, string matKhauMoi)
         {
             string query = "UPDATE TaiKhoan SET MatKhau = @MatKhauMoi WHERE Gmail = @Gmail AND MatKhau = @MatKhauCu";
             try

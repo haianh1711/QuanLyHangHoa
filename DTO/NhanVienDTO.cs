@@ -14,6 +14,10 @@ namespace DTO
         public string? ChucVu { get; set; }
         public string? HinhAnh { get; set; }
 
+        public NhanVienDTO()
+        {
+
+        }
         public NhanVienDTO(string maNhanVien, string tenNhanVien, string ngayBatDau, string chucVu, string hinhAnh)
         {
             MaNhanVien = maNhanVien;

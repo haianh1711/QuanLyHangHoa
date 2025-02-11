@@ -11,7 +11,7 @@ namespace BLL
     {
         private DoiMatKhauDAL doiMatKhauDAL = new DoiMatKhauDAL();
 
-        public bool DoiMatKhau(string tenTaiKhoan, string matKhauCu, string matKhauMoi, string xacNhanMatKhau)
+        public bool DoiMatKhau(string Gmail, string matKhauCu, string matKhauMoi, string xacNhanMatKhau)
         {
             // Kiểm tra mật khẩu mới và xác nhận mật khẩu
             if (string.IsNullOrEmpty(matKhauMoi) || string.IsNullOrEmpty(xacNhanMatKhau))
@@ -30,7 +30,7 @@ namespace BLL
             }
 
             // Gửi yêu cầu xuống DAL
-            return doiMatKhauDAL.DoiMatKhau(tenTaiKhoan, matKhauCu, matKhauMoi);
+            return doiMatKhauDAL.DoiMatKhau(Gmail, matKhauCu, matKhauMoi);
         }
     }
 }
