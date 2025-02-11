@@ -13,7 +13,7 @@ namespace BLL
     {
         private ThongKeDAL thongKeDAL = new ThongKeDAL();
 
-        public List <SanPhamDTO> GetSanPhamThongKe()
+        public List<SanPhamDTO> GetSanPhamThongKe()
         {
             return thongKeDAL.GetSanPhamThongKe();
         }
@@ -21,13 +21,41 @@ namespace BLL
         {
             return thongKeDAL.SearchTenNhanVien(Info);
         }
+        public NhanVienDTO GetThongTinNhanVien(string Info)
+        {
+            return thongKeDAL.GetThongTinNhanVien(Info);
+        }
         public List<PhieuNhapDTO> GetThongKePhieuNhapSanPhamData()
         {
             return thongKeDAL.GetThongKePhieuNhapSanPhamData();
         }
-        public List<PhieuNhapDTO> GetThongKePhieuNhapHangThangData()
+        public List<PhieuXuatDTO> GetThongKePhieuXuatSanPhamData()
+        {
+            return thongKeDAL.GetThongKePhieuXuatSanPhamData();
+        }
+        public List<ThongKePhieuNhapDTO> GetThongKePhieuNhapHangTuanData()
+        {
+            return thongKeDAL.GetThongKePhieuNhapHangTuanData();
+        }
+        public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangTuanData()
+        {
+            return thongKeDAL.GetThongKePhieuXuatHangTuanData();
+        }
+        public List<ThongKePhieuNhapDTO> GetThongKePhieuNhapHangThangData()
         {
             return thongKeDAL.GetThongKePhieuNhapHangThangData();
+        }
+        public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangThangData()
+        {
+            return thongKeDAL.GetThongKePhieuXuatHangThangData();
+        }
+        public List<ThongKePhieuNhapDTO> GetThongKePhieuNhapHangNamData()
+        {
+            return thongKeDAL.GetThongKePhieuNhapHangNamData();
+        }
+        public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangNamData()
+        {
+            return thongKeDAL.GetThongKePhieuXuatHangNamData();
         }
     }
 }

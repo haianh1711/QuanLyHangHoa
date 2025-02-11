@@ -18,7 +18,7 @@ namespace DAL
 
         public List<SanPhamDTO> GetSanPhamThongKe()
         {
-            List<SanPhamDTO> thongKeList = new List<SanPhamDTO>(); 
+            List<SanPhamDTO> thongKeList = new List<SanPhamDTO>();
 
             string query = "Select MaSanPham, TenSanPham, SoLuong, MoTa from SanPham";
 
@@ -26,7 +26,7 @@ namespace DAL
             {
                 var dataTable = dbHelper.ExecuteQuery(query);
 
-                foreach(DataRow row in dataTable.Rows)
+                foreach (DataRow row in dataTable.Rows)
                 {
                     SanPhamDTO thongke = new SanPhamDTO
                     {
@@ -40,7 +40,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi: " + ex.Message);
+                throw;
             }
             return thongKeList;
         }
@@ -51,7 +51,7 @@ namespace DAL
             SqlParameter[] Parameters = new SqlParameter[]
             {
                 new SqlParameter("@Info", Info)
-            }; 
+            };
             string query = @"Select top 1 sp.MaSanPham, sp.TenSanPham, pn.SoLuong, sp.MoTa 
                              From PhieuNhap pn inner join SanPham sp 
                              On pn.MaSanPham = sp.MaSanPham
@@ -62,7 +62,7 @@ namespace DAL
             try
             {
                 var dataTable = dbHelper.ExecuteQuery(query);
-                foreach(DataRow row in dataTable.Rows)
+                foreach (DataRow row in dataTable.Rows)
                 {
                     SanPhamDTO thongKeNhap = new SanPhamDTO
                     {
@@ -74,9 +74,9 @@ namespace DAL
                     phieuNhapList.Add(thongKeNhap);
                 }
             }
-            catch(Exception ex) 
-            { 
-                Console.WriteLine("Lỗi: " + ex.Message);
+            catch (Exception ex)
+            {
+                throw;
             }
             return phieuNhapList;
         }
@@ -101,16 +101,17 @@ namespace DAL
                     };
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine("Lỗi: " + ex.Message);
+                throw;
             }
             return null;
         }
         public List<PhieuNhapDTO> GetThongKePhieuNhapSanPhamData()
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
-            string query = "Select MaSanPham, SoLuongNhap from ChiTietPhieuNhap";
+            string query = @"Select MaSanPham, Sum(SoLuongNhap) AS TongSoLuongNhap from ChiTietPhieuNhap
+                             Group By MaSanPham";
             try
             {
                 var reader = dbHelper.ExecuteReader(query);
@@ -119,39 +120,221 @@ namespace DAL
                     data.Add(new PhieuNhapDTO
                     {
                         MaSanPham = reader["MaSanPham"].ToString(),
-                        SoLuongNhap = Convert.ToInt32(reader["SoLuongNhap"])
-                    });    
+                        SoLuongNhap = Convert.ToInt32(reader["TongSoLuongNhap"])
+                    });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("Lỗi: " + ex.Message);
+                throw;
             }
             return data;
         }
-        public List<PhieuNhapDTO> GetThongKePhieuNhapHangThangData()
+        public List<PhieuXuatDTO> GetThongKePhieuXuatSanPhamData()
         {
-            List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
-            string query = @"Select pn.NgayNhap, ct.SoLuongNhap 
-                             from PhieuNhap pn inner join ChiTietPhieuNhap ct 
-                             On pn.MaPhieuNhap = ct.MaPhieuNhap";
+            List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
+            string query = @"Select MaSanPham, Sum(SoLuongXuat) AS TongSoLuongXuat from ChiTietPhieuXuat
+                             Group By MaSanPham";
             try
             {
                 var reader = dbHelper.ExecuteReader(query);
                 while (reader.Read())
                 {
-                    DateTime date = Convert.ToDateTime(reader["NgayNhap"]);
-                    data.Add(new PhieuNhapDTO
+                    data.Add(new PhieuXuatDTO
                     {
-                        NgayNhap =  date.ToString("MM"),
-                        SoLuongNhap = Convert.ToInt32(reader["SoLuongNhap"])
+                        MaSanPham = reader["MaSanPham"].ToString(),
+                        SoLuongXuat = Convert.ToInt32(reader["TongSoLuongXuat"])
                     });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("Lỗi: " + ex.Message);
+                throw;
             }
+            return data;
+        }
+        public List<ThongKePhieuNhapDTO> GetThongKePhieuNhapHangTuanData()
+        {
+            List<ThongKePhieuNhapDTO> data = new List<ThongKePhieuNhapDTO>();
+            string query = @"Select DATEPART(YEAR,pn.NgayNhap) AS Nam,
+                            DATEPART(WEEK,pn.NgayNhap) AS Tuan, 
+                            SUM(ct.SoLuongNhap) AS TongSoLuongNhap
+                            from PhieuNhap pn inner join ChiTietPhieuNhap ct
+                            On pn.MaPhieuNhap = ct.MaPhieuNhap
+                            Group By DATEPART(YEAR, pn.NgayNhap), DATEPART(WEEK, pn.NgayNhap)
+                            Order By Nam ASC , Tuan ASC";
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    int nam = reader.GetInt32(0);
+                    int tuan = reader.GetInt32(1);
+                    int tongSoLuong = reader.GetInt32(2);
+                    data.Add(new ThongKePhieuNhapDTO
+                    {
+                        ThangNam = $"Tuần {tuan}",
+                        TongSoLuongNhap = tongSoLuong
+                    });
+                }
+            }
+            catch (Exception ex) 
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangTuanData()
+        {
+            List<ThongKePhieuXuatDTO> data = new List<ThongKePhieuXuatDTO>();
+            string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
+                            DATEPART(WEEK,px.NgayNhap) AS Tuan, 
+                            SUM(ct.SoLuongXuat) AS TongSoLuongNhap
+                            from PhieuXuat px inner join ChiTietPhieuXuat ct
+                            On px.MaPhieuXuat = ct.MaPhieuXuat
+                            Group By DATEPART(YEAR, px.NgayNhap), DATEPART(WEEK, px.NgayNhap)
+                            Order By Nam ASC , Tuan ASC";
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    int nam = reader.GetInt32(0);
+                    int tuan = reader.GetInt32(1);
+                    int tongSoLuong = reader.GetInt32(2);
+                    data.Add(new ThongKePhieuXuatDTO
+                    {
+                        ThangNam = $"Tuần {tuan}",
+                        TongSoLuongXuat = tongSoLuong
+                    });
+                }
+            }
+            catch(Exception ex) 
+            { 
+                throw;
+            }
+            return data;
+        }
+        public List<ThongKePhieuNhapDTO> GetThongKePhieuNhapHangThangData()
+        {
+            List<ThongKePhieuNhapDTO> data = new List<ThongKePhieuNhapDTO>();
+            string query = @"Select DATEPART(YEAR,pn.NgayNhap) AS Nam,
+                             DATEPART(MONTH, pn.NgayNhap) AS Thang,
+                             SUM(ct.SoLuongNhap) AS TongSoLuongNhap 
+                             from PhieuNhap pn inner join ChiTietPhieuNhap ct 
+                             On pn.MaPhieuNhap = ct.MaPhieuNhap
+                             Group By DATEPART(YEAR,NgayNhap), DATEPART(MONTH, pn.NgayNhap)
+                             Order By Nam ASC, Thang ASC";
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    int nam = reader.GetInt32(0);
+                    int thang = reader.GetInt32(1);
+                    int tongSoLuong = reader.GetInt32(2);
+                    data.Add(new ThongKePhieuNhapDTO
+                    {
+                        ThangNam = $"Tháng {thang:D2}/{nam}",
+                        TongSoLuongNhap = tongSoLuong,
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangThangData()
+        {
+            List<ThongKePhieuXuatDTO> data = new List<ThongKePhieuXuatDTO>();
+            string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
+                            DATEPART(MONTH,px.NgayNhap) AS Thang, 
+                            SUM(ct.SoLuongXuat) AS TongSoLuongNhap
+                            from PhieuXuat px inner join ChiTietPhieuXuat ct
+                            On px.MaPhieuXuat = ct.MaPhieuXuat
+                            Group By DATEPART(YEAR, px.NgayNhap), DATEPART(MONTH, px.NgayNhap)
+                            Order By Nam ASC , Thang ASC";
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    int nam = reader.GetInt32(0);
+                    int thang = reader.GetInt32(1);
+                    int tongSoLuong = reader.GetInt32(2);
+                    data.Add(new ThongKePhieuXuatDTO
+                    {
+                        ThangNam = $"Tháng {thang:D2}/{nam}",
+                        TongSoLuongXuat = tongSoLuong,
+                    });
+                }
+            }
+            catch(Exception ex) 
+            { 
+                throw; 
+            }
+            return data;
+        }
+        public List<ThongKePhieuNhapDTO> GetThongKePhieuNhapHangNamData()
+        {
+            List<ThongKePhieuNhapDTO> data = new List<ThongKePhieuNhapDTO>();
+            string query = @"Select DATEPART(YEAR,pn.NgayNhap) AS Nam, 
+                            SUM(ct.SoLuongNhap) AS TongSoLuongNhap
+                            from PhieuNhap pn inner join ChiTietPhieuNhap ct
+                            On pn.MaPhieuNhap = ct.MaPhieuNhap
+                            Group By DATEPART(YEAR ,pn.NgayNhap)
+                            Order By Nam ASC";
+
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    int nam = reader.GetInt32(0);
+                    int tongSoLuong = reader.GetInt32(1);
+                    data.Add(new ThongKePhieuNhapDTO
+                    {
+                        ThangNam = $"{nam}",
+                        TongSoLuongNhap = tongSoLuong
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangNamData()
+        {
+            List<ThongKePhieuXuatDTO> data = new List<ThongKePhieuXuatDTO>();
+            string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
+                            SUM(ct.SoLuongXuat) AS TongSoLuongNhap
+                            from PhieuXuat px inner join ChiTietPhieuXuat ct
+                            On px.MaPhieuXuat = ct.MaPhieuXuat
+                            Group By DATEPART(YEAR, px.NgayNhap)
+                            Order By Nam ASC";
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    int nam = reader.GetInt32(0);
+                    int thang = reader.GetInt32(1);
+                    int tongSoLuong = reader.GetInt32(2);
+                    data.Add(new ThongKePhieuXuatDTO
+                    {
+                        ThangNam = $"Tháng {thang:D2}/{nam}",
+                        TongSoLuongXuat = tongSoLuong,
+                    });
+                }
+            }
+            catch(Exception ex) 
+            { 
+                throw; 
+            } 
             return data;
         }
     }
