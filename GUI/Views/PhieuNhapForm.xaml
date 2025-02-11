@@ -6,151 +6,126 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views"
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
+             xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
              Height="665" Width="678">
     <UserControl.DataContext>
         <viewModels:PhieuNhapViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition />
-            <RowDefinition Height="0.7*"/>
-        </Grid.RowDefinitions>
 
-        <!-- Nút tìm kiếm -->
-        <ContentControl Grid.Row="0"
-                        Margin="0,0,0,10"
-                        Style="{StaticResource SearchTextBox}"
-                        Tag="Nhập mã hoặc tên hàng hóa..."></ContentControl>
+        <!--Form-->
+        <Grid>
 
-        <!--Nhập thông tin-->
-        <Border Grid.Row="1" 
-                Style="{StaticResource SimpleBorderStyle}" 
-                Margin="0,0,0,10" >
-            <Grid Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.6*"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-                <!--Tổng tiền và nút lưu phiếu, xóa-->
-                <Grid>
+            <!-- Nút tìm kiếm -->
+            <Grid Margin="0, 0, 0, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Tag="Nhập mã phiếu nhập..." 
+                         Style="{StaticResource SearchTextBox}"
+                         Text="{Binding MaTimKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemCommand}"/>
+            </Grid>
+
+            <!--Bảng-->
+            <DataGrid x:Name="dgPhieuNhap" Grid.Row="1" 
+                    Margin="0,0,0,10" 
+                  ItemsSource="{Binding PhieuNhaps, Mode=TwoWay}" 
+                  SelectedItem="{Binding SelectedPhieuNhap}"
+                  Style="{StaticResource DataGridStyle}" SelectionChanged="dgPhieuNhap_SelectionChanged" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã phiếu nhập" Binding="{Binding MaPhieuNhap}" Width="*"  />
+                    <DataGridTextColumn Header="Ngày tạo" Binding="{Binding NgayNhap}"  Width="*" />
+                    <DataGridTextColumn Header="Nhân viên thực hiện" Binding="{Binding MaNhanVien}"  Width="*" />
+                    <DataGridTextColumn Header="Tống tiền" Binding="{Binding TongTien}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--Nhập thông tin-->
+            <Border Grid.Row="2" 
+                    Style="{StaticResource SimpleBorderStyle}" >
+                <Grid Margin="20" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Margin="0, 0, 20, 0">
-                        <Label Style="{StaticResource SimpleLabelStyle}" Content="Tổng tiền" />
-                        <TextBox x:Name="txtTongTien" Style="{StaticResource SimpleTextBoxStyle}" 
-                                 IsReadOnly="True"
-                                 Text="{Binding PhieuNhap.TongTien, Mode=OneWay}"/>
-                    </StackPanel>
+                    <!--Nhập thông tin-->
+                    <Grid Margin="0, 0, 30, 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <Button Content="Lưu phiếu" 
-                                Style="{StaticResource SimpleRoundedButton}"
-                                Command="{Binding LuuPhieuCommand}"/>
-                        <Button Content="Xóa" 
-                                Style="{StaticResource SimpleRoundedButton}"
-                                Command="{Binding XoaPhieuCommand}"
-                                />
-                    </StackPanel>
-                </Grid>
+                        <!--Mã phiếu nhập-->
+                        <StackPanel >
+                            <Label Style="{StaticResource SimpleLabelStyle}"  Content="Mã phiếu nhập" />
+                            <TextBox x:Name="txtMaPN" 
+                                     Text="{Binding SelectedPhieuNhap.MaPhieuNhap}"
+                                     Style="{StaticResource ReadOnlyTextBoxStyle}"
+                                     IsReadOnly="True"/>
+                        </StackPanel>
 
-                <!--Thêm sp vào phiếu-->
-                <ContentControl Grid.Row="1" Tag="Thêm sản phẩm vào phiếu"
-                        Style="{StaticResource BorderWithHeaderStyle}" 
-                        Background="#CAD9FF">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="120"/>
-                        </Grid.ColumnDefinitions>
-
-                        <!--Nhập thông tin-->
-                        <Grid Margin="0, 0, 30, 0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+                        <!-- Nhân viên thực hiện và Ngày-->
+                        <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="15"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-
-                            <StackPanel >
-                                <Label Style="{StaticResource SimpleLabelStyle}"  Content="Mã sản phẩm" />
-                                <ComboBox x:Name="cbMaSP"
-                                          ItemsSource="{Binding SanPhams}"
-                                          DisplayMemberPath="MaSanPham"
-                                          SelectedValuePath="MaSanPham"
-                                          SelectedValue="{Binding SelectedChiTiet.MaSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          SelectedItem="{Binding SelectedSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          Style="{StaticResource SimpleComboBoxStyle}">
-                                </ComboBox>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2">
-                                <Label Style="{StaticResource SimpleLabelStyle}" Content="Tên sản phẩm" />
-                                <TextBox x:Name="txtTenSP" 
-                                         Style="{StaticResource SimpleTextBoxStyle}"
-                                         IsReadOnly="True"
-                                         Text="{Binding SelectedChiTiet.TenSanPham, Mode=OneWay}"/>
-                            </StackPanel>
-
                             <StackPanel Grid.Row="1">
-                                <Label Style="{StaticResource SimpleLabelStyle}" Content="Số lượng nhập" />
-                                <TextBox x:Name="txtSoLuong" Style="{StaticResource SimpleTextBoxStyle}" 
-                                         Text="{Binding SelectedChiTiet.SoLuongNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Style="{StaticResource SimpleLabelStyle}" Content="Nhân viên thực hiện" />
+                                <TextBox x:Name="txtNhanVien" Style="{StaticResource ReadOnlyTextBoxStyle}" 
+                                         Text="{Binding SelectedPhieuNhap.MaNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
-
-                            
 
                             <StackPanel Grid.Column="2" Grid.Row="1">
-                                <Label Style="{StaticResource SimpleLabelStyle}" Content="Giá nhập" />
-                                <TextBox x:Name="txtGiaNhap" Grid.Row="1" 
-                                      Style="{StaticResource SimpleTextBoxStyle}" 
-                                      Text="{Binding SelectedChiTiet.GiaNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Style="{StaticResource SimpleLabelStyle}" Content="Ngày tạo"/>
+                                <TextBox x:Name="txtNgayNhap" Grid.Row="1" IsReadOnly="True"
+                                         Style="{StaticResource ReadOnlyTextBoxStyle}" 
+                                         Text="{Binding SelectedPhieuNhap.NgayNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
-
                         </Grid>
 
-                        <!--Các nút-->
-                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                            <Button Content="Thêm" 
-                                    Margin="0, 0, 0, 5"
-                                    Style="{StaticResource SimpleButton}" 
-                                    Command="{Binding ThemChiTietCommand}"/>
-                            <Button Content="Sửa" Style="{StaticResource SimpleButton}" Margin="0, 0, 0, 5"/>
-                            <Button Content="Xóa" Style="{StaticResource SimpleButton}"/>
+                        <!-- Tổng tiền-->
+                        <StackPanel Grid.Row="2">
+                            <Label Style="{StaticResource SimpleLabelStyle}" Content="Tổng tiền" />
+                            <TextBox x:Name="txtTongTien" 
+                                     Style="{StaticResource ReadOnlyTextBoxStyle}"
+                                     IsReadOnly="True"
+                                     Text="{Binding SelectedPhieuNhap.TongTien, Mode=OneWay}"/>
                         </StackPanel>
-
                     </Grid>
-                </ContentControl>
+
+                    <!--Các nút-->
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                        <Button Content="Thêm" Style="{StaticResource SimpleRoundedButton}" 
+                                Command="{Binding ThemPhieuNhapCommand}"/>
+                        <Button Content="Xóa" Style="{StaticResource SimpleRoundedButton}"
+                                Command="{Binding XoaPhieuNhapCommand}"/>
+                        <Grid Margin="0, 30, 0, 0"/>
+                        <Button Content="Chi tiết phiếu" Style="{StaticResource SimpleRoundedButton}"
+                                Command="{Binding XoaChiTietCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
 
 
-            </Grid>
-        </Border>
 
+        </Grid>
 
-        <!--Bảng-->
-        <DataGrid x:Name="dgChiTietPN" Grid.Row="2" 
-                  
-                  ItemsSource="{Binding ChiTietPhieuNhaps}" 
-                  SelectedItem="{Binding SelectedChiTiet}"
-                  Style="{StaticResource DataGridStyle}" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã sản phẩm" Binding="{Binding MaSanPham}" Width="*"  />
-                <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding TenSanPham}"  Width="*" />
-                <DataGridTextColumn Header="Giá nhập" Binding="{Binding GiaNhap}"  Width="*" />
-                <DataGridTextColumn Header="Số lượng nhập" Binding="{Binding SoLuongNhap}" Width="*" />
-                <DataGridTextColumn Header="Thành tiền" Binding="{Binding ThanhTien}" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
-
+        <!--Thông báo-->
+        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
     </Grid>
 </UserControl>

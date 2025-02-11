@@ -31,10 +31,11 @@
         <Setter Property="Height" Value="35"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Foreground" Value="#CF0000"/>
+        <Setter Property="Background" Value="#DFEBF8"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Cursor="Hand" Background="#DFEBF8">
+                    <Border Cursor="Hand" Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center" 
                                       HorizontalAlignment="Center"
                                       Content="{TemplateBinding Content}"/>
@@ -50,4 +51,26 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--Button bo góc của messageBox-->
+    <Style x:Key="MessageBoxButton" TargetType="Button">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="20"
+                            Background="#5B71A8" >
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary> 

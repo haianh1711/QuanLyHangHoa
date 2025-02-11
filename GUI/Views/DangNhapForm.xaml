@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.Views"
         mc:Ignorable="d"
-        Title="DangNhapForm" Height="616" Width="546.4"
+        Title="DangNhapForm" Height="454" Width="683"
         Background="Transparent" 
           WindowStyle="None"
           ResizeMode="NoResize"
@@ -13,13 +13,38 @@
           AllowsTransparency="True"
           MouseDown="Window_MouseDown">
 
-    <Border CornerRadius="40"
+    <Border CornerRadius="10"
      Background="#161F36"
      BorderBrush="Transparent"
      BorderThickness="1">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <!-- Thoát -->
-            <Button 
+            <Image
+              Width="187"
+              Height="187"
+Margin="306,0,85,160" 
+Source="/Images/bubble.png" 
+Stretch="Fill"
+Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1">
+                <Image.Effect>
+                    <BlurEffect Radius="10"/>
+
+                </Image.Effect>
+            </Image>
+            <!-- Thoát -->
+            <Grid Grid.Row="1"
+                  Grid.Column="1">
+                <Button 
 BorderBrush="Transparent"
 FontFamily="Segoe MDL2 Assets" 
 Content="&#xE7E8;" 
@@ -29,123 +54,142 @@ Background="Transparent"
 HorizontalAlignment="Right" 
 VerticalAlignment="Top" 
 Margin="19,19,20,0" Click="Button_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <!-- Tắt mọi trạng thái mặc định -->
-                        <Setter Property="OverridesDefaultStyle" Value="True" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}"
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <!-- Tắt mọi trạng thái mặc định -->
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
 
-
-
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="353" Orientation="Vertical">
-                <!-- Avatar -->
-                <Grid>
-                    <Image Source="/Images/ImgLogin.png" Width="350" Height="150"/>
-                </Grid>
-                <!-- Tên đăng nhập -->
-                <Grid>
-                    <Border Background="#2A2A45" CornerRadius="20" Padding="5">
-                        <TextBox x:Name="txtUser"
-                              Width="351" Height="43"
-                              HorizontalAlignment="Left"
-                              Foreground="White"
-                              Background="Transparent"
-                              BorderBrush="DarkGray"
-                              FontSize="20"
-                              VerticalContentAlignment="Center"
-                              TextAlignment="Left" 
-                              CaretBrush="LightGray"
-                              BorderThickness="0,0,0,0"
-                              Padding="50,0,0,0"
-                              FocusVisualStyle="{x:Null}" TextChanged="txtUser_TextChanged" Text="&#x9;&#x9;" />
-                    </Border>
-                    <TextBlock FontFamily="Segoe MDL2 Assets"
-                            Text="&#xE77B;"
-                            Height="40"
-                            Foreground="White"
-                            Padding="10,0,0,0"
-                            FontSize="38" Margin="0,6,306,7" />
-                </Grid>
-
-                <!-- Mật khẩu -->
-                <Border Background="#2A2A45" CornerRadius="20" Padding="5" Margin="0,20,0,0" Height="55">
-                    <Grid>
-                        <PasswordBox x:Name="txtPass"
-                              Width="351" Height="43"
-                              HorizontalAlignment="Center"
-                              Foreground="White"
-                              Background="Transparent"
-                              BorderBrush="DarkGray"
-                              BorderThickness="0,0,0,0"
-                              FontSize="20"
-                              VerticalContentAlignment="Center"
-                              Padding="50,0,0,0"
-                              PasswordChanged="txtPass_PasswordChanged"/>
-                        <TextBlock FontFamily="Segoe MDL2 Assets"
-                            Text="&#xE72E;"
-                            Height="38"
-                            Foreground="White"
-                            Padding="5,0,0,0"
-                            FontSize="38" Margin="0,6,306,7" />
-                    </Grid>
-                </Border>
-
-                <!-- Nút đăng nhập -->
-                <Button  Width="351"
+            <Grid Grid.Row="1"
+                  Grid.Column="1"
+                  VerticalAlignment="Center" >
+                <Border CornerRadius="20"
+                        BorderThickness="2"
+                        Width="477"
+                        Height="241"
+                        BorderBrush="White">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="241" >
+                        <!-- Avatar -->
+                        <Grid>
+                            <Image Source="/Images/ustock-removebg-preview.png" Width="120" Height="124"/>
+                        </Grid>
+                        <!-- Nút đăng nhập -->
+                        <Button  Width="351"
                   Height="43"
                   FontSize="20"
-                  FontWeight="Bold"
+                  FontWeight="Light"
                   Click="Btn_Login"
                   Margin="0,20,0,0" 
                   Foreground="White">
-                    <Button.Style>
-                        <Style TargetType="Button" >
-                            <Setter  Property="Background" Value="#5B71A8"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FF6C96FF"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Border    Width="351"
-                                Height="43"
-                                CornerRadius="20"
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" >
+                                    <Setter  Property="Background" Value="#5B71A8"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF6C96FF"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border    Width="269"
+                                Height="42"
+                                CornerRadius="10"
                                 Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center"
-                                           Content="Đăng nhập"
-                                           HorizontalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
-            <!-- Nhãn sử dụng email -->
-            <TextBlock Text="Sử dụng email của bạn?"
-            MouseDown="TextBlock_MouseDown"
-            Foreground="Gray"
-            FontSize="15"
-            TextWrapping="Wrap"
-            Height="30"
-            Margin="188,517,188,0"
-            VerticalAlignment="Top"
-            Width="168" TextDecorations="Underline" />
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="/Images/ggdmm.png" Width="30" Height="30" Margin="10,0,0,0" Grid.Column="0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Đăng nhập bằng Gmail" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,3"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                    </StackPanel>
+                </Border>
+                <!-- Nhãn sử dụng email -->
+            </Grid>
+            <Image Grid.ColumnSpan="2" 
+                   Width="297"
+                   Height="297"
+       Margin="-54,146,335,-96" 
+       Grid.Row="1" 
+       Source="/Images/bubble.png" 
+       Stretch="Fill" 
+       Grid.RowSpan="2"
+       Opacity="0.7">
+                <Image.Effect>
+                    <BlurEffect Radius="10"/>
+
+                </Image.Effect>
+            </Image>
+            <Image
+                     Width="187"
+                     Height="187"
+       Margin="-70,-53,462,212" 
+       Source="/Images/bubble.png" 
+       Stretch="Fill"
+       Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <Image.Effect>
+                    <BlurEffect Radius="10"/>
+
+                </Image.Effect>
+            </Image>
+            <Image
+              Width="187"
+              Height="187"
+    Margin="457,120,-65,39" 
+    Source="/Images/bubble.png" 
+    Stretch="Fill"
+    Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1">
+                <Image.Effect>
+                    <BlurEffect Radius="10"/>
+
+                </Image.Effect>
+            </Image>
+            <Image
+                Width="114"
+                Height="114"
+                Margin="306,28,57,-37" 
+                Source="/Images/bubble.png" 
+                Stretch="Fill"
+                Opacity="0.7" Grid.Column="1" Grid.Row="2">
+                <Image.Effect>
+                    <BlurEffect Radius="10"/>
+
+                </Image.Effect>
+            </Image>
+            <Image
+              Width="50"
+              Height="50"
+              Margin="42,10,10,46" 
+              Source="/Images/bubble.png" 
+              Stretch="Fill"
+              Opacity="0.7" Grid.Column="2">
+                <Image.Effect>
+                    <BlurEffect Radius="10"/>
+
+                </Image.Effect>
+            </Image>
         </Grid>
     </Border>
-
 </Window>

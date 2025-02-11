@@ -16,28 +16,13 @@ using System.Windows.Shapes;
 namespace GUI.Views
 {
     /// <summary>
-    /// Interaction logic for ThongKeForm.xaml
+    /// Interaction logic for ChiTietPhieuNhapForm.xaml
     /// </summary>
-    public partial class ThongKeSPTonKhoForm : UserControl
+    public partial class ChiTietPhieuNhapForm : UserControl
     {
-        public ThongKeSPTonKhoForm()
+        public ChiTietPhieuNhapForm()
         {
             InitializeComponent();
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void DataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void DataGrid_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
-        {
-                
         }
     }
 }

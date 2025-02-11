@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace BLL
 {
@@ -12,9 +13,81 @@ namespace BLL
     {
         private ChiTietPhieuNhapDAL ChiTietPhieuNhapDAL = new ChiTietPhieuNhapDAL();
 
-        public bool ThemCTPN(ChiTietPhieuNhapDTO chiTietPhieuNhapDTO)
+        public bool ThemDanhSachCTPN(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
         {
-            return ChiTietPhieuNhapDAL.ThemCTPN(chiTietPhieuNhapDTO);
+            using (TransactionScope transaction = new TransactionScope())
+            {
+                try
+                {
+                    foreach (ChiTietPhieuNhapDTO chiTiet in chiTietPhieuNhapDTOs)
+                    {
+                        chiTiet.MaCTPN = ChiTietPhieuNhapDAL.TaoMaCTPNMoi();
+                        bool result = ChiTietPhieuNhapDAL.ThemCTPN(chiTiet);
+                        if (!result) throw new Exception("Thất bại trong việc thêm mã CPTN" + chiTiet.MaCTPN);
+                    }
+
+                    transaction.Complete();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Thêm danh sách thất bại: " + ex.Message, ex);
+                }
+            }
+        }
+
+        public bool SuaDanhSachCTPN(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
+        {
+            using (TransactionScope transaction = new TransactionScope())
+            {
+                try
+                {
+                    foreach (ChiTietPhieuNhapDTO chiTiet in chiTietPhieuNhapDTOs)
+                    {
+                        bool result = ChiTietPhieuNhapDAL.SuaCTPN(chiTiet);
+                        if (!result) throw new Exception("Thất bại trong việc sửa mã CPTN" + chiTiet.MaCTPN);
+                    }
+
+                    transaction.Complete();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Sửa danh sách thất bại: " + ex.Message, ex);
+                }
+            }
+        }
+
+        public bool XoaDanhSachCTPN(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
+        {
+            using (TransactionScope transaction = new TransactionScope())
+            {
+                try
+                {
+                    foreach (ChiTietPhieuNhapDTO chiTiet in chiTietPhieuNhapDTOs)
+                    {
+                        bool result = ChiTietPhieuNhapDAL.XoaCTPN(chiTiet.MaCTPN);
+                        if (!result) throw new Exception("Thất bại trong việc xóa mã CPTN" + chiTiet.MaCTPN);
+                    }
+
+                    transaction.Complete();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Xóa danh sách thất bại: " + ex.Message, ex);
+                }
+            }
+        }
+
+        public List<ChiTietPhieuNhapDTO> HienThiDanhSachCTPN(string maPhieuNhap)
+        {
+            return ChiTietPhieuNhapDAL.HienThiDanhSachCTPN(maPhieuNhap);
+        }
+
+        public bool XoaTatCaChiTietCuaPhieuNhap(string maPhieuNhap)
+        {
+            return ChiTietPhieuNhapDAL.XoaTatCaChiTietCuaPhieuNhap(maPhieuNhap);
         }
 
         public decimal? TinhThanhTien(ChiTietPhieuNhapDTO chiTietPhieuNhapDTO)
@@ -25,6 +98,11 @@ namespace BLL
         public string? TaoMaCTPNMoi()
         {
             return ChiTietPhieuNhapDAL.TaoMaCTPNMoi();
+        }
+
+        public List<ChiTietPhieuNhapDTO> TimKiemCTPN(string info, string maPhieuNhap)
+        {
+            return ChiTietPhieuNhapDAL.TimKiemCTPN(info, maPhieuNhap);
         }
     }
 }

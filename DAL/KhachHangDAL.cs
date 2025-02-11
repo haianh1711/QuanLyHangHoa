@@ -13,7 +13,7 @@ namespace DAL
     {
         private DatabaseHelper dbHelper = new DatabaseHelper();
         // Lấy tất cả khách hàng từ cơ sở dữ liệu
-        public List<KhachHangDTO> GetAllKhachHang()
+        public List<KhachHangDTO> HienThiDanhSachKH()
         {
             List<KhachHangDTO> danhSachKhachHang = new List<KhachHangDTO>();
             string query = "SELECT MaKhachHang, TenKhachHang, SoDienThoai, Gmail FROM KhachHang";
@@ -62,66 +62,34 @@ namespace DAL
         }
 
         // Tìm kiếm khách hàng theo mã và tên
-        public List<KhachHangDTO> SearchKhachHang(string maKhachHang, string tenKhachHang)
+        public List<KhachHangDTO> TimKiem(string maKhachHang = "", string tenKhachHang = "")
         {
             List<KhachHangDTO> danhSachKhachHang = new List<KhachHangDTO>();
             string query = @"SELECT MaKhachHang, TenKhachHang, SoDienThoai, Gmail 
-                             FROM KhachHang 
-                             WHERE (@MaKhachHang = '' OR MaKhachHang LIKE '%' + @MaKhachHang + '%')
-                             AND (@TenKhachHang = '' OR TenKhachHang LIKE '%' + @TenKhachHang + '%')";
+                     FROM KhachHang 
+                     WHERE MaKhachHang LIKE '%' + @TuKhoa + '%' 
+                        OR TenKhachHang LIKE '%' + @TuKhoa + '%'";
 
             SqlParameter[] parameters =
             {
-                new SqlParameter("@MaKhachHang", maKhachHang),
-                new SqlParameter("@TenKhachHang", tenKhachHang)
-            };
+        new SqlParameter("@MaKhachHang", maKhachHang),
+        new SqlParameter("@TenKhachHang", tenKhachHang)
+    };
 
             DataTable dt = dbHelper.ExecuteQuery(query, parameters);
 
             foreach (DataRow row in dt.Rows)
             {
-                KhachHangDTO kh = new KhachHangDTO
+                danhSachKhachHang.Add(new KhachHangDTO
                 {
                     MaKhachHang = row["MaKhachHang"].ToString(),
                     TenKhachHang = row["TenKhachHang"].ToString(),
                     SoDienThoai = row["SoDienThoai"].ToString(),
                     Gmail = row["Gmail"].ToString()
-                };
-                danhSachKhachHang.Add(kh);
+                });
             }
 
             return danhSachKhachHang;
         }
-
-        // Lấy thông tin khách hàng theo mã
-        public KhachHangDTO? GetKhachHangById(string maKhachHang)
-        {
-            string query = @"SELECT MaKhachHang, TenKhachHang, SoDienThoai, Gmail 
-                             FROM KhachHang 
-                             WHERE MaKhachHang = @MaKhachHang";
-
-            SqlParameter[] parameters =
-            {
-                new SqlParameter("@MaKhachHang", maKhachHang)
-            };
-
-            DataTable dt = dbHelper.ExecuteQuery(query, parameters);
-
-            if (dt.Rows.Count > 0)
-            {
-                DataRow row = dt.Rows[0];
-                return new KhachHangDTO
-                {
-                    MaKhachHang = row["MaKhachHang"].ToString(),
-                    TenKhachHang = row["TenKhachHang"].ToString(),
-                    SoDienThoai = row["SoDienThoai"].ToString(),
-                    Gmail = row["Gmail"].ToString()
-                };
-            }
-
-            // Trường hợp không tìm thấy kết quả
-            return null;
-        }
     }
-   
 }

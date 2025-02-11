@@ -13,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GUI.Views
+namespace GUI.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for SanPhamForm.xaml
+    /// Interaction logic for ThongBao.xaml
     /// </summary>
-    public partial class SanPhamForm : UserControl
+    public partial class ThongBao : UserControl
     {
-        public SanPhamForm()
+        public ThongBao()
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }

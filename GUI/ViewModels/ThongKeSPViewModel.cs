@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 
 namespace GUI.ViewModels
 {
-    partial class ThongKeSPNhapViewModel : ObservableObject
+    partial class ThongKeSPViewModel : ObservableObject
     {
         private static ThongKeBLL thongKeBLL = new();
 
@@ -33,7 +33,7 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string thongTinNV;
 
-        public ThongKeSPNhapViewModel()
+        public ThongKeSPViewModel()
         {
             Data = new ObservableCollection<SanPhamDTO>(thongKeBLL.GetSanPhamThongKe());
 

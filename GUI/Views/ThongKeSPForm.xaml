@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GUI.Views.ThongKeSPTonKhoForm"
+﻿<UserControl x:Class="GUI.Views.ThongKeSPForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              Height="665" Width="678">
     <UserControl.DataContext>
-        <viewModels:ThongKeSPTonKhoViewModel />
+        <viewModels:ThongKeSPViewModel />
     </UserControl.DataContext>
 
     <!--Sản phẩm tồn kho-->
@@ -21,11 +21,39 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
-        <!-- Nút tìm kiếm -->
-        <ContentControl Grid.Row="0"
-                        Margin="0, 0, 0, 10"
-                        Style="{StaticResource SearchTextBox}"
-                        Tag="Nhập mã hoặc tên nhân viên..."></ContentControl>
+        <!-- filter & Nút tìm kiếm -->
+        <Grid Margin="0, 0, 0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Style="{StaticResource FilterComboBoxStyle}"  Margin="0, 0, 10, 0"
+                SelectedIndex="0">
+                <ComboBoxItem>Tuần</ComboBoxItem>
+                <ComboBoxItem>Tháng</ComboBoxItem>
+                <ComboBoxItem>Năm</ComboBoxItem>
+            </ComboBox>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0"
+                         Text="{Binding ThongTinTimKiem}" 
+                         Tag="Nhập mã hoặc tên hàng hóa..." 
+                         Style="{StaticResource SearchTextBox}" 
+                         HorizontalAlignment="Stretch"/>
+
+                <Button Grid.Column="1"
+                        Command="{Binding TimKiemCommand}" 
+                        Style="{StaticResource SearchButton}"/>
+            </Grid>
+
+        </Grid>
+
 
         <!-- Bảng chứa thông tin sản phẩm -->
         <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 
@@ -33,9 +61,8 @@
                   Margin="0, 0, 0, 10">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã SP" Binding="{Binding SanPhamID}" Width="*"  />
+                <DataGridTextColumn Header="Mã SP" Binding="{Binding MaSanPham}" Width="*"  />
                 <DataGridTextColumn Header="Tên SP" Binding="{Binding TenSanPham}"  Width="*" />
-                <DataGridTextColumn Header="Giá tiền" Binding="{Binding GiaNhap}"  Width="*" />
                 <DataGridTextColumn Header="Số lượng tồn" Binding="{Binding SoLuong}"  Width="*" />
                 <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}"  Width="*" />
             </DataGrid.Columns>
@@ -43,6 +70,7 @@
         
         <!--Biểu đồ cột ngang chứa số lượng tồn kho của từng sản phẩm-->
         <Border Margin="0, 0, 0, 10" Grid.Row="2" Style="{StaticResource SimpleBorderStyle}">
+           
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <lvc:CartesianChart
                     Series="{Binding Series}"

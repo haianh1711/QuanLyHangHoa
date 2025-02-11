@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:GUI"
              xmlns:views="clr-namespace:GUI.Views"
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
-             StartupUri="Views\DangNhapForm.xaml">
+             StartupUri="Views\ChiTietPhieuNhapForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,6 +14,8 @@
                 <ResourceDictionary Source="Styles/Button.xaml"/>
                 <ResourceDictionary Source="Styles/Background.xaml"/>
                 <ResourceDictionary Source="Styles/Image.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollViewer.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

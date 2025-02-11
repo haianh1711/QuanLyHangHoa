@@ -16,21 +16,19 @@ using System.Windows.Shapes;
 namespace GUI.Views
 {
     /// <summary>
-    /// Interaction logic for NhapSanPhamForm.xaml
+    /// Interaction logic for SanPhamForm.xaml
     /// </summary>
-    public partial class PhieuNhapForm : UserControl
+    public partial class HangHoaForm : UserControl
     {
-        public PhieuNhapForm()
+        public HangHoaForm()
         {
             InitializeComponent();
         }
 
-        private void dgPhieuNhap_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is DataGrid dataGrid && dataGrid.SelectedItem != null)
-            {
-                dataGrid.ScrollIntoView(dataGrid.SelectedItem);
-            }
+
         }
+
     }
 }
