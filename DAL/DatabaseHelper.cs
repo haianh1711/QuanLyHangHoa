@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DatabaseHelper
     {
-        private string connectionString = "Data Source=.;Initial Catalog=QlBanHang;Integrated Security=True;Trust Server Certificate=True;";
+        private string connectionString = "Data Source=.;Initial Catalog=QlHangHoa;Integrated Security=True;Trust Server Certificate=True;";
 
         public SqlConnection GetSqlConnection()     
         {
