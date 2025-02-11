@@ -67,8 +67,8 @@ namespace DAL
             List<KhachHangDTO> danhSachKhachHang = new List<KhachHangDTO>();
             string query = @"SELECT MaKhachHang, TenKhachHang, SoDienThoai, Gmail 
                      FROM KhachHang 
-                     WHERE (@MaKhachHang = '' OR MaKhachHang LIKE '%' + @MaKhachHang + '%')
-                     AND (@TenKhachHang = '' OR TenKhachHang LIKE '%' + @TenKhachHang + '%')";
+                     WHERE MaKhachHang LIKE '%' + @TuKhoa + '%' 
+                        OR TenKhachHang LIKE '%' + @TuKhoa + '%'";
 
             SqlParameter[] parameters =
             {

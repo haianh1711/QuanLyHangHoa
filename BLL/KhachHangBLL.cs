@@ -33,9 +33,9 @@ namespace BLL
 
             return khachHangDAL.XoaKhachHang(maKhachHang);
         }
-        public List<KhachHangDTO> TimKiem(string maKhachHang, string tenKhachHang)
+        public List<KhachHangDTO> TimKiem(string tuKhoa)
         {
-            return khachHangDAL.TimKiem(maKhachHang, tenKhachHang);
+            return khachHangDAL.TimKiem(tuKhoa);
         }
         public KhachHangBLL()
         {
