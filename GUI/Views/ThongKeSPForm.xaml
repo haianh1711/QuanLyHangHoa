@@ -1,39 +1,37 @@
-﻿<UserControl x:Class="GUI.Views.ThongKeSPNhapForm"
+﻿<UserControl x:Class="GUI.Views.ThongKeSPForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GUI.Views"
+             xmlns:local="clr-namespace:GUI.Views" 
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
              Height="665" Width="678">
     <UserControl.DataContext>
-        <viewModels:ThongKeSPNhapViewModel/>
+        <viewModels:ThongKeSPViewModel />
     </UserControl.DataContext>
+
+    <!--Sản phẩm tồn kho-->
     <Grid>
-        <!--Sản phẩm tồn kho-->
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="70"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-
+        
         <!-- Nút tìm kiếm -->
         <ContentControl Grid.Row="0"
-            Margin="0, 0, 0, 10"
-            Style="{StaticResource SearchTextBox}"
-            Tag="Nhập mã hoặc tên sản phẩm..."></ContentControl>
-
-        <!--Tên nhân viên-->
-        <TextBlock Grid.Row="1" FontSize="32" VerticalAlignment="Center" Text="{Binding ThongTinNV}"/>
+                        Margin="0, 0, 0, 10"
+                        Style="{StaticResource SearchTextBox}"
+                        Tag="Nhập mã hoặc tên nhân viên..."></ContentControl>
 
         <!-- Bảng chứa thông tin sản phẩm -->
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Data}" 
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 
                   Style="{StaticResource DataGridStyle}"
                   Margin="0, 0, 0, 10">
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Mã SP" Binding="{Binding MaSanPham}" Width="*"  />
                 <DataGridTextColumn Header="Tên SP" Binding="{Binding TenSanPham}"  Width="*" />
@@ -41,23 +39,23 @@
                 <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}"  Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-
+        
         <!--Biểu đồ cột ngang chứa số lượng tồn kho của từng sản phẩm-->
-        <Border Margin="0, 0, 0, 10" Grid.Row="3"
-                Style="{StaticResource SimpleBorderStyle}">
+        <Border Margin="0, 0, 0, 10" Grid.Row="2" Style="{StaticResource SimpleBorderStyle}">
+           
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <lvc:CartesianChart
-                Series="{Binding Series}"
-                YAxes="{Binding YAxes}" 
-                XAxes="{Binding XAxes}" 
-                Height="{Binding ChartHeight}" FontSize="9"/>
+                    Series="{Binding Series}"
+                    YAxes="{Binding YAxes}" 
+                    Height="{Binding ChartHeight}" FontSize="9"/>
+                            <!-- Đặt chiều cao cố định lớn hơn khung hiển thị -->
             </ScrollViewer>
         </Border>
 
-        <!--Biểu đồ line thể hiện tổng số lượng tồn kho theo từng tháng-->
-        <Border Grid.Row="4" 
-                Style="{StaticResource SimpleBorderStyle}">
+        <Border Grid.Row="3" Style="{StaticResource SimpleBorderStyle}">
             <lvc:CartesianChart Series="{Binding SeriesLine}"/>
         </Border>
+
     </Grid>
 </UserControl>
+

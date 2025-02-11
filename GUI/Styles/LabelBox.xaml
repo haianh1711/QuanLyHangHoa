@@ -3,25 +3,49 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!--Biến-->
     <sys:Double x:Key="DefaultFonsize">14</sys:Double>
-    
+
     <!--Label-->
     <Style TargetType="Label" x:Key="SimpleLabelStyle">
         <Setter Property="FontSize" Value="{StaticResource DefaultFonsize}" />
         <Setter Property="Foreground" Value="#333333" />
     </Style>
-    
+
     <!--Textbox-->
     <Style TargetType="TextBox" x:Key="SimpleTextBoxStyle">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border CornerRadius="7" Background="#FFFFFF" Height="35">
+                    <Border CornerRadius="7" Background="#FFFFFF" Height="35"
+                            >
                         <TextBox Background="Transparent" 
                                  Padding="10, 0, 0, 0"
                                  FontSize="{StaticResource DefaultFonsize}"
                                  VerticalAlignment="Center"
                                  BorderThickness="0">
+                            <TextBox.Text>
+                                <Binding Path="Text" RelativeSource="{RelativeSource TemplatedParent}" />
+                            </TextBox.Text>
+                        </TextBox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Textbox readonly-->
+    <Style TargetType="TextBox" x:Key="ReadOnlyTextBoxStyle">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border CornerRadius="7" Background="#fafafa" Height="35" 
+                            >
+                        <TextBox Foreground="#8c909c" Background="Transparent" 
+                             Padding="10, 0, 0, 0"
+                             FontSize="{StaticResource DefaultFonsize}"
+                             VerticalAlignment="Center"
+                             BorderThickness="0">
                             <TextBox.Text>
                                 <Binding Path="Text" RelativeSource="{RelativeSource TemplatedParent}" />
                             </TextBox.Text>
@@ -44,7 +68,7 @@
                         <Border x:Name="BackgroundBorder" 
                             CornerRadius="7" 
                             Background="#fff" 
-                            BorderThickness="0">
+                            >
 
                             <!-- Hiển thị nội dung được chọn -->
                             <ContentPresenter VerticalAlignment="Center" 

@@ -24,7 +24,6 @@
     <None Remove="Images\power %281%29.png" />
     <None Remove="Views\UserControls\BTran.jpg" />
     <None Remove="Views\UserControls\power %281%29.png" />
-    <None Remove="Views\UserControls\Trân.jpg" />
     <None Remove="Views\UserControls\Ảnh.png" />
     <None Remove="Views\ustock-removebg-preview.png" />
   </ItemGroup>
@@ -40,8 +39,6 @@
     </Resource>
     <Resource Include="Images\power (1).png" />
     <Resource Include="Views\UserControls\BTran.jpg" />
-    <Resource Include="Views\UserControls\Trân.jpg" />
-    <Resource Include="Views\UserControls\ustock-removebg-preview.png" />
     <Resource Include="Views\UserControls\Ảnh.png" />
     <Resource Include="Views\ustock-removebg-preview.png" />
   </ItemGroup>
