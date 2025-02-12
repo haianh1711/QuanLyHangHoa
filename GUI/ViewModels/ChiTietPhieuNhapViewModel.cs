@@ -87,7 +87,6 @@ namespace GUI.ViewModels
             }
         }
 
-
         partial void OnSelectedSanPhamChanged(HangHoaDTO? value)
         {
             if (value != null && TempChiTiet != null)
@@ -109,9 +108,7 @@ namespace GUI.ViewModels
                 ThongTinTimKiem = ThongTinTimKiem ?? "";
                 PhieuNhap.MaPhieuNhap = PhieuNhap.MaPhieuNhap ?? "";
                 ChiTietPhieuNhaps = new ObservableCollection<ChiTietPhieuNhapDTO>(chiTietPhieuNhapBLL.TimKiemCTPN(ThongTinTimKiem, PhieuNhap.MaPhieuNhap));
-
             }
-
         }
 
         [RelayCommand]

@@ -61,6 +61,11 @@ namespace BLL
             }
         }
 
+        public List<ChiTietPhieuNhapDTO> LayDanhSachCTPNTheoMaHH(string maHh)
+        {
+            return ChiTietPhieuNhapDAL.LayDanhSachCTPNTheoMaHH(maHh);
+        }
+
         public bool XoaDanhSachCTPN(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
         {
             using (TransactionScope transaction = new TransactionScope())
