@@ -113,10 +113,9 @@ namespace DAL
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
                         MaHang = row["MaHang"].ToString(),
                         TenHang = row["TenHang"].ToString(),
-                        GiaNhap = (decimal)row["GiaNhap"],
                         SoLuongNhap = (int)row["SoLuongNhap"],
-                        ThanhTien = (decimal)row["ThanhTien"]
-
+                        GiaNhap = Convert.ToDecimal(row["GiaNhap"]),
+                        ThanhTien = Convert.ToDecimal(row["ThanhTien"])
                     };
                     list.Add(thongke);
                 }

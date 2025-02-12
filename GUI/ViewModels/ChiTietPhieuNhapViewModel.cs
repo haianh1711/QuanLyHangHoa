@@ -127,7 +127,7 @@ namespace GUI.ViewModels
                     TenHang = TempChiTiet.TenHang,
                     GiaNhap = TempChiTiet.GiaNhap,
                     SoLuongNhap = TempChiTiet.SoLuongNhap,
-                    ThanhTien = TempChiTiet.GiaNhap * TempChiTiet.SoLuongNhap
+                    ThanhTien = chiTietPhieuNhapBLL.TinhThanhTien(TempChiTiet)
                 };
 
                 ChiTietPhieuNhaps.Add(chiTietMoi);
