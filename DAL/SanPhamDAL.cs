@@ -93,13 +93,14 @@ namespace DAL
                 throw new Exception("Lỗi khi thêm sản phẩm: " + ex.Message);
             }
         }
-        public List<SanPhamDTO> TimSanPham(string masanpham)
+        public List<SanPhamDTO> TimSanPham(string tukhoa)
         {
             List<SanPhamDTO> sanPhamDTOs = new List<SanPhamDTO>();
-            string query = "SELECT MaHang, TenHang, SoLuong, HinhAnh, Mota FROM HangHoa WHERE MaHang LIKE @maSanPham";
-            SqlParameter[] parameters = {
-    new SqlParameter("@maSanPham", $"%{masanpham}%")
-};
+            string query = "SELECT MaHang, TenHang, SoLuong, HinhAnh, Mota FROM HangHoa WHERE MaHang LIKE @tukhoa or TenHang LIKE @tukhoa";
+            SqlParameter[] parameters = 
+                {
+            new SqlParameter("@tukhoa", $"%{tukhoa}%")
+                };
             try
             {
                 var dataTable = dbHelper.ExecuteQuery(query,parameters);
@@ -162,6 +163,43 @@ namespace DAL
                     throw new Exception("Lỗi khi xóa sản phẩm: " + ex.Message);
                 }
         }
+        public int LaySoLuongSanPham(string maSanPham)
+        {
+            string query = $"GET SoLuong WHERE MaSanPham = @MaSanPham";
+            SqlParameter[] parameters =
+                [
+                    new SqlParameter("@MaPhieuNhap",maSanPham),
+                ];
+            try
+            {
+                int soLuong = (int)dbHelper.ExecuteScalar(query);
+                return soLuong;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy số lượng sản phẩm: " + ex.Message);
+            }
+        }
 
+        public bool CapNhatSoLuongSanPham(string maSanPham, int soLuongCapNhap)
+        {
+            string query = "UPDATE SanPham SET SoLuong = @SoLuong WHERE MaSanPham = @MaSanPham";
+
+            SqlParameter[] parameters =
+            [
+                    new SqlParameter("@SoLuong", soLuongCapNhap),
+                    new SqlParameter("@MaSanPham", maSanPham),
+            ];
+
+            try
+            {
+                int rowsAffected = dbHelper.ExecuteNonQuery(query, parameters);
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy số lượng sản phẩm: " + ex.ToString(), ex);
+            }
+        }
     }
 }

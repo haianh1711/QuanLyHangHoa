@@ -9,150 +9,85 @@
 
     <Grid>
         <Border 
-               Width="640"
-               Height="300"
-               CornerRadius="10"
-               Background="#A7BFFC">
+             Grid.Row="2"
+            Style="{StaticResource SimpleBorderStyle}" 
+             Padding="20">
             <Grid>
-                <TextBox Width="160"
-                         Height="30" Margin="89,92,405,178"/>
-                <TextBlock Text="Mã nhân viên" 
-                                   FontSize="15" 
-                                   Margin="89,69,415,211"/>
-                <TextBox Width="150"
-                         Height="30" Margin="255,92,235,178"/>
-                <TextBlock Text="Tên nhân viên" 
-                                   FontSize="15" 
-                                   Margin="260,69,3,211"/>
-                <TextBox Width="316"
-            Height="30" Margin="14,15,160,0"/>
-                <TextBlock Text="Gmail" 
-                      FontSize="15" 
-                      Margin="89,122,471,162"/>
-                <TextBox Width="160"
-             Height="30" Margin="89,200,405,70"/>
-                <TextBlock Text="Ngày bắt đầu" 
-                       FontSize="15" 
-                       Margin="89,178,415,103"/>
-                <TextBox Width="150"
-             Height="30" Margin="255,200,235,70"/>
-                <TextBlock Text="Chức vụ" 
-                       FontSize="15" 
-                       Margin="260,179,300,102"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1.5*"/>
+                    </Grid.RowDefinitions>
 
-                <StackPanel Height="130"
-                            Width="110"
-                            Margin="500,0,0,150">
-                    <Image x:Name="ImagePreview" Height="100" Width="100" Stretch="Uniform" />
-                    <Button 
-                      BorderBrush="Transparent"
-                      FontFamily="Segoe MDL2 Assets" 
-                      Content="&#xE722;" 
-                      FontSize="26" 
-                      Foreground="#FFF" 
-                      Background="Transparent"
-                      HorizontalAlignment="Left" 
-                      VerticalAlignment="Top" 
-                      Margin="80,0,0,0" Click="Anh_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <!-- Tắt mọi trạng thái mặc định -->
-                                <Setter Property="OverridesDefaultStyle" Value="True" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}"
-                      BorderBrush="{TemplateBinding BorderBrush}"
-                      BorderThickness="{TemplateBinding BorderThickness}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </StackPanel>
-                <TextBlock Text="Ảnh nhân viên" 
-                       FontSize="12" 
-                       Margin="543,145,6,139"/>
-                <Button Width="100"
-                        Height="30"
-                        Margin="550,100,0,0"
-                        Background="#DFEBF8" 
-                        Content="Sửa"
-                        Foreground="Red"
-                        FontSize="15" Click="Sua_Click">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <!-- Tắt mọi trạng thái mặc định -->
-                            <Setter Property="OverridesDefaultStyle" Value="True"  />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-BorderBrush="{TemplateBinding BorderBrush}"
-BorderThickness="{TemplateBinding BorderThickness}"
-                                                    CornerRadius="15,0,0,15">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button Width="100"
-                        Height="30"
-                        Margin="550,170,0,0"
-                        Background="#DFEBF8" 
-                        Content="Xoá"
-                        Foreground="Red"
-                        FontSize="15" Click="Xoa_Click">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <!-- Tắt mọi trạng thái mặc định -->
-                            <Setter Property="OverridesDefaultStyle" Value="True"  />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-BorderBrush="{TemplateBinding BorderBrush}"
-BorderThickness="{TemplateBinding BorderThickness}"
-                                                CornerRadius="15,0,0,15">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button Width="100"
-                        Height="30"
-                        Margin="550,240,0,0"
-                        Background="#DFEBF8" 
-                        Content="Gửi mail"
-                        Foreground="Red"
-                        FontSize="15" Click="GuiMail_Click">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <!-- Tắt mọi trạng thái mặc định -->
-                            <Setter Property="OverridesDefaultStyle" Value="True"  />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-BorderBrush="{TemplateBinding BorderBrush}"
-BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15,0,0,15">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
+
+                    <!--TextBox hàng đầu-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã nhân viên" />
+                        <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding MaNhanVien, Mode=TwoWay}"/>
+                    </Grid>
+
+                    <!--TextBox hàng hai-->
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Tên nhân viên" />
+                        <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TenNhanVien, Mode=TwoWay}"/>
+                    </Grid>
+                    <!--TextBox hàng ba-->
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="3" Style="{StaticResource SimpleLabelStyle}" Content="Ngày bắt đầu" />
+                        <TextBox Grid.Row="3" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding NgayBatDau, Mode=TwoWay}"/>
+                        <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Chức vụ" />
+                        <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding ChucVu, Mode=TwoWay}"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="2" HorizontalAlignment="Right">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Image  Style="{StaticResource ImageDefault}"/>
+
+
+                    <!--Nút-->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                        <Button Content="Thêm" Style="{StaticResource SimpleRoundedButton}"/>
+                        <Button Content="Sửa" Style="{StaticResource SimpleRoundedButton}"/>
+                        <Button Content="Xóa" Style="{StaticResource SimpleRoundedButton}"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Border>
     </Grid>
