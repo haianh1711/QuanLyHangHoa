@@ -40,6 +40,10 @@
                 <views:PhieuNhapForm/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:PhieuXuatViewModel}">
+                <views:PhieuNhapForm/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModels:ThongKeSPNhapViewModel}">
                 <views:ThongKeNhapSPForm/>
             </DataTemplate>
