@@ -36,8 +36,6 @@ namespace GUI.ViewModels
 
         }
 
-
-
         [ObservableProperty]
         public object view;
 

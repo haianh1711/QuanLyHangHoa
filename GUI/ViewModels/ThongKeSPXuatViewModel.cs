@@ -2,6 +2,8 @@
 using BLL;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DTO;
+using GUI.ViewModels.UserControls;
+using GUI.Views.UserControls;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel;
@@ -21,6 +23,9 @@ namespace GUI.ViewModels
     {
 
         [ObservableProperty]
+        ThongBaoViewModel thongBaoVM = new();
+
+        [ObservableProperty]
         public ObservableCollection<string> danhSachLoc = [ "Tuần", "Tháng", "Năm" ];
 
         [ObservableProperty]
@@ -28,7 +33,7 @@ namespace GUI.ViewModels
 
         [ObservableProperty]
         private string hienThiLuaChonLoc;
-
+        [ObservableProperty]
         private static ThongKeBLL thongKeBLL = new();
 
         private const int barHeight = 40;
@@ -71,7 +76,10 @@ namespace GUI.ViewModels
             List<PhieuNhapDTO> phieuNhapDTOs = new();
             string[] dsTenSanPham = phieuNhapDTOs.Select(phieunhap => phieunhap.MaHang ?? string.Empty).ToArray();
             double[]  dsSoLuongNhap = phieuNhapDTOs.Select(phieunhap => (double?)phieunhap.SoLuongNhap ?? 0).ToArray();
-
+            if (dsSoLuongNhap.Length == 0)
+            {
+                return;
+            }
             double maxSoLuongNhap = dsSoLuongNhap.Max();
             double[] dsSoLuongNhapMax = dsSoLuongNhap.Select(phieunhap => maxSoLuongNhap).ToArray();
 

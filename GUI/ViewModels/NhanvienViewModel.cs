@@ -16,14 +16,7 @@ namespace GUI.ViewModels
         private ObservableCollection<NhanVienDTO> data;
         public NhanvienViewModel()
         {
-            //data = new ObservableCollection<NhanVienDTO>
-            //{
-            //    new NhanVienDTO("NV001", "Nguyễn Văn A", "01/01/2021", "Nhân viên", ""),
-            //    new NhanVienDTO("NV002", "Trần Thị B", "01/01/2021", "Nhân viên", ""),
-            //    new NhanVienDTO("NV003", "Lê Văn C", "01/01/2021", "Nhân viên", ""),
-            //    new NhanVienDTO("NV004", "Nguyễn Thị D", "01/01/2021", "Nhân viên", ""),
-            //    new NhanVienDTO("NV005", "Trần Văn E", "01/01/2021", "Nhân viên", "")
-            //};
+            
         }
     }
 }

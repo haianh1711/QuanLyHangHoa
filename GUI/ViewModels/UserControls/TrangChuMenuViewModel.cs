@@ -40,7 +40,7 @@ namespace GUI.ViewModels.UserControls
         [RelayCommand]
         private void ChonGiaoDien()
         {
-            MainViewModel.View = new ChonGiaoDichViewModel();
+            MainViewModel.View = new ChonGiaoDichViewModel(MainViewModel);
         }
 
         [RelayCommand]
@@ -69,7 +69,7 @@ namespace GUI.ViewModels.UserControls
             }
             catch (Exception ex)
             {
-                await MainViewModel.ThongBaoVM.MessageBox.OK(ex.Message);
+                await MainViewModel.ThongBaoVM.MessageOK(ex.Message);
 
             }
         }

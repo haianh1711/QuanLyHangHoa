@@ -2,6 +2,7 @@
 using BLL;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DTO;
+using GUI.ViewModels.UserControls;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel;
@@ -25,6 +26,8 @@ namespace GUI.ViewModels
 
     partial class ThongKeSPNhapViewModel : ObservableObject
     {
+        [ObservableProperty]
+        ThongBaoViewModel thongBaoVM = new();
 
         [ObservableProperty]
         public ObservableCollection<string> danhSachLoc = [ "Tuần", "Tháng", "Năm" ];
@@ -69,7 +72,7 @@ namespace GUI.ViewModels
         {
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
             luaChonLoc = "Tuần";
-            //LoadBarChartSeries();
+            LoadBarChartSeries();
         }
 
         private void LoadBarChartSeries()
@@ -78,6 +81,10 @@ namespace GUI.ViewModels
             string[] dsTenSanPham = phieuNhapDTOs.Select(phieunhap => phieunhap.MaHang ?? string.Empty).ToArray();
             double[]  dsSoLuongNhap = phieuNhapDTOs.Select(phieunhap => (double?)phieunhap.SoLuongNhap ?? 0).ToArray();
 
+            if(dsSoLuongNhap.Length == 0)
+            {
+                return;
+            }
             double maxSoLuongNhap = dsSoLuongNhap.Max();
             double[] dsSoLuongNhapMax = dsSoLuongNhap.Select(phieunhap => maxSoLuongNhap).ToArray();
 

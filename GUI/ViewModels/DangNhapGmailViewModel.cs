@@ -40,9 +40,9 @@ namespace GUI.ViewModels
         [RelayCommand]
         public async Task loginGmail()
         {
-            if (selectTaiKhoan != null)
+            if (SelectTaiKhoan != null)
             {
-                TaiKhoanDTO taikhoanHopLe = await dangNhapBLL.DangNhapGmail();
+                TaiKhoanDTO? taikhoanHopLe = await dangNhapBLL.DangNhapGmail();
 
                 if (taikhoanHopLe != null)
                 {

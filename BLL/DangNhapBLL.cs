@@ -40,7 +40,8 @@ namespace BLL
                     clientSecrets,
                     Scopes,
                     "user",
-                    CancellationToken.None
+                    CancellationToken.None,
+                    new FileDataStore("GoogleOAuthToken", true)
                 );
 
                 var service = new GmailService(new BaseClientService.Initializer()

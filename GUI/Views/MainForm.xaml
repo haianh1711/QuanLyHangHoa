@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         xmlns:MainMenuC="clr-namespace:GUI.Views.UserControls"
+         xmlns:userControl="clr-namespace:GUI.Views.UserControls"
         xmlns:local="clr-namespace:GUI.Views" 
          xmlns:viewModels="clr-namespace:GUI.ViewModels"
         mc:Ignorable="d"
@@ -14,9 +14,9 @@
          Background="Transparent"
          AllowsTransparency="True"
          WindowStartupLocation="CenterScreen">
-    <!--<Window.DataContext>
+    <Window.DataContext>
         <viewModels:MainViewModel/>
-    </Window.DataContext>-->
+    </Window.DataContext>
     <Grid>
         <Border  Background="#DFEBF8" Padding="10,20" CornerRadius="15" BorderBrush="Transparent">
             <Grid>
@@ -29,7 +29,7 @@
 
             </Grid>
         </Border>
-        <!--<userControl:ThongBao DataContext="{Binding ThongBaoVM}"/>-->
+        <userControl:ThongBao DataContext="{Binding ThongBaoVM}"/>
 
     </Grid>
 </Window>

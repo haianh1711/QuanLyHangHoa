@@ -32,9 +32,6 @@ namespace BLL
                 smtpClient.Send(mailMessage);
                 Console.WriteLine("Email đã gửi thành công!");
                 return true;
-            
         }
-
-
     }
 }
