@@ -5,7 +5,7 @@
              xmlns:views="clr-namespace:GUI.Views"
              xmlns:viewModels="clr-namespace:GUI.ViewModels" 
              xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
-             StartupUri="Views\ChiTietPhieuForm.xaml">
+             StartupUri="Views\MainForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
