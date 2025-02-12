@@ -44,7 +44,7 @@
         </DataGrid>
 
         <!--Ô nhập dữ liệu-->
-        <Border Grid.Row="2" 
+        <Border Grid.Row="2"    
                 Style="{StaticResource SimpleBorderStyle}" 
                 Padding="20">
             <Grid>

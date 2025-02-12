@@ -29,13 +29,18 @@ namespace GUI.ViewModels
         [ObservableProperty]
         public ObservableCollection<string> danhSachLoc = [ "Tuần", "Tháng", "Năm" ];
 
+        [ObservableProperty]
+        private string luaChonLoc;
+
+        [ObservableProperty]
+        private string hienThiLuaChonLoc;
+
         private static ThongKeBLL thongKeBLL = new();
 
         private const int barHeight = 40;
         private const int barSpacing = 5;
 
         
-
         // biểu đồ cột
         [ObservableProperty]
         private ISeries[] barChartSeries;
@@ -63,9 +68,8 @@ namespace GUI.ViewModels
         public ThongKeSPViewModel()
         {
             Data = new ObservableCollection<SanPhamDTO>(thongKeBLL.GetSanPhamThongKe());
-
+            luaChonLoc = "Tuần";
             LoadBarChartSeries();
-            LoadLineChartSeries();
         }
 
         private void LoadBarChartSeries()
@@ -114,11 +118,10 @@ namespace GUI.ViewModels
         }
 
 
-        private void LoadLineChartSeries()
+        private void LoadLineChartSeries(List<ThongKePhieuNhapDTO> thongKePhieus)
         {
-            List<ThongKePhieuNhapDTO> thongKePhieus = thongKeBLL.GetThongKePhieuNhapHangTuanData();
             DataPoint[] dataPoints = thongKePhieus.Select(tk => new DataPoint() {
-                Value = (double)(tk.TongSoLuongNhap ?? 0),
+                Value = tk.TongSoLuongNhap ?? 0,
                 Label = tk.ThangNam ?? ""
             } ).ToArray();
             string[] dsThoiGian = thongKePhieus.Select(tk => tk.ThangNam ?? "").ToArray();
@@ -154,6 +157,31 @@ namespace GUI.ViewModels
             double value = point.Model.Value;  // Lấy giá trị Y
 
             MessageBox.Show($"Label: {label}\nValue: {value}");
+        }
+
+        partial void OnLuaChonLocChanged(string value)
+        {
+            List<ThongKePhieuNhapDTO> thongKePhieus = new();
+            switch (value)
+            {
+                case "Tuần":
+                    thongKePhieus = thongKeBLL.GetThongKePhieuNhapHangTuanData();
+
+                    break;
+                case "Tháng":
+                    thongKePhieus = thongKeBLL.GetThongKePhieuNhapHangThangData();
+
+                    break;
+                case "Năm":
+                    thongKePhieus = thongKeBLL.GetThongKePhieuNhapHangNamData();
+
+                    break;
+                default:
+                    LuaChonLoc = "Tuần";
+                    break;
+            }
+            HienThiLuaChonLoc = "Lọc theo " + LuaChonLoc;
+            LoadLineChartSeries(thongKePhieus);
         }
 
         private void UpdateChartHeight()
