@@ -20,7 +20,7 @@ namespace DAL
         {
             List<HangHoaDTO> thongKeList = new List<HangHoaDTO>();
 
-            string query = "Select MaHang, TenHangHoa, SoLuong, MoTa from HangHoa";
+            string query = "Select MaHang, TenHang, SoLuong, MoTa from HangHoa";
 
             try
             {
@@ -31,7 +31,7 @@ namespace DAL
                     HangHoaDTO thongke = new HangHoaDTO
                     {
                         MaHang = row["MaHang"].ToString(),
-                        TenHangHoa = row["TenHangHoa"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
                         SoLuong = Convert.ToInt32(row["SoLuong"]),
                         MoTa = row["MoTa"].ToString()
                     };
@@ -52,7 +52,7 @@ namespace DAL
             {
                 new SqlParameter("@Info", Info)
             };
-            string query = @"Select top 1 sp.MaHang, sp.TenHangHoa, pn.SoLuong, sp.MoTa 
+            string query = @"Select top 1 sp.MaHang, sp.TenHang, pn.SoLuong, sp.MoTa 
                              From PhieuNhap pn inner join HangHoa sp 
                              On pn.MaHang = sp.MaHang
                              inner join NhanVien nv
@@ -67,7 +67,7 @@ namespace DAL
                     HangHoaDTO thongKeNhap = new HangHoaDTO
                     {
                         MaHang = row["MaHang"].ToString(),
-                        TenHangHoa = row["TenHangHoa"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
                         SoLuong = Convert.ToInt32(row["SoLuong"]),
                         MoTa = row["MoTa"].ToString()
                     };
