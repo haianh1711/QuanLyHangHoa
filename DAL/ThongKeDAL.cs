@@ -20,7 +20,7 @@ namespace DAL
         {
             List<SanPhamDTO> thongKeList = new List<SanPhamDTO>();
 
-            string query = "Select MaSanPham, TenSanPham, SoLuong, MoTa from SanPham";
+            string query = "Select MaHangHoa, TenHangHoa, SoLuong, MoTa from SanPham";
 
             try
             {
@@ -30,8 +30,8 @@ namespace DAL
                 {
                     SanPhamDTO thongke = new SanPhamDTO
                     {
-                        MaSanPham = row["MaSanPham"].ToString(),
-                        TenSanPham = row["TenSanPham"].ToString(),
+                        MaHangHoa = row["MaHangHoa"].ToString(),
+                        TenHangHoa = row["TenHangHoa"].ToString(),
                         SoLuong = Convert.ToInt32(row["SoLuong"]),
                         MoTa = row["MoTa"].ToString()
                     };
@@ -52,9 +52,9 @@ namespace DAL
             {
                 new SqlParameter("@Info", Info)
             };
-            string query = @"Select top 1 sp.MaSanPham, sp.TenSanPham, pn.SoLuong, sp.MoTa 
+            string query = @"Select top 1 sp.MaHangHoa, sp.TenHangHoa, pn.SoLuong, sp.MoTa 
                              From PhieuNhap pn inner join SanPham sp 
-                             On pn.MaSanPham = sp.MaSanPham
+                             On pn.MaHangHoa = sp.MaHangHoa
                              inner join NhanVien nv
                              On pn.MaNhanVien = nv.MaNhanVien
                              Where pn.MaNhanVien = @Info
@@ -66,8 +66,8 @@ namespace DAL
                 {
                     SanPhamDTO thongKeNhap = new SanPhamDTO
                     {
-                        MaSanPham = row["MaSanPham"].ToString(),
-                        TenSanPham = row["TenSanPham"].ToString(),
+                        MaHangHoa = row["MaHangHoa"].ToString(),
+                        TenHangHoa = row["TenHangHoa"].ToString(),
                         SoLuong = Convert.ToInt32(row["SoLuong"]),
                         MoTa = row["MoTa"].ToString()
                     };
@@ -110,8 +110,8 @@ namespace DAL
         public List<PhieuNhapDTO> GetThongKePhieuNhapSanPhamData()
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
-            string query = @"Select MaSanPham, Sum(SoLuongNhap) AS TongSoLuongNhap from ChiTietPhieuNhap
-                             Group By MaSanPham";
+            string query = @"Select MaHangHoa, Sum(SoLuongNhap) AS TongSoLuongNhap from ChiTietPhieuNhap
+                             Group By MaHangHoa";
             try
             {
                 var reader = dbHelper.ExecuteReader(query);
@@ -119,7 +119,7 @@ namespace DAL
                 {
                     data.Add(new PhieuNhapDTO
                     {
-                        MaSanPham = reader["MaSanPham"].ToString(),
+                        MaHangHoa = reader["MaHangHoa"].ToString(),
                         SoLuongNhap = Convert.ToInt32(reader["TongSoLuongNhap"])
                     });
                 }
@@ -133,8 +133,8 @@ namespace DAL
         public List<PhieuXuatDTO> GetThongKePhieuXuatSanPhamData()
         {
             List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
-            string query = @"Select MaSanPham, Sum(SoLuongXuat) AS TongSoLuongXuat from ChiTietPhieuXuat
-                             Group By MaSanPham";
+            string query = @"Select MaHangHoa, Sum(SoLuongXuat) AS TongSoLuongXuat from ChiTietPhieuXuat
+                             Group By MaHangHoa";
             try
             {
                 var reader = dbHelper.ExecuteReader(query);
@@ -142,7 +142,7 @@ namespace DAL
                 {
                     data.Add(new PhieuXuatDTO
                     {
-                        MaSanPham = reader["MaSanPham"].ToString(),
+                        MaHangHoa = reader["MaHangHoa"].ToString(),
                         SoLuongXuat = Convert.ToInt32(reader["TongSoLuongXuat"])
                     });
                 }

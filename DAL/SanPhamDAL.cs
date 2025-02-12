@@ -17,7 +17,7 @@ namespace DAL
         {
             List<SanPhamDTO> sanPhamDTOs = new List<SanPhamDTO>();
 
-            string query = "Select MaSanPham, TenSanPham from SanPham";
+            string query = "Select MaHangHoa, TenHangHoa from SanPham";
 
             try
             {
@@ -27,8 +27,8 @@ namespace DAL
                 {
                     SanPhamDTO sanPham = new SanPhamDTO
                     {
-                        MaSanPham = row["MaSanPham"].ToString(),
-                        TenSanPham = row["TenSanPham"].ToString(),
+                        MaHangHoa = row["MaHangHoa"].ToString(),
+                        TenHangHoa = row["TenHangHoa"].ToString(),
                     };
                     sanPhamDTOs.Add(sanPham);
                 }
@@ -46,7 +46,7 @@ namespace DAL
         {
             List<SanPhamDTO> sanPhamDTOs = new List<SanPhamDTO>();
 
-            string query = "Select MaSanPham, TenSanPham from SanPham";
+            string query = "Select MaHangHoa, TenHangHoa from SanPham";
 
             try
             {
@@ -56,8 +56,8 @@ namespace DAL
                 {
                     SanPhamDTO sanPham = new SanPhamDTO
                     {
-                        MaSanPham = row["MaSanPham"].ToString(),
-                        TenSanPham = row["TenSanPham"].ToString(),
+                        MaHangHoa = row["MaHangHoa"].ToString(),
+                        TenHangHoa = row["TenHangHoa"].ToString(),
                     };
                     sanPhamDTOs.Add(sanPham);
                 }
@@ -73,13 +73,13 @@ namespace DAL
 
         public bool ThemSanPham(SanPhamDTO sanPham)
         {
-            string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaSanPham, @TenSanPham, @SoLuong, @MoTa, @HinhAnh)";
+            string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaHangHoa, @TenHangHoa, @SoLuong, @MoTa, @HinhAnh)";
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
             {
-            new SqlParameter("@MaSanPham", sanPham.MaSanPham),
-            new SqlParameter("@TenSanPham", sanPham.TenSanPham),
+            new SqlParameter("@MaHangHoa", sanPham.MaHangHoa),
+            new SqlParameter("@TenHangHoa", sanPham.TenHangHoa),
            // new SqlParameter("@DonGia", sanPham.GiaNhap),
             new SqlParameter("@SoLuong", sanPham.SoLuong),
             new SqlParameter("@MoTa", sanPham.MoTa ?? (object)DBNull.Value), // Tránh lỗi nếu null
@@ -108,8 +108,8 @@ namespace DAL
                 {
                     SanPhamDTO sanPham = new SanPhamDTO
                     {
-                        MaSanPham = row["MaHang"].ToString(),
-                        TenSanPham = row["TenHang"].ToString(),
+                        MaHangHoa = row["MaHang"].ToString(),
+                        TenHangHoa = row["TenHang"].ToString(),
                         SoLuong = Convert.ToInt32(row["SoLuong"]),
                         HinhAnh = row["HinhAnh"].ToString(),
                         MoTa = row["MoTa"].ToString()
@@ -129,8 +129,8 @@ namespace DAL
             string query = $"UPDATE HangHoa SET MaHang = @MaHang, TenHang = @TenHang, SoLuong = @SoLuong, HinhAnh = @HinhAnh, MoTa = @MoTa Where MaHang = @MaHang";
             SqlParameter[] parameters =
             {
-                new SqlParameter("@MaHang", sanPham.MaSanPham),
-                new SqlParameter ("@TenHang", sanPham.TenSanPham),
+                new SqlParameter("@MaHang", sanPham.MaHangHoa),
+                new SqlParameter ("@TenHang", sanPham.TenHangHoa),
                 new SqlParameter("@SoLuong", sanPham.SoLuong),
                 new SqlParameter("@HinhAnh", sanPham.HinhAnh),
                 new SqlParameter("@MoTa", sanPham.MoTa)
@@ -146,12 +146,12 @@ namespace DAL
             }
         }
 
-        public bool XoaSanPham(string maSanPham)
+        public bool XoaSanPham(string MaHangHoa)
         {
                 string query = $"DELETE FROM HangHoa where Mahang = @MaHang";
                 SqlParameter[] parameters =
                 {
-                new SqlParameter("@MaHang", maSanPham)
+                new SqlParameter("@MaHang", MaHangHoa)
             };
                 try
                 {
@@ -163,12 +163,12 @@ namespace DAL
                     throw new Exception("Lỗi khi xóa sản phẩm: " + ex.Message);
                 }
         }
-        public int LaySoLuongSanPham(string maSanPham)
+        public int LaySoLuongSanPham(string MaHangHoa)
         {
-            string query = $"GET SoLuong WHERE MaSanPham = @MaSanPham";
+            string query = $"GET SoLuong WHERE MaHangHoa = @MaHangHoa";
             SqlParameter[] parameters =
                 [
-                    new SqlParameter("@MaPhieuNhap",maSanPham),
+                    new SqlParameter("@MaPhieuNhap",MaHangHoa),
                 ];
             try
             {
@@ -181,14 +181,14 @@ namespace DAL
             }
         }
 
-        public bool CapNhatSoLuongSanPham(string maSanPham, int soLuongCapNhap)
+        public bool CapNhatSoLuongSanPham(string MaHangHoa, int soLuongCapNhap)
         {
-            string query = "UPDATE SanPham SET SoLuong = @SoLuong WHERE MaSanPham = @MaSanPham";
+            string query = "UPDATE SanPham SET SoLuong = @SoLuong WHERE MaHangHoa = @MaHangHoa";
 
             SqlParameter[] parameters =
             [
                     new SqlParameter("@SoLuong", soLuongCapNhap),
-                    new SqlParameter("@MaSanPham", maSanPham),
+                    new SqlParameter("@MaHangHoa", MaHangHoa),
             ];
 
             try

@@ -9,17 +9,17 @@ namespace DTO
 {
      public class SanPhamDTO
     {
-        public string? MaSanPham { get; set; }
-        public string? TenSanPham { get; set; }
+        public string? MaHangHoa { get; set; }
+        public string? TenHangHoa { get; set; }
         public double? GiaNhap { get; set; }
         public int? SoLuong { get; set; }
         public string? MoTa { get; set; }
         public string? HinhAnh { get; set; }
 
-        public SanPhamDTO(string? sanPhamID, string? tenSanPham, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
+        public SanPhamDTO(string? sanPhamID, string? tenHangHoa, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
         {
-            MaSanPham = sanPhamID;
-            TenSanPham = tenSanPham;
+            MaHangHoa = sanPhamID;
+            TenHangHoa = tenHangHoa;
             GiaNhap = giaNhap;
             SoLuong = soLuong;
             MoTa = moTa;
