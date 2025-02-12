@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using GUI.ViewModels.UserControls;
+using GUI.Views;
 using GUI.Views.UserControls;
 using System;
 using System.Collections.Generic;
@@ -7,15 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace GUI.ViewModels.UserControls
+
+namespace GUI.ViewModels
 {
     internal partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        public ThongBaoViewModel thongBaoVM;
+        public ThongBao thongBaoVM;
 
         [ObservableProperty]
-        public TrangChuMenuViewModel menuVM;
+        public TrangChuViewModel menuVM;
 
         public TrangChuMenuViewModel trangChuMenuVM { get; set; }
         public TrangChuViewModel trangChuVM { get; set; }
@@ -23,7 +26,7 @@ namespace GUI.ViewModels.UserControls
         public MainViewModel()
         {
             // khởi tạo menu
-            ThongBaoVM = new ThongBaoViewModel();
+            ThongBaoVM = new ThongBao();
             trangChuMenuVM = new TrangChuMenuViewModel(this);
             Menu = trangChuMenuVM;
 

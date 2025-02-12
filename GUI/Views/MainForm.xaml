@@ -14,9 +14,9 @@
          Background="Transparent"
          AllowsTransparency="True"
          WindowStartupLocation="CenterScreen">
-    <!--<Window.DataContext>
+    <Window.DataContext>
         <viewModels:MainViewModel/>
-    </Window.DataContext>-->
+    </Window.DataContext>
     <Grid>
         <Border  Background="#DFEBF8" Padding="10,20" CornerRadius="15" BorderBrush="Transparent">
             <Grid>
