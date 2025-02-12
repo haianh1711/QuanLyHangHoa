@@ -194,7 +194,7 @@
                     <Border CornerRadius="7" Background="#FFFFFF">
                         <TextBox Background="Transparent" 
                                  Padding="10, 5, 0, 0"
-                                 FontSize="16"
+                                 FontSize="14"
                                  VerticalAlignment="Top"
                                  BorderThickness="0"
                                  AcceptsReturn="True"       
