@@ -11,7 +11,8 @@ namespace DTO
         public string? MaKhachHang { get; set; }
         public string? TenKhachHang { get; set; }
         public string? SoDienThoai { get; set; }
-        public string? Gmail { get; set; }
+        public string? Gmail { get; set; }  
+        public string? DiaChi { get; set; }
 
         
         public KhachHangDTO(string maKhachHang, string tenKhachHang, string soDienThoai, string gmail)
@@ -20,6 +21,7 @@ namespace DTO
             TenKhachHang = tenKhachHang;
             SoDienThoai = soDienThoai;
             Gmail = gmail;
+            DiaChi = DiaChi;
         }
 
         public KhachHangDTO() { }
