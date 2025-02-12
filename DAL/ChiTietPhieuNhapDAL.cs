@@ -129,46 +129,24 @@ namespace DAL
 
         }
 
-
-        public List<ChiTietPhieuNhapDTO> LayDanhSachCTPNTheoMaHH(string maHh)
+        public bool XoaTatCaCTPNTHeoMaHH(string maHH)
         {
             try
             {
-                List<ChiTietPhieuNhapDTO> list = new();
+                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaHang = @maHH";
 
-                string query = @"SELECT ct.MaCTPN, sp.MaHang, sp.TenHang, ct.GiaNhap, ct.SoLuongNhap, ct.MaPhieuNhap,
-		                        ct.SoLuongNhap * ct.GiaNhap as ThanhTien
-                                FROM ChiTietPhieuNhap ct INNER JOIN
-                                                      HangHoa sp ON ct.MaHang = sp.MaHang
-                                WHERE (ct.MaHangHoa = @MaHangHoa)";
-                SqlParameter[] parameters =
+                SqlParameter[] parameters = new SqlParameter[]
                 {
-                    new SqlParameter("@MaHangHoa", maHh)
+                    new SqlParameter("@maHH", maHH)
                 };
 
+                var result = dbHelper.ExecuteNonQuery(query, parameters);
 
-                var dataTable = dbHelper.ExecuteQuery(query, parameters);
-
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    ChiTietPhieuNhapDTO thongke = new ChiTietPhieuNhapDTO
-                    {
-                        MaCTPN = row["MaCTPN"].ToString(),
-                        MaPhieuNhap = row["MaPhieuNhap"].ToString(),
-                        MaHang = row["MaHang"].ToString(),
-                        TenHang = row["TenHang"].ToString(),
-                        SoLuongNhap = (int)row["SoLuongNhap"],
-                        GiaNhap = Convert.ToDecimal(row["GiaNhap"]),
-                        ThanhTien = Convert.ToDecimal(row["ThanhTien"])
-                    };
-                    list.Add(thongke);
-                }
-
-                return list;
+                return result > 0;
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi khi lấy danh sách chi tiết phiếu nhập theo mã hàng hóa: {ex.Message}", ex);
+                throw;
             }
         }
 

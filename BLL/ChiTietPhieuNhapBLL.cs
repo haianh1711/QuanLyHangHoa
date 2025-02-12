@@ -12,7 +12,7 @@ namespace BLL
     public class ChiTietPhieuNhapBLL
     {
         private ChiTietPhieuNhapDAL ChiTietPhieuNhapDAL = new ChiTietPhieuNhapDAL();
-        private HangHoaBLL HangHoaBLL = new();
+        private HangHoaDAL HangHoaDAL = new();
 
         public bool ThemDanhSachCTPN(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
         {
@@ -61,9 +61,9 @@ namespace BLL
             }
         }
 
-        public List<ChiTietPhieuNhapDTO> LayDanhSachCTPNTheoMaHH(string maHh)
+        public bool XoaTatCaCTPNTHeoMaHH(string maHh)
         {
-            return ChiTietPhieuNhapDAL.LayDanhSachCTPNTheoMaHH(maHh);
+            return ChiTietPhieuNhapDAL.XoaTatCaCTPNTHeoMaHH(maHh);
         }
 
         public bool XoaDanhSachCTPN(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
@@ -94,10 +94,10 @@ namespace BLL
             int SLBanDau = ChiTietPhieuNhapDAL.LaySoLuongNhap(chiTiet.MaPhieuNhap);
             int SLChenhLech = chiTiet.SoLuongNhap - SLBanDau;
 
-            int soLuongTon = HangHoaBLL.LaySoLuongHangHoa(chiTiet.MaHang);
+            int soLuongTon = HangHoaDAL.LaySoLuongHangHoa(chiTiet.MaHang);
             soLuongTon += SLChenhLech;
 
-            return HangHoaBLL.CapNhatSoLuongHangHoa(chiTiet.MaHang, soLuongTon);
+            return HangHoaDAL.CapNhatSoLuongHangHoa(chiTiet.MaHang, soLuongTon);
         }
 
         public List<ChiTietPhieuNhapDTO> HienThiDanhSachCTPN(string maPhieuNhap)

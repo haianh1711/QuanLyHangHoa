@@ -45,8 +45,7 @@ namespace BLL
 
             using(TransactionScope transaction = new())
             {
-                List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs = ChiTietPhieuNhapBLL.LayDanhSachCTPNTheoMaHH(maHangHoa);
-                if (ChiTietPhieuNhapBLL.XoaDanhSachCTPN(chiTietPhieuNhapDTOs))
+                if (ChiTietPhieuNhapBLL.XoaTatCaChiTietCuaPhieuNhap(maHangHoa))
                 {
                     if(HangHoaDAL.XoaHangHoa(maHangHoa))
                         transaction.Complete(); return true;
@@ -54,8 +53,8 @@ namespace BLL
 
                 return false;
             }
-            
         }
+
         public int LaySoLuongHangHoa(string MaHang)
         {
             return HangHoaDAL.LaySoLuongHangHoa(MaHang);

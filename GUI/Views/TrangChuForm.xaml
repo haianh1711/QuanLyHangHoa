@@ -132,7 +132,7 @@
                     <Button Grid.Column="1" 
                     Style="{StaticResource CustomButtonStyle}" 
                     Content="Đăng xuất" 
-                    Margin="23,556,21,-7" Click="Button_Click_1"/>
+                    Margin="23,556,21,-7" />
 
 
 
