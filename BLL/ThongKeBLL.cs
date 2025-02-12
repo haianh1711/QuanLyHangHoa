@@ -13,11 +13,11 @@ namespace BLL
     {
         private ThongKeDAL thongKeDAL = new ThongKeDAL();
 
-        public List<SanPhamDTO> GetSanPhamThongKe()
+        public List<HangHoaDTO> GetHangHoaThongKe()
         {
-            return thongKeDAL.GetSanPhamThongKe();
+            return thongKeDAL.GetHangHoaThongKe();
         }
-        public List<SanPhamDTO> SearchTenNhanVien(string Info)
+        public List<HangHoaDTO> SearchTenNhanVien(string Info)
         {
             return thongKeDAL.SearchTenNhanVien(Info);
         }
@@ -25,13 +25,13 @@ namespace BLL
         {
             return thongKeDAL.GetThongTinNhanVien(Info);
         }
-        public List<PhieuNhapDTO> GetThongKePhieuNhapSanPhamData()
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaData()
         {
-            return thongKeDAL.GetThongKePhieuNhapSanPhamData();
+            return thongKeDAL.GetThongKePhieuNhapHangHoaData();
         }
-        public List<PhieuXuatDTO> GetThongKePhieuXuatSanPhamData()
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaData()
         {
-            return thongKeDAL.GetThongKePhieuXuatSanPhamData();
+            return thongKeDAL.GetThongKePhieuXuatHangHoaData();
         }
         public List<ThongKePhieuNhapDTO> GetThongKePhieuNhapHangTuanData()
         {

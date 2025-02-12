@@ -16,11 +16,11 @@ namespace DAL
     {
         DatabaseHelper dbHelper = new DatabaseHelper();
 
-        public List<SanPhamDTO> GetSanPhamThongKe()
+        public List<HangHoaDTO> GetHangHoaThongKe()
         {
-            List<SanPhamDTO> thongKeList = new List<SanPhamDTO>();
+            List<HangHoaDTO> thongKeList = new List<HangHoaDTO>();
 
-            string query = "Select MaHangHoa, TenHangHoa, SoLuong, MoTa from SanPham";
+            string query = "Select MaHangHoa, TenHangHoa, SoLuong, MoTa from HangHoa";
 
             try
             {
@@ -28,7 +28,7 @@ namespace DAL
 
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    SanPhamDTO thongke = new SanPhamDTO
+                    HangHoaDTO thongke = new HangHoaDTO
                     {
                         MaHangHoa = row["MaHangHoa"].ToString(),
                         TenHangHoa = row["TenHangHoa"].ToString(),
@@ -44,16 +44,16 @@ namespace DAL
             }
             return thongKeList;
         }
-        public List<SanPhamDTO> SearchTenNhanVien(string Info)
+        public List<HangHoaDTO> SearchTenNhanVien(string Info)
         {
-            List<SanPhamDTO> phieuNhapList = new List<SanPhamDTO>();
+            List<HangHoaDTO> phieuNhapList = new List<HangHoaDTO>();
 
             SqlParameter[] Parameters = new SqlParameter[]
             {
                 new SqlParameter("@Info", Info)
             };
             string query = @"Select top 1 sp.MaHangHoa, sp.TenHangHoa, pn.SoLuong, sp.MoTa 
-                             From PhieuNhap pn inner join SanPham sp 
+                             From PhieuNhap pn inner join HangHoa sp 
                              On pn.MaHangHoa = sp.MaHangHoa
                              inner join NhanVien nv
                              On pn.MaNhanVien = nv.MaNhanVien
@@ -64,7 +64,7 @@ namespace DAL
                 var dataTable = dbHelper.ExecuteQuery(query);
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    SanPhamDTO thongKeNhap = new SanPhamDTO
+                    HangHoaDTO thongKeNhap = new HangHoaDTO
                     {
                         MaHangHoa = row["MaHangHoa"].ToString(),
                         TenHangHoa = row["TenHangHoa"].ToString(),
@@ -107,7 +107,7 @@ namespace DAL
             }
             return null;
         }
-        public List<PhieuNhapDTO> GetThongKePhieuNhapSanPhamData()
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaData()
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
             string query = @"Select MaHangHoa, Sum(SoLuongNhap) AS TongSoLuongNhap from ChiTietPhieuNhap
@@ -130,7 +130,7 @@ namespace DAL
             }
             return data;
         }
-        public List<PhieuXuatDTO> GetThongKePhieuXuatSanPhamData()
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaData()
         {
             List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
             string query = @"Select MaHangHoa, Sum(SoLuongXuat) AS TongSoLuongXuat from ChiTietPhieuXuat

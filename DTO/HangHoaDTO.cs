@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-     public class SanPhamDTO
+     public class HangHoaDTO
     {
         public string? MaHangHoa { get; set; }
         public string? TenHangHoa { get; set; }
@@ -16,9 +16,9 @@ namespace DTO
         public string? MoTa { get; set; }
         public string? HinhAnh { get; set; }
 
-        public SanPhamDTO(string? sanPhamID, string? tenHangHoa, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
+        public HangHoaDTO(string? hangHoaID, string? tenHangHoa, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
         {
-            MaHangHoa = sanPhamID;
+            MaHangHoa = hangHoaID;
             TenHangHoa = tenHangHoa;
             GiaNhap = giaNhap;
             SoLuong = soLuong;
@@ -26,6 +26,6 @@ namespace DTO
             HinhAnh = hinhAnh;
         }
 
-        public SanPhamDTO() { }
+        public HangHoaDTO() { }
     }
 }

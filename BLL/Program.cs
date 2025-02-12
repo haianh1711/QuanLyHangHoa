@@ -15,7 +15,7 @@ class Program
         Console.Write("Nhập mã hoặc tên sản phẩm cần tìm: ");
         string tukhoa = Console.ReadLine();
 
-        List<SanPhamDTO> danhSachSanPham = sanPhamBLL.TimSanPham(tukhoa);
+        List<HangHoaDTO> danhSachSanPham = sanPhamBLL.TimSanPham(tukhoa);
 
         if (danhSachSanPham.Count > 0)
         {

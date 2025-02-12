@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class SanPhamDAL
+    public class HangHoaDAL
     {
         DatabaseHelper dbHelper = new DatabaseHelper();
 
-        public List<SanPhamDTO> LayMaVaTenSP()
+        public List<HangHoaDTO> LayMaVaTenSP()
         {
-            List<SanPhamDTO> sanPhamDTOs = new List<SanPhamDTO>();
+            List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHangHoa, TenHangHoa from SanPham";
+            string query = "Select MaHangHoa, TenHangHoa from HangHoa";
 
             try
             {
@@ -25,12 +25,12 @@ namespace DAL
 
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    SanPhamDTO sanPham = new SanPhamDTO
+                    HangHoaDTO HangHoa = new HangHoaDTO
                     {
                         MaHangHoa = row["MaHangHoa"].ToString(),
                         TenHangHoa = row["TenHangHoa"].ToString(),
                     };
-                    sanPhamDTOs.Add(sanPham);
+                    HangHoaDTOs.Add(HangHoa);
                 }
 
             }
@@ -39,14 +39,14 @@ namespace DAL
                 Console.WriteLine("Lỗi: " + ex.Message);
             }
 
-            return sanPhamDTOs;
+            return HangHoaDTOs;
         }
 
-        public List<SanPhamDTO> HienThiDanhSachHH()
+        public List<HangHoaDTO> HienThiDanhSachHH()
         {
-            List<SanPhamDTO> sanPhamDTOs = new List<SanPhamDTO>();
+            List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHangHoa, TenHangHoa from SanPham";
+            string query = "Select MaHangHoa, TenHangHoa from HangHoa";
 
             try
             {
@@ -54,12 +54,12 @@ namespace DAL
 
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    SanPhamDTO sanPham = new SanPhamDTO
+                    HangHoaDTO HangHoa = new HangHoaDTO
                     {
                         MaHangHoa = row["MaHangHoa"].ToString(),
                         TenHangHoa = row["TenHangHoa"].ToString(),
                     };
-                    sanPhamDTOs.Add(sanPham);
+                    HangHoaDTOs.Add(HangHoa);
                 }
 
             }
@@ -68,22 +68,22 @@ namespace DAL
                 Console.WriteLine("Lỗi: " + ex.Message);
             }
 
-            return sanPhamDTOs;
+            return HangHoaDTOs;
         }
 
-        public bool ThemSanPham(SanPhamDTO sanPham)
+        public bool ThemHangHoa(HangHoaDTO HangHoa)
         {
             string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaHangHoa, @TenHangHoa, @SoLuong, @MoTa, @HinhAnh)";
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
             {
-            new SqlParameter("@MaHangHoa", sanPham.MaHangHoa),
-            new SqlParameter("@TenHangHoa", sanPham.TenHangHoa),
-           // new SqlParameter("@DonGia", sanPham.GiaNhap),
-            new SqlParameter("@SoLuong", sanPham.SoLuong),
-            new SqlParameter("@MoTa", sanPham.MoTa ?? (object)DBNull.Value), // Tránh lỗi nếu null
-            new SqlParameter("@HinhAnh", sanPham.HinhAnh ?? (object)DBNull.Value)
+            new SqlParameter("@MaHangHoa", HangHoa.MaHangHoa),
+            new SqlParameter("@TenHangHoa", HangHoa.TenHangHoa),
+           // new SqlParameter("@DonGia", HangHoa.GiaNhap),
+            new SqlParameter("@SoLuong", HangHoa.SoLuong),
+            new SqlParameter("@MoTa", HangHoa.MoTa ?? (object)DBNull.Value), // Tránh lỗi nếu null
+            new SqlParameter("@HinhAnh", HangHoa.HinhAnh ?? (object)DBNull.Value)
             };
                 int rowsAffected = dbHelper.ExecuteNonQuery(query, parameters);
                 return rowsAffected > 0;
@@ -93,9 +93,9 @@ namespace DAL
                 throw new Exception("Lỗi khi thêm sản phẩm: " + ex.Message);
             }
         }
-        public List<SanPhamDTO> TimSanPham(string tukhoa)
+        public List<HangHoaDTO> TimHangHoa(string tukhoa)
         {
-            List<SanPhamDTO> sanPhamDTOs = new List<SanPhamDTO>();
+            List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
             string query = "SELECT MaHang, TenHang, SoLuong, HinhAnh, Mota FROM HangHoa WHERE MaHang LIKE @tukhoa or TenHang LIKE @tukhoa";
             SqlParameter[] parameters = 
                 {
@@ -106,7 +106,7 @@ namespace DAL
                 var dataTable = dbHelper.ExecuteQuery(query,parameters);
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    SanPhamDTO sanPham = new SanPhamDTO
+                    HangHoaDTO HangHoa = new HangHoaDTO
                     {
                         MaHangHoa = row["MaHang"].ToString(),
                         TenHangHoa = row["TenHang"].ToString(),
@@ -114,26 +114,26 @@ namespace DAL
                         HinhAnh = row["HinhAnh"].ToString(),
                         MoTa = row["MoTa"].ToString()
                     };
-                    sanPhamDTOs.Add(sanPham);
+                    HangHoaDTOs.Add(HangHoa);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Lỗi: " + ex.Message);
             }
-            return sanPhamDTOs;
+            return HangHoaDTOs;
         }
 
-        public bool CapNhatSanPham(SanPhamDTO sanPham)
+        public bool CapNhatHangHoa(HangHoaDTO HangHoa)
         {
             string query = $"UPDATE HangHoa SET MaHang = @MaHang, TenHang = @TenHang, SoLuong = @SoLuong, HinhAnh = @HinhAnh, MoTa = @MoTa Where MaHang = @MaHang";
             SqlParameter[] parameters =
             {
-                new SqlParameter("@MaHang", sanPham.MaHangHoa),
-                new SqlParameter ("@TenHang", sanPham.TenHangHoa),
-                new SqlParameter("@SoLuong", sanPham.SoLuong),
-                new SqlParameter("@HinhAnh", sanPham.HinhAnh),
-                new SqlParameter("@MoTa", sanPham.MoTa)
+                new SqlParameter("@MaHang", HangHoa.MaHangHoa),
+                new SqlParameter ("@TenHang", HangHoa.TenHangHoa),
+                new SqlParameter("@SoLuong", HangHoa.SoLuong),
+                new SqlParameter("@HinhAnh", HangHoa.HinhAnh),
+                new SqlParameter("@MoTa", HangHoa.MoTa)
             };
             try
             {
@@ -146,7 +146,7 @@ namespace DAL
             }
         }
 
-        public bool XoaSanPham(string MaHangHoa)
+        public bool XoaHangHoa(string MaHangHoa)
         {
                 string query = $"DELETE FROM HangHoa where Mahang = @MaHang";
                 SqlParameter[] parameters =
@@ -163,7 +163,7 @@ namespace DAL
                     throw new Exception("Lỗi khi xóa sản phẩm: " + ex.Message);
                 }
         }
-        public int LaySoLuongSanPham(string MaHangHoa)
+        public int LaySoLuongHangHoa(string MaHangHoa)
         {
             string query = $"GET SoLuong WHERE MaHangHoa = @MaHangHoa";
             SqlParameter[] parameters =
@@ -181,9 +181,9 @@ namespace DAL
             }
         }
 
-        public bool CapNhatSoLuongSanPham(string MaHangHoa, int soLuongCapNhap)
+        public bool CapNhatSoLuongHangHoa(string MaHangHoa, int soLuongCapNhap)
         {
-            string query = "UPDATE SanPham SET SoLuong = @SoLuong WHERE MaHangHoa = @MaHangHoa";
+            string query = "UPDATE HangHoa SET SoLuong = @SoLuong WHERE MaHangHoa = @MaHangHoa";
 
             SqlParameter[] parameters =
             [
