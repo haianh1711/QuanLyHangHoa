@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GUI.Views.UserControls
+namespace GUI.Views
 {
     /// <summary>
     /// Interaction logic for TrangChuHienThiTKForm.xaml

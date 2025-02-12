@@ -74,7 +74,7 @@ namespace GUI.ViewModels
 
         private void LoadBarChartSeries()
         {
-            List<PhieuNhapDTO> phieuNhapDTOs = thongKeBLL.GetThongKePhieuNhapHangHoaData();
+            List<PhieuNhapDTO> phieuNhapDTOs = new();
             string[] dsTenSanPham = phieuNhapDTOs.Select(phieunhap => phieunhap.MaHang ?? string.Empty).ToArray();
             double[]  dsSoLuongNhap = phieuNhapDTOs.Select(phieunhap => (double?)phieunhap.SoLuongNhap ?? 0).ToArray();
 

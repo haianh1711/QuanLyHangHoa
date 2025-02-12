@@ -25,11 +25,7 @@
                     <ColumnDefinition Width="678"   />
                 </Grid.ColumnDefinitions>
                 <ContentControl x:Name="menu" Content="{Binding Menu}"/>
-                <ContentControl x:Name="view" Grid.Column="1"
-                         Content="{Binding View}" 
-                         Height="655.25" 
-                         Width="678">
-                </ContentControl>
+                <ContentControl x:Name="view" Content="{Binding View}" Grid.Column="1"/>
 
             </Grid>
         </Border>
