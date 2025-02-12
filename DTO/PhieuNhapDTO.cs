@@ -11,7 +11,7 @@ namespace DTO
     {
         public string? MaPhieuNhap {  get; set; }
         public string? MaNhanVien { get; set; }
-        public string? MaSanPham {  get; set; }
+        public string? MaHangHoa {  get; set; }
         public string? NgayNhap { get; set; }
         public int? SoLuongNhap {  get; set; }
         public double? GiaNhap { get; set; }
