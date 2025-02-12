@@ -20,9 +20,9 @@ namespace BLL
         {
             return sanPhamDAL.ThemSanPham(sanPham);
         }
-        public List<SanPhamDTO> TimSanPham(string maSanPham)
+        public List<SanPhamDTO> TimSanPham(string tukhoa)
         {
-            return sanPhamDAL.TimSanPham(maSanPham);
+            return sanPhamDAL.TimSanPham(tukhoa);
         }
         public bool CapnhatSanPham(SanPhamDTO sanPham)
         {
@@ -35,6 +35,14 @@ namespace BLL
             if (string.IsNullOrEmpty(maSanPham))
                 return false;
             return sanPhamDAL.XoaSanPham(maSanPham);
+        }
+        public int LaySoLuongSanPham(string maSanPham)
+        {
+            return sanPhamDAL.LaySoLuongSanPham(maSanPham);
+        }
+        public bool CapNhatSoLuongSanPham(string maSanPham, int soLuong)
+        {
+            return sanPhamDAL.CapNhatSoLuongSanPham(maSanPham, soLuong);
         }
     }
 }

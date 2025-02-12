@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 using BLL;
-using DAL;
 using DTO;
 
 class Program
@@ -11,39 +11,23 @@ class Program
         Console.OutputEncoding = Encoding.UTF8;
 
         SanPhamBLL sanPhamBLL = new SanPhamBLL();
-        Console.Write("Nhập mã sản phẩm cần xóa: ");
-        string maSanPham = Console.ReadLine();
 
-        // Kiểm tra xem sản phẩm có tồn tại không trước khi xóa
-        List<SanPhamDTO> sanPhams = sanPhamBLL.TimSanPham(maSanPham);
-        if (sanPhams.Count > 0)
+        Console.Write("Nhập mã hoặc tên sản phẩm cần tìm: ");
+        string tukhoa = Console.ReadLine();
+
+        List<SanPhamDTO> danhSachSanPham = sanPhamBLL.TimSanPham(tukhoa);
+
+        if (danhSachSanPham.Count > 0)
         {
-            var sanPham = sanPhams[0];
-            Console.WriteLine($" Đã tìm thấy sản phẩm: Mã: {sanPham.MaSanPham} - Tên: {sanPham.TenSanPham} - Số lượng: {sanPham.SoLuong}");
-
-            Console.Write(" Bạn có chắc chắn muốn xóa sản phẩm này? (Y/N): ");
-            string confirm = Console.ReadLine().Trim().ToLower();
-
-            if (confirm == "y")
+            Console.WriteLine("Danh sách sản phẩm tìm thấy:");
+            foreach (var sp in danhSachSanPham)
             {
-                bool daXoa = sanPhamBLL.XoaSanPham(maSanPham);
-                if (daXoa)
-                {
-                    Console.WriteLine(" Xóa sản phẩm thành công!");
-                }
-                else
-                {
-                    Console.WriteLine(" Xóa sản phẩm thất bại.");
-                }
-            }
-            else
-            {
-                Console.WriteLine(" Hủy thao tác xóa.");
+                Console.WriteLine($"Mã: {sp.MaSanPham} - Tên: {sp.TenSanPham} - Số lượng: {sp.SoLuong}");
             }
         }
         else
         {
-            Console.WriteLine(" Không tìm thấy sản phẩm nào với mã này.");
+            Console.WriteLine("Không tìm thấy sản phẩm nào.");
         }
     }
 }
