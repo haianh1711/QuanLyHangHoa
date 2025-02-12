@@ -16,13 +16,21 @@ using System.Windows.Shapes;
 namespace GUI.Views
 {
     /// <summary>
-    /// Interaction logic for ChiTietPhieuNhapForm.xaml
+    /// Interaction logic for NhapSanPhamForm.xaml
     /// </summary>
-    public partial class ChiTietPhieuNhapForm : UserControl
+    public partial class PhieuXuatForm : UserControl
     {
-        public ChiTietPhieuNhapForm()
+        public PhieuXuatForm()
         {
             InitializeComponent();
+        }
+
+        private void dgPhieuNhap_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is DataGrid dataGrid && dataGrid.SelectedItem != null)
+            {
+                dataGrid.ScrollIntoView(dataGrid.SelectedItem);
+            }
         }
     }
 }
