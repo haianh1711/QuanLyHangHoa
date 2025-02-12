@@ -63,7 +63,7 @@ namespace GUI.ViewModels.UserControls
             }
             catch (Exception ex)
             {
-                await MainViewModel.ThongBaoVM.MessageOK(ex.Message);
+                await MainViewModel.ThongBaoVM.MessageBox.OK(ex.Message);
 
             }
         }
