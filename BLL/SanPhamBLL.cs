@@ -8,41 +8,41 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class SanPhamBLL
+    public class HangHoaBLL
     {
-        private SanPhamDAL sanPhamDAL = new();
+        private HangHoaDAL HangHoaDAL = new();
 
-        public List<SanPhamDTO> LayMaVaTenSP()
+        public List<HangHoaDTO> LayMaVaTenSP()
         {
-            return sanPhamDAL.LayMaVaTenSP();
+            return HangHoaDAL.LayMaVaTenSP();
         }
-        public bool ThemSanPham(SanPhamDTO sanPham)
+        public bool ThemHangHoa(HangHoaDTO HangHoa)
         {
-            return sanPhamDAL.ThemSanPham(sanPham);
+            return HangHoaDAL.ThemHangHoa(HangHoa);
         }
-        public List<SanPhamDTO> TimSanPham(string tukhoa)
+        public List<HangHoaDTO> TimHangHoa(string tukhoa)
         {
-            return sanPhamDAL.TimSanPham(tukhoa);
+            return HangHoaDAL.TimHangHoa(tukhoa);
         }
-        public bool CapnhatSanPham(SanPhamDTO sanPham)
+        public bool CapnhatHangHoa(HangHoaDTO HangHoa)
         {
-            if (string.IsNullOrEmpty(sanPham.MaSanPham))
+            if (string.IsNullOrEmpty(HangHoa.MaHangHoa))
                 return false;
-            return sanPhamDAL.CapNhatSanPham(sanPham);
+            return HangHoaDAL.CapNhatHangHoa(HangHoa);
         }
-        public bool XoaSanPham(string maSanPham)
+        public bool XoaHangHoa(string maHangHoa)
         {
-            if (string.IsNullOrEmpty(maSanPham))
+            if (string.IsNullOrEmpty(maHangHoa))
                 return false;
-            return sanPhamDAL.XoaSanPham(maSanPham);
+            return HangHoaDAL.XoaHangHoa(maHangHoa);
         }
-        public int LaySoLuongSanPham(string maSanPham)
+        public int LaySoLuongHangHoa(string maHangHoa)
         {
-            return sanPhamDAL.LaySoLuongSanPham(maSanPham);
+            return HangHoaDAL.LaySoLuongHangHoa(maHangHoa);
         }
-        public bool CapNhatSoLuongSanPham(string maSanPham, int soLuong)
+        public bool CapNhatSoLuongHangHoa(string maHangHoa, int soLuong)
         {
-            return sanPhamDAL.CapNhatSoLuongSanPham(maSanPham, soLuong);
+            return HangHoaDAL.CapNhatSoLuongHangHoa(maHangHoa, soLuong);
         }
     }
 }

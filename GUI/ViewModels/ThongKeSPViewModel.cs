@@ -25,7 +25,7 @@ namespace GUI.ViewModels
         private double maxSoLuongNhap;
 
         [ObservableProperty]
-        private ObservableCollection<SanPhamDTO> data;
+        private ObservableCollection<HangHoaDTO> data;
 
         [ObservableProperty]
         private int chartHeight;
@@ -35,7 +35,7 @@ namespace GUI.ViewModels
 
         public ThongKeSPViewModel()
         {
-            Data = new ObservableCollection<SanPhamDTO>(thongKeBLL.GetSanPhamThongKe());
+            Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetSanPhamThongKe());
 
             List<PhieuNhapDTO> phieuNhapDTOs = thongKeBLL.GetThongKePhieuNhapSanPhamData();
             dsTenSanPham = phieuNhapDTOs.Select(phieunhap => phieunhap.MaSanPham ?? String.Empty).ToArray();

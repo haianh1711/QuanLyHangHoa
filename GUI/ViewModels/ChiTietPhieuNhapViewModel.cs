@@ -49,10 +49,10 @@ namespace GUI.ViewModels
 
         // ComboBox
         [ObservableProperty]
-        private List<SanPhamDTO> sanPhams;
+        private List<HangHoaDTO> sanPhams;
 
         [ObservableProperty]
-        private SanPhamDTO? selectedSanPham;
+        private HangHoaDTO? selectedSanPham;
 
         public ChiTietPhieuNhapViewModel()
         {
@@ -88,7 +88,7 @@ namespace GUI.ViewModels
         }
 
 
-        partial void OnSelectedSanPhamChanged(SanPhamDTO? value)
+        partial void OnSelectedSanPhamChanged(HangHoaDTO? value)
         {
             if (value != null && TempChiTiet != null)
             {
