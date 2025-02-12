@@ -11,6 +11,9 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows;
 using System.Windows.Input;
 using BLL;
+using DAL;
+using GUI.Views.UserControls;
+using GUI.ViewModels.UserControls;
 
 
 namespace GUI.ViewModels
@@ -20,17 +23,24 @@ namespace GUI.ViewModels
        private KhachHangBLL khachHangBLL = new KhachHangBLL();
 
         [ObservableProperty]
+        private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
+
+        [ObservableProperty]
         private ObservableCollection<KhachHangDTO> data;
 
         [ObservableProperty]
         private KhachHangDTO selectedKhachHang;
 
 
-        public ICommand XoaKhachHangCommand { get; set; }
+        // Tìm kiếm
+        [ObservableProperty]
+        private string? tuKhoaTimKiem;
+
+
         public KhachHangViewModel() 
         {
            
-            Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.GetAllKhachHang());
+            Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
         }
 
 
@@ -39,38 +49,52 @@ namespace GUI.ViewModels
         {
             if(SelectedKhachHang != null)
             {
-                bool daSua = khachHangBLL.UpdateKhachHang(SelectedKhachHang);
+                bool daSua = khachHangBLL.SuaKhachHang(SelectedKhachHang);
 
                 if (daSua)
                 {
                     MessageBox.Show("Đã sửa thành công!");
-                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.GetAllKhachHang());
+                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
 
                 }
             }
         }
 
         [RelayCommand]
-        public void XoakhachHang()
+        private async Task XoaKhachHang()
         {
-            if (SelectedKhachHang != null)
+            try
             {
-                bool daXoa = khachHangBLL.DeleteKhachHang(SearchKhachHang);
-
-                if(daXoa) 
+                if (SelectedKhachHang != null)
                 {
-                    MessageBox.Show("Đã xóa thành công!");
-                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.GetAllKhachHang());
+                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa khách hàng này? Dữ liệu sẽ bị mất vĩnh viễn.");
+                    if (isXoaPhieuNhap)
+                    {
+                        bool result = khachHangBLL.DeleteKhachHang(SelectedKhachHang.MaKhachHang);
+                        if (result)
+                        {
+                            await ThongBaoVM.MessageOK("Xóa khách hàng thành công");
+                            Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
+                        }
+                    }
+
                 }
             }
+            catch (Exception ex)
+            {
+                await ThongBaoVM.MessageOK(ex.ToString());
+            }
+
         }
 
         [RelayCommand]
         public void SearchKhachHang()
         {
-            if (SelectedKhachHang != null)
+            if (selectedKhachHang != null)
             {
-                bool DaSearch = khachHangBLL.SearchKhachHang(SelectedKhachHang);
+                TuKhoaTimKiem = TuKhoaTimKiem ?? "";
+                Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.TimKiem(TuKhoaTimKiem));
+
 
             }
         }
