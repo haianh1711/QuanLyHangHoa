@@ -20,12 +20,17 @@
         </Grid.RowDefinitions>
 
         <!-- Nút tìm kiếm -->
-        <ContentControl Grid.Row="0"
-                    Margin="0,0,0,10"
-                    Style="{StaticResource SearchTextBox}"
-                    Tag="Nhập mã hoặc tên nhân viên..."></ContentControl>
+        <Grid Margin="0, 0, 0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
 
-        <!-- Bảng chứa thông tin khách-->
+            <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên nhân viên..." Style="{StaticResource SearchTextBox}" />
+            <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding SearchComand}"/>
+        </Grid>
+
+        <!-- Bảng chứa thông tin nhân viên-->
         <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 
               Style="{StaticResource DataGridStyle}"
                 Margin="0, 0, 0, 5">

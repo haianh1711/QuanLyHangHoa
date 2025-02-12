@@ -1,4 +1,5 @@
 ﻿using DTO;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -72,11 +73,19 @@ namespace DAL
 
         public bool ThemSanPham(SanPhamDTO sanPham)
         {
-            string query = $"INSERT INTO SanPham (MaSanPham, TenSanPham, DonGia, SoLuong, MoTa, HinhAnh) VALUES ('{sanPham.MaSanPham}', '{sanPham.TenSanPham}', {sanPham.GiaNhap}, {sanPham.SoLuong}, {sanPham.MoTa}, {sanPham.HinhAnh})";
-
+            string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaSanPham, @TenSanPham, @SoLuong, @MoTa, @HinhAnh)";
             try
             {
-                int rowsAffected = dbHelper.ExecuteNonQuery(query);
+                SqlParameter[] parameters = new SqlParameter[]
+            {
+            new SqlParameter("@MaSanPham", sanPham.MaSanPham),
+            new SqlParameter("@TenSanPham", sanPham.TenSanPham),
+           // new SqlParameter("@DonGia", sanPham.GiaNhap),
+            new SqlParameter("@SoLuong", sanPham.SoLuong),
+            new SqlParameter("@MoTa", sanPham.MoTa ?? (object)DBNull.Value), // Tránh lỗi nếu null
+            new SqlParameter("@HinhAnh", sanPham.HinhAnh ?? (object)DBNull.Value)
+            };
+                int rowsAffected = dbHelper.ExecuteNonQuery(query, parameters);
                 return rowsAffected > 0;
             }
             catch (Exception ex)
@@ -84,15 +93,50 @@ namespace DAL
                 throw new Exception("Lỗi khi thêm sản phẩm: " + ex.Message);
             }
         }
-
+        public List<SanPhamDTO> TimSanPham(string masanpham)
+        {
+            List<SanPhamDTO> sanPhamDTOs = new List<SanPhamDTO>();
+            string query = "SELECT MaHang, TenHang, SoLuong, HinhAnh, Mota FROM HangHoa WHERE MaHang LIKE @maSanPham";
+            SqlParameter[] parameters = {
+    new SqlParameter("@maSanPham", $"%{masanpham}%")
+};
+            try
+            {
+                var dataTable = dbHelper.ExecuteQuery(query,parameters);
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    SanPhamDTO sanPham = new SanPhamDTO
+                    {
+                        MaSanPham = row["MaHang"].ToString(),
+                        TenSanPham = row["TenHang"].ToString(),
+                        SoLuong = Convert.ToInt32(row["SoLuong"]),
+                        HinhAnh = row["HinhAnh"].ToString(),
+                        MoTa = row["MoTa"].ToString()
+                    };
+                    sanPhamDTOs.Add(sanPham);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi: " + ex.Message);
+            }
+            return sanPhamDTOs;
+        }
 
         public bool CapNhatSanPham(SanPhamDTO sanPham)
         {
-            string query = $"UPDATE SanPham SET TenSanPham = '{sanPham.TenSanPham}', DonGia = {sanPham.GiaNhap}, SoLuong = {sanPham.SoLuong}, MoTa = {sanPham.MoTa}, HinhAnh = {sanPham.HinhAnh} WHERE MaSanPham = '{sanPham.MaSanPham}'";
-
+            string query = $"UPDATE HangHoa SET MaHang = @MaHang, TenHang = @TenHang, SoLuong = @SoLuong, HinhAnh = @HinhAnh, MoTa = @MoTa Where MaHang = @MaHang";
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@MaHang", sanPham.MaSanPham),
+                new SqlParameter ("@TenHang", sanPham.TenSanPham),
+                new SqlParameter("@SoLuong", sanPham.SoLuong),
+                new SqlParameter("@HinhAnh", sanPham.HinhAnh),
+                new SqlParameter("@MoTa", sanPham.MoTa)
+            };
             try
             {
-                int rowsAffected = dbHelper.ExecuteNonQuery(query);
+                int rowsAffected = dbHelper.ExecuteNonQuery(query,parameters);
                 return rowsAffected > 0;
             }
             catch (Exception ex)
@@ -101,77 +145,23 @@ namespace DAL
             }
         }
 
-        public int LaySoLuongSanPham(string maSanPham)
-        {
-            string query = $"GET SoLuong WHERE MaSanPham = '{maSanPham}'";
-
-            try
-            {
-                int soLuong = (int)dbHelper.ExecuteScalar(query);
-                return soLuong;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Lỗi khi cập nhật số lượng sản phẩm: " + ex.Message);
-            }
-        }
-
-        public bool CapNhatSoLuongSanPham(string maSanPham, int soLuongCapNhap)
-        {
-            string query = $"UPDATE SanPham SET SoLuong = {soLuongCapNhap} WHERE MaSanPham = '{maSanPham}'";
-
-            try
-            {
-                int rowsAffected = dbHelper.ExecuteNonQuery(query);
-                return rowsAffected > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Lỗi khi lấy số lượng sản phẩm: " + ex.Message);
-            }
-        }
-
         public bool XoaSanPham(string maSanPham)
         {
-            string query = $"DELETE FROM SanPham WHERE MaSanPham = '{maSanPham}'";
-
-            try
-            {
-                int rowsAffected = dbHelper.ExecuteNonQuery(query);
-                return rowsAffected > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Lỗi khi xóa sản phẩm: " + ex.Message);
-            }
-        }
-
-        public SanPhamDTO GetChiTietSanPham(string maSanPham)
-        {
-            string query = $"SELECT * FROM SanPham WHERE MaSanPham = '{maSanPham}'";
-
-            try
-            {
-                var dataTable = dbHelper.ExecuteQuery(query);
-
-                if (dataTable != null && dataTable.Rows.Count > 0)
+                string query = $"DELETE FROM HangHoa where Mahang = @MaHang";
+                SqlParameter[] parameters =
                 {
-                    DataRow row = dataTable.Rows[0];
-                    return new SanPhamDTO
-                    {
-                        MaSanPham = row["MaSanPham"].ToString(),
-                        TenSanPham = row["TenSanPham"].ToString(),
-                        GiaNhap = (double?)Convert.ToDecimal(row["GiaNhap"]),
-                        SoLuong = Convert.ToInt32(row["SoLuong"])
-                    };
+                new SqlParameter("@MaHang", maSanPham)
+            };
+                try
+                {
+                    int rowsAffected = dbHelper.ExecuteNonQuery(query, parameters);
+                    return rowsAffected > 0;
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Lỗi khi lấy chi tiết sản phẩm: " + ex.Message);
-            }
-
-            return null;
+                catch (Exception ex)
+                {
+                    throw new Exception("Lỗi khi xóa sản phẩm: " + ex.Message);
+                }
         }
+
     }
 }
