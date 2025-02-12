@@ -26,7 +26,7 @@ namespace GUI.ViewModels.UserControls
         }
 
         [RelayCommand]
-        private void QlPhieuNhap()
+        private void QlNhapXuat()
         {
             MainViewModel.View = new PhieuNhapViewModel();
         }
@@ -34,19 +34,25 @@ namespace GUI.ViewModels.UserControls
         [RelayCommand]
         private void QlHangHoa()
         {
-            MainViewModel.View = new SanPhamViewModel();
+            MainViewModel.View = new HangHoaViewModel();
         }
 
         [RelayCommand]
-        private void QlSpTonKho()
+        private void ChonGiaoDien()
         {
-            MainViewModel.View = new ThongKeSPTonKhoViewModel();
+            MainViewModel.View = new ChonGiaoDichViewModel();
         }
 
         [RelayCommand]
-        private void QlSpNhap()
+        private void QlThongKeNhap()
         {
             MainViewModel.View = new ThongKeSPNhapViewModel();
+        }
+
+        [RelayCommand]
+        private void QlThongKeXuat()
+        {
+            MainViewModel.View = new ThongKeSPXuatViewModel();
         }
 
         [RelayCommand]

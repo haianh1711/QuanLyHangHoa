@@ -23,7 +23,7 @@ namespace GUI.ViewModels
         public string? Label { get; set; } 
     }
 
-    partial class ThongKeSPViewModel : ObservableObject
+    partial class ThongKeSPNhapViewModel : ObservableObject
     {
 
         [ObservableProperty]
@@ -65,11 +65,11 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string thongTinNV;
 
-        public ThongKeSPViewModel()
+        public ThongKeSPNhapViewModel()
         {
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
             luaChonLoc = "Tuần";
-            LoadBarChartSeries();
+            //LoadBarChartSeries();
         }
 
         private void LoadBarChartSeries()

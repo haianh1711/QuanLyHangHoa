@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GUI.Views.ThongKeSPForm"
+﻿<UserControl x:Class="GUI.Views.ThongKeXuatSPForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              Height="665" Width="678">
     <UserControl.DataContext>
-        <viewModels:ThongKeSPViewModel />
+        <viewModels:ThongKeSPNhapViewModel />
     </UserControl.DataContext>
 
     <!--Sản phẩm tồn kho-->

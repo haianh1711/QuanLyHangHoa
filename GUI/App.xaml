@@ -40,12 +40,20 @@
                 <views:PhieuNhapForm/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModels:ThongKeSPViewModel}">
-                <views:ThongKeSPForm/>
+            <DataTemplate DataType="{x:Type viewModels:ThongKeSPNhapViewModel}">
+                <views:ThongKeNhapSPForm/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:ThongKeSPXuatViewModel}">
+                <views:ThongKeXuatSPForm/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:HangHoaViewModel}">
                 <views:HangHoaForm/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:ChonGiaoDichViewModel}">
+                <views:ChonGiaoDichForm/>
             </DataTemplate>
 
         </ResourceDictionary>

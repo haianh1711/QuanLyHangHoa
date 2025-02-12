@@ -18,9 +18,9 @@ namespace GUI.Views
     /// <summary>
     /// Interaction logic for ThongKeForm.xaml
     /// </summary>
-    public partial class ThongKeSPForm : UserControl
+    public partial class ThongKeXuatSPForm : UserControl
     {
-        public ThongKeSPForm()
+        public ThongKeXuatSPForm()
         {
             InitializeComponent();
         }
