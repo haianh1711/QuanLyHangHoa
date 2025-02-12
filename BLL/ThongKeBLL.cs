@@ -25,9 +25,29 @@ namespace BLL
         {
             return thongKeDAL.GetThongTinNhanVien(Info);
         }
-        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaData()
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoTuanData(string tuan)
         {
-            return thongKeDAL.GetThongKePhieuNhapHangHoaData();
+            return thongKeDAL.GetThongKePhieuNhapHangHoaTheoTuanData(tuan);
+        }
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaTheoTuanData(string tuan)
+        {
+            return thongKeDAL.GetThongKePhieuXuatHangHoaTheoTuanData(tuan);
+        }
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoThangData(string thang)
+        {
+            return thongKeDAL.GetThongKePhieuNhapHangHoaTheoThangData(thang);
+        }
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaTheoThangData(string thang)
+        {
+            return thongKeDAL.GetThongKePhieuXuatHangHoaTheoThangData(thang);
+        }
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoNamData(string nam)
+        {
+            return thongKeDAL.GetThongKePhieuNhapHangHoaTheoNamData(nam);
+        }
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaTheoNamData(string nam)
+        {
+            return thongKeDAL.GetThongKePhieuXuatHangHoaTheoNamData(nam);
         }
         public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaData()
         {

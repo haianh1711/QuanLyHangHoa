@@ -1,9 +1,11 @@
-﻿using DTO;
+﻿using Azure.Core;
+using DTO;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -107,11 +109,73 @@ namespace DAL
             }
             return null;
         }
-        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaData()
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoTuanData(string tuan)
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
             string query = @"Select MaHang, Sum(SoLuongNhap) AS TongSoLuongNhap from ChiTietPhieuNhap
+                             Where @Tuan = DATEPART(WEEK,NgayNhap)
                              Group By MaHang";
+            SqlParameter[] parameter = new SqlParameter[]
+            {
+                new SqlParameter ("@Tuan", tuan)
+            };
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    data.Add(new PhieuNhapDTO
+                    {
+
+                        MaHang = reader["MaHang"].ToString(),
+                        SoLuongNhap = Convert.ToInt32(reader["TongSoLuongNhap"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaTheoTuanData(string tuan)
+        {
+            List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
+            string query = @"Select MaHang, Sum(SoLuongXuat) AS TongSoLuongXuat from ChiTietPhieuXuat
+                             Where @Tuan = DATEPART(WEEK,NgayNhap)                            
+                             Group By MaHang";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter ("@Tuan", tuan)
+            };
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    data.Add(new PhieuXuatDTO
+                    {
+                        MaHang = reader["MaHang"].ToString(),
+                        SoLuongXuat = Convert.ToInt32(reader["TongSoLuongXuat"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoThangData(string thang)
+        {
+            List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
+            string query = @"Select MaHang, Sum(SoLuongNhap) AS TongSoLuongNhap from ChiTietPhieuNhap
+                             Where @Thang = DATEPART(MONTH,NgayNhap)
+                             Group By MaHang";
+            SqlParameter[] Parameter = new SqlParameter[]
+            {
+                new SqlParameter("@Thang", thang)
+            };
             try
             {
                 var reader = dbHelper.ExecuteReader(query);
@@ -121,6 +185,91 @@ namespace DAL
                     {
                         MaHang = reader["MaHang"].ToString(),
                         SoLuongNhap = Convert.ToInt32(reader["TongSoLuongNhap"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaTheoThangData(string thang)
+        {
+            List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
+            string query = @"Select MaHang, Sum(SoLuongXuat) AS TongSoLuongXuat from ChiTietPhieuXuat
+                             Where @Thang = DATEPART(MONTH,NgayNhap)                            
+                             Group By MaHang";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter ("@Thang", thang)
+            };
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    data.Add(new PhieuXuatDTO
+                    {
+                        MaHang = reader["MaHang"].ToString(),
+                        SoLuongXuat = Convert.ToInt32(reader["TongSoLuongXuat"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoNamData(string nam)
+        {
+            List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
+            string query = @"Select MaHang, Sum(SoLuongNhap) AS TongSoLuongNhap from ChiTietPhieuNhap
+                             Where @Nam = DATEPART(YEAR,NgayNhap);
+                             Group By MaHang";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Nam", nam)
+            };
+
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    data.Add(new PhieuNhapDTO
+                    {
+                        MaHang = reader["MaHang"].ToString(),
+                        SoLuongNhap = Convert.ToInt32(reader["TongSoLuongNhap"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return data;
+        }
+        public List<PhieuXuatDTO> GetThongKePhieuXuatHangHoaTheoNamData(string nam)
+        {
+            List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
+            string query = @"Select MaHang, Sum(SoLuongXuat) AS TongSoLuongXuat from ChiTietPhieuXuat
+                             Where @Nam = DATEPART(YEAR,NgayNhap)                            
+                             Group By MaHang";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter ("@Nam", nam)
+            };
+            try
+            {
+                var reader = dbHelper.ExecuteReader(query);
+                while (reader.Read())
+                {
+                    data.Add(new PhieuXuatDTO
+                    {
+                        MaHang = reader["MaHang"].ToString(),
+                        SoLuongXuat = Convert.ToInt32(reader["TongSoLuongXuat"])
                     });
                 }
             }
@@ -178,7 +327,7 @@ namespace DAL
                     });
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw;
             }
@@ -209,8 +358,8 @@ namespace DAL
                     });
                 }
             }
-            catch(Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 throw;
             }
             return data;
@@ -271,9 +420,9 @@ namespace DAL
                     });
                 }
             }
-            catch(Exception ex) 
-            { 
-                throw; 
+            catch (Exception ex)
+            {
+                throw;
             }
             return data;
         }
@@ -331,10 +480,10 @@ namespace DAL
                     });
                 }
             }
-            catch(Exception ex) 
-            { 
-                throw; 
-            } 
+            catch (Exception ex)
+            {
+                throw;
+            }
             return data;
         }
     }
