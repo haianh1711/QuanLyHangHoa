@@ -26,7 +26,7 @@ namespace BLL
         }
         public bool CapnhatHangHoa(HangHoaDTO HangHoa)
         {
-            if (string.IsNullOrEmpty(HangHoa.MaHangHoa))
+            if (string.IsNullOrEmpty(HangHoa.MaHang))
                 return false;
             return HangHoaDAL.CapNhatHangHoa(HangHoa);
         }

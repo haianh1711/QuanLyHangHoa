@@ -12,6 +12,7 @@ namespace BLL
     public class ChiTietPhieuNhapBLL
     {
         private ChiTietPhieuNhapDAL ChiTietPhieuNhapDAL = new ChiTietPhieuNhapDAL();
+        private HangHoaBLL HangHoaBLL = new();
 
         public bool ThemDanhSachCTPN(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
         {
@@ -24,6 +25,7 @@ namespace BLL
                         chiTiet.MaCTPN = ChiTietPhieuNhapDAL.TaoMaCTPNMoi();
                         bool result = ChiTietPhieuNhapDAL.ThemCTPN(chiTiet);
                         if (!result) throw new Exception("Thất bại trong việc thêm mã CPTN" + chiTiet.MaCTPN);
+                        if (!CapNhapSoLuongTon(chiTiet)) return false;
                     }
 
                     transaction.Complete();
@@ -46,6 +48,7 @@ namespace BLL
                     {
                         bool result = ChiTietPhieuNhapDAL.SuaCTPN(chiTiet);
                         if (!result) throw new Exception("Thất bại trong việc sửa mã CPTN" + chiTiet.MaCTPN);
+                        if (!CapNhapSoLuongTon(chiTiet)) return false;
                     }
 
                     transaction.Complete();
@@ -68,6 +71,7 @@ namespace BLL
                     {
                         bool result = ChiTietPhieuNhapDAL.XoaCTPN(chiTiet.MaCTPN);
                         if (!result) throw new Exception("Thất bại trong việc xóa mã CPTN" + chiTiet.MaCTPN);
+                        if (!CapNhapSoLuongTon(chiTiet)) return false;
                     }
 
                     transaction.Complete();
@@ -78,6 +82,17 @@ namespace BLL
                     throw new Exception("Xóa danh sách thất bại: " + ex.Message, ex);
                 }
             }
+        }
+
+        private bool CapNhapSoLuongTon(ChiTietPhieuNhapDTO chiTiet)
+        {
+            int SLBanDau = ChiTietPhieuNhapDAL.LaySoLuongNhap(chiTiet.MaPhieuNhap);
+            int SLChenhLech = chiTiet.SoLuongNhap - SLBanDau;
+
+            int soLuongTon = HangHoaBLL.LaySoLuongHangHoa(chiTiet.MaSanPham);
+            soLuongTon += SLChenhLech;
+
+            return HangHoaBLL.CapNhatSoLuongHangHoa(chiTiet.MaSanPham, soLuongTon);
         }
 
         public List<ChiTietPhieuNhapDTO> HienThiDanhSachCTPN(string maPhieuNhap)

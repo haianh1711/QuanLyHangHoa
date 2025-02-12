@@ -35,7 +35,7 @@ namespace DAL
                         MaNhanVien = row["MaNhanVien"].ToString(),
                         NgayNhap = Convert.ToDateTime(row["NgayNhap"]).ToString("dd/MM/yyyy"),
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
-                        TongTien = (decimal?)row["TongTien"]
+                        TongTien = (decimal)row["TongTien"]
                     };
                     ds.Add(kh);
                 }

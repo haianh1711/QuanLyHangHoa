@@ -21,7 +21,7 @@ namespace GUI.ViewModels
 
         private PhieuNhapBLL phieuNhapBLL = new();
         private ChiTietPhieuNhapBLL chiTietPhieuNhapBLL = new();
-        private SanPhamBLL sanPhamBLL = new();
+        private HangHoaBLL hangHoaBLL = new();
 
         // dataGrid
         [ObservableProperty]
@@ -49,14 +49,14 @@ namespace GUI.ViewModels
 
         // ComboBox
         [ObservableProperty]
-        private List<HangHoaDTO> sanPhams;
+        private List<HangHoaDTO> hangHoas;
 
         [ObservableProperty]
-        private HangHoaDTO? selectedSanPham;
+        private HangHoaDTO? selectedHangHoa;
 
         public ChiTietPhieuNhapViewModel()
         {
-            sanPhams = sanPhamBLL.LayMaVaTenSP();
+            HangHoas = hangHoaBLL.LayMaVaTenSP();
 
             phieuNhap = new()
             {
@@ -87,14 +87,13 @@ namespace GUI.ViewModels
             }
         }
 
-
-        partial void OnSelectedSanPhamChanged(HangHoaDTO? value)
+        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
         {
             if (value != null && TempChiTiet != null)
             {
-                TempChiTiet.MaSanPham = value.MaSanPham;
+                TempChiTiet.MaSanPham = value.MaHang;
 
-                TempChiTiet.TenSanPham = value.TenSanPham;
+                TempChiTiet.TenSanPham = value.TenHang;
                 // Lỗi không biết: không thể tự động cập nhập tên sp thay đổi
                 // giải pháp code thủ công để thông báo cho giao diện
                 OnPropertyChanged(nameof(TempChiTiet));

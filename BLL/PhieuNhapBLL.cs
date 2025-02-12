@@ -20,7 +20,6 @@ namespace BLL
 
         }
 
-
         public bool XoaPhieuNhap(string maPhieuNhap)
         {
             using (TransactionScope transaction = new())

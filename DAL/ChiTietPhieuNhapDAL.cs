@@ -113,9 +113,9 @@ namespace DAL
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
                         MaSanPham = row["MaSanPham"].ToString(),
                         TenSanPham = row["TenSanPham"].ToString(),
-                        GiaNhap = (decimal?)row["GiaNhap"],
-                        SoLuongNhap = (int?)row["SoLuongNhap"],
-                        ThanhTien = (decimal?)row["ThanhTien"]
+                        GiaNhap = (decimal)row["GiaNhap"],
+                        SoLuongNhap = (int)row["SoLuongNhap"],
+                        ThanhTien = (decimal)row["ThanhTien"]
 
                     };
                     list.Add(thongke);
@@ -160,9 +160,9 @@ namespace DAL
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
                         MaSanPham = row["MaSanPham"].ToString(),
                         TenSanPham = row["TenSanPham"].ToString(),
-                        GiaNhap = (decimal?)row["GiaNhap"],
-                        SoLuongNhap = (int?)row["SoLuongNhap"],
-                        ThanhTien = (decimal?)row["ThanhTien"]
+                        GiaNhap = (decimal)row["GiaNhap"],
+                        SoLuongNhap = (int)row["SoLuongNhap"],
+                        ThanhTien = (decimal)row["ThanhTien"]
                     };
                     list.Add(thongke);
                 }
@@ -195,6 +195,25 @@ namespace DAL
             {
                 throw new Exception($"Lỗi khi xóa chi tiết phiếu nhập: {ex.Message}", ex);
             }
+        }
+
+        public int LaySoLuongNhap(string MaCTPN)
+        {
+            string query = @"SELECT SoLuongNhap FROM ChiTietPhieuNhap
+                            WHERE MaCTPN = @MaCTPN";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@MaCTPN", MaCTPN)
+            };
+
+            var result = dbHelper.ExecuteScalar(query, parameters);
+
+            if (result != null && int.TryParse(result.ToString(), out int soLuongNhap))
+            {
+                return soLuongNhap;
+            }
+            return 0;
         }
 
         public string? TaoMaCTPNMoi()
