@@ -35,10 +35,6 @@ namespace BLL
             
         }
 
-        public void testc()
-        {
-            Console.WriteLine("hello");
-        }
 
     }
 }

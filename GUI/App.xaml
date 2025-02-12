@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GUI"
              xmlns:views="clr-namespace:GUI.Views"
-             xmlns:viewModels="clr-namespace:GUI.ViewModels" 
-             xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
-             StartupUri="Views\ChiTietPhieuForm.xaml">
+             xmlns:viewModels="clr-namespace:GUI.ViewModels"
+             StartupUri="Views\HangHoaForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,35 +17,6 @@
                 <ResourceDictionary Source="Styles/ScrollViewer.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
-
-            <DataTemplate DataType="{x:Type viewModelsUC:TrangChuMenuViewModel}">
-                <viewsUC:TrangChuMenu/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModels:TrangChuViewModel}">
-                <views:MainForm/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModels:NhanvienViewModel}">
-                <views:NhanVienForm/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModels:KhachHangViewModel}">
-                <views:KhachhangForm/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModels:PhieuNhapViewModel}">
-                <views:PhieuNhapForm/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModels:ThongKeSPViewModel}">
-                <views:ThongKeSPForm/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModels:HangHoaViewModel}">
-                <views:HangHoaForm/>
-            </DataTemplate>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

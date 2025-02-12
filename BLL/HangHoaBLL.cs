@@ -1,20 +1,28 @@
 ﻿using DAL;
 using DTO;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace BLL
 {
     public class HangHoaBLL
     {
         private HangHoaDAL HangHoaDAL = new();
+        private ChiTietPhieuNhapBLL ChiTietPhieuNhapBLL = new();
 
         public List<HangHoaDTO> LayMaVaTenSP()
         {
             return HangHoaDAL.LayMaVaTenSP();
+        }
+        public List<HangHoaDTO> HienThiDanhSachHH()
+        {
+            return HangHoaDAL.HienThiDanhSachHH();
         }
         public bool ThemHangHoa(HangHoaDTO HangHoa)
         {
@@ -30,11 +38,23 @@ namespace BLL
                 return false;
             return HangHoaDAL.CapNhatHangHoa(HangHoa);
         }
-        public bool XoaHangHoa(string MaHang)
+        public bool XoaHangHoa(string maHangHoa)
         {
-            if (string.IsNullOrEmpty(MaHang))
+            if (string.IsNullOrEmpty(maHangHoa))
                 return false;
-            return HangHoaDAL.XoaHangHoa(MaHang);
+
+            using(TransactionScope transaction = new())
+            {
+                List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs = ChiTietPhieuNhapBLL.LayDanhSachCTPNTheoMaHH(maHangHoa);
+                if (ChiTietPhieuNhapBLL.XoaDanhSachCTPN(chiTietPhieuNhapDTOs))
+                {
+                    if(HangHoaDAL.XoaHangHoa(maHangHoa))
+                        transaction.Complete(); return true;
+                }
+
+                return false;
+            }
+            
         }
         public int LaySoLuongHangHoa(string MaHang)
         {

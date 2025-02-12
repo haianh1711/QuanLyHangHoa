@@ -11,7 +11,7 @@ namespace DAL
 {
     public class ChiTietPhieuNhapDAL
     {
-        private DatabaseHelper dbHelper = new DatabaseHelper();
+        private readonly DatabaseHelper dbHelper = new ();
 
         public bool ThemCTPN(ChiTietPhieuNhapDTO chiTietPhieuNhapDTO)
         {
@@ -113,10 +113,9 @@ namespace DAL
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
                         MaHang = row["MaHang"].ToString(),
                         TenHang = row["TenHang"].ToString(),
-                        GiaNhap = (decimal)row["GiaNhap"],
                         SoLuongNhap = (int)row["SoLuongNhap"],
-                        ThanhTien = (decimal)row["ThanhTien"]
-
+                        GiaNhap = Convert.ToDecimal(row["GiaNhap"]),
+                        ThanhTien = Convert.ToDecimal(row["ThanhTien"])
                     };
                     list.Add(thongke);
                 }
@@ -128,6 +127,49 @@ namespace DAL
                 throw new Exception($"Lỗi khi hiển thị danh sách chi tiết phiếu nhập: {ex.Message}", ex);
             }
 
+        }
+
+
+        public List<ChiTietPhieuNhapDTO> LayDanhSachCTPNTheoMaHH(string maHh)
+        {
+            try
+            {
+                List<ChiTietPhieuNhapDTO> list = new();
+
+                string query = @"SELECT ct.MaCTPN, sp.MaHang, sp.TenHang, ct.GiaNhap, ct.SoLuongNhap, ct.MaPhieuNhap,
+		                        ct.SoLuongNhap * ct.GiaNhap as ThanhTien
+                                FROM ChiTietPhieuNhap ct INNER JOIN
+                                                      HangHoa sp ON ct.MaHang = sp.MaHang
+                                WHERE (ct.MaHangHoa = @MaHangHoa)";
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@MaHangHoa", maHh)
+                };
+
+
+                var dataTable = dbHelper.ExecuteQuery(query, parameters);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    ChiTietPhieuNhapDTO thongke = new ChiTietPhieuNhapDTO
+                    {
+                        MaCTPN = row["MaCTPN"].ToString(),
+                        MaPhieuNhap = row["MaPhieuNhap"].ToString(),
+                        MaHang = row["MaHang"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
+                        SoLuongNhap = (int)row["SoLuongNhap"],
+                        GiaNhap = Convert.ToDecimal(row["GiaNhap"]),
+                        ThanhTien = Convert.ToDecimal(row["ThanhTien"])
+                    };
+                    list.Add(thongke);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy danh sách chi tiết phiếu nhập theo mã hàng hóa: {ex.Message}", ex);
+            }
         }
 
 
@@ -196,6 +238,7 @@ namespace DAL
                 throw new Exception($"Lỗi khi xóa chi tiết phiếu nhập: {ex.Message}", ex);
             }
         }
+
 
         public int LaySoLuongNhap(string MaCTPN)
         {

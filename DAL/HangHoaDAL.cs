@@ -11,7 +11,7 @@ namespace DAL
 {
     public class HangHoaDAL
     {
-        DatabaseHelper dbHelper = new DatabaseHelper();
+        private readonly DatabaseHelper dbHelper = new();
 
         public List<HangHoaDTO> LayMaVaTenSP()
         {
@@ -46,7 +46,7 @@ namespace DAL
         {
             List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHang, TenHang from HangHoa";
+            string query = "Select MaHang, TenHang, SoLuong, MoTa, HinhAnh from HangHoa";
 
             try
             {
@@ -58,6 +58,9 @@ namespace DAL
                     {
                         MaHang = row["MaHang"].ToString(),
                         TenHang = row["TenHang"].ToString(),
+                        SoLuong = Convert.ToInt32(row["SoLuong"]),
+                        MoTa = row["MoTa"].ToString(),
+                        HinhAnh = row["HinhAnh"].ToString(),
                     };
                     HangHoaDTOs.Add(HangHoa);
                 }

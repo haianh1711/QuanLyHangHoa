@@ -14,6 +14,6 @@ namespace DTO
         public decimal? GiaNhap { get; set; }
         public int SoLuongNhap { get; set; }
         public string? MaPhieuNhap { get; set; }
-        public decimal? ThanhTien { get; set; }
+        public decimal ThanhTien { get; set; }
     }
 }

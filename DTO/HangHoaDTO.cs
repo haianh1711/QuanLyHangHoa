@@ -12,15 +12,14 @@ namespace DTO
         public string? MaHang { get; set; }
         public string? TenHang { get; set; }
         public double? GiaNhap { get; set; }
-        public int? SoLuong { get; set; }
+        public int SoLuong { get; set; }
         public string? MoTa { get; set; }
         public string? HinhAnh { get; set; }
 
-        public HangHoaDTO(string? hangHoaID, string? tenHangHoa, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
+        public HangHoaDTO(string? hangHoaID, string? tenHangHoa,  int soLuong, string? moTa, string? hinhAnh = null)
         {
             MaHang = hangHoaID;
             TenHang = tenHangHoa;
-            GiaNhap = giaNhap;
             SoLuong = soLuong;
             MoTa = moTa;
             HinhAnh = hinhAnh;
