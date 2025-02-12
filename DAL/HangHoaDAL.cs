@@ -17,7 +17,7 @@ namespace DAL
         {
             List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHangHoa, TenHangHoa from HangHoa";
+            string query = "Select MaHang, TenHangHoa from HangHoa";
 
             try
             {
@@ -27,7 +27,7 @@ namespace DAL
                 {
                     HangHoaDTO HangHoa = new HangHoaDTO
                     {
-                        MaHangHoa = row["MaHangHoa"].ToString(),
+                        MaHang = row["MaHang"].ToString(),
                         TenHangHoa = row["TenHangHoa"].ToString(),
                     };
                     HangHoaDTOs.Add(HangHoa);
@@ -46,7 +46,7 @@ namespace DAL
         {
             List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHangHoa, TenHangHoa from HangHoa";
+            string query = "Select MaHang, TenHangHoa from HangHoa";
 
             try
             {
@@ -56,7 +56,7 @@ namespace DAL
                 {
                     HangHoaDTO HangHoa = new HangHoaDTO
                     {
-                        MaHangHoa = row["MaHangHoa"].ToString(),
+                        MaHang = row["MaHang"].ToString(),
                         TenHangHoa = row["TenHangHoa"].ToString(),
                     };
                     HangHoaDTOs.Add(HangHoa);
@@ -73,12 +73,12 @@ namespace DAL
 
         public bool ThemHangHoa(HangHoaDTO HangHoa)
         {
-            string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaHangHoa, @TenHangHoa, @SoLuong, @MoTa, @HinhAnh)";
+            string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaHang, @TenHangHoa, @SoLuong, @MoTa, @HinhAnh)";
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
             {
-            new SqlParameter("@MaHangHoa", HangHoa.MaHangHoa),
+            new SqlParameter("@MaHang", HangHoa.MaHang),
             new SqlParameter("@TenHangHoa", HangHoa.TenHangHoa),
            // new SqlParameter("@DonGia", HangHoa.GiaNhap),
             new SqlParameter("@SoLuong", HangHoa.SoLuong),
@@ -108,7 +108,7 @@ namespace DAL
                 {
                     HangHoaDTO HangHoa = new HangHoaDTO
                     {
-                        MaHangHoa = row["MaHang"].ToString(),
+                        MaHang = row["MaHang"].ToString(),
                         TenHangHoa = row["TenHang"].ToString(),
                         SoLuong = Convert.ToInt32(row["SoLuong"]),
                         HinhAnh = row["HinhAnh"].ToString(),
@@ -129,7 +129,7 @@ namespace DAL
             string query = $"UPDATE HangHoa SET MaHang = @MaHang, TenHang = @TenHang, SoLuong = @SoLuong, HinhAnh = @HinhAnh, MoTa = @MoTa Where MaHang = @MaHang";
             SqlParameter[] parameters =
             {
-                new SqlParameter("@MaHang", HangHoa.MaHangHoa),
+                new SqlParameter("@MaHang", HangHoa.MaHang),
                 new SqlParameter ("@TenHang", HangHoa.TenHangHoa),
                 new SqlParameter("@SoLuong", HangHoa.SoLuong),
                 new SqlParameter("@HinhAnh", HangHoa.HinhAnh),
@@ -146,12 +146,12 @@ namespace DAL
             }
         }
 
-        public bool XoaHangHoa(string MaHangHoa)
+        public bool XoaHangHoa(string MaHang)
         {
                 string query = $"DELETE FROM HangHoa where Mahang = @MaHang";
                 SqlParameter[] parameters =
                 {
-                new SqlParameter("@MaHang", MaHangHoa)
+                new SqlParameter("@MaHang", MaHang)
             };
                 try
                 {
@@ -163,12 +163,12 @@ namespace DAL
                     throw new Exception("Lỗi khi xóa sản phẩm: " + ex.Message);
                 }
         }
-        public int LaySoLuongHangHoa(string MaHangHoa)
+        public int LaySoLuongHangHoa(string MaHang)
         {
-            string query = $"GET SoLuong WHERE MaHangHoa = @MaHangHoa";
+            string query = $"GET SoLuong WHERE MaHang = @MaHang";
             SqlParameter[] parameters =
                 [
-                    new SqlParameter("@MaPhieuNhap",MaHangHoa),
+                    new SqlParameter("@MaPhieuNhap",MaHang),
                 ];
             try
             {
@@ -181,14 +181,14 @@ namespace DAL
             }
         }
 
-        public bool CapNhatSoLuongHangHoa(string MaHangHoa, int soLuongCapNhap)
+        public bool CapNhatSoLuongHangHoa(string MaHang, int soLuongCapNhap)
         {
-            string query = "UPDATE HangHoa SET SoLuong = @SoLuong WHERE MaHangHoa = @MaHangHoa";
+            string query = "UPDATE HangHoa SET SoLuong = @SoLuong WHERE MaHang = @MaHang";
 
             SqlParameter[] parameters =
             [
                     new SqlParameter("@SoLuong", soLuongCapNhap),
-                    new SqlParameter("@MaHangHoa", MaHangHoa),
+                    new SqlParameter("@MaHang", MaHang),
             ];
 
             try

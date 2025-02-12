@@ -9,7 +9,7 @@ namespace DTO
 {
      public class HangHoaDTO
     {
-        public string? MaHangHoa { get; set; }
+        public string? MaHang { get; set; }
         public string? TenHangHoa { get; set; }
         public double? GiaNhap { get; set; }
         public int? SoLuong { get; set; }
@@ -18,7 +18,7 @@ namespace DTO
 
         public HangHoaDTO(string? hangHoaID, string? tenHangHoa, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
         {
-            MaHangHoa = hangHoaID;
+            MaHang = hangHoaID;
             TenHangHoa = tenHangHoa;
             GiaNhap = giaNhap;
             SoLuong = soLuong;

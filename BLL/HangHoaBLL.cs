@@ -26,23 +26,23 @@ namespace BLL
         }
         public bool CapnhatHangHoa(HangHoaDTO HangHoa)
         {
-            if (string.IsNullOrEmpty(HangHoa.MaHangHoa))
+            if (string.IsNullOrEmpty(HangHoa.MaHang))
                 return false;
             return HangHoaDAL.CapNhatHangHoa(HangHoa);
         }
-        public bool XoaHangHoa(string maHangHoa)
+        public bool XoaHangHoa(string MaHang)
         {
-            if (string.IsNullOrEmpty(maHangHoa))
+            if (string.IsNullOrEmpty(MaHang))
                 return false;
-            return HangHoaDAL.XoaHangHoa(maHangHoa);
+            return HangHoaDAL.XoaHangHoa(MaHang);
         }
-        public int LaySoLuongHangHoa(string maHangHoa)
+        public int LaySoLuongHangHoa(string MaHang)
         {
-            return HangHoaDAL.LaySoLuongHangHoa(maHangHoa);
+            return HangHoaDAL.LaySoLuongHangHoa(MaHang);
         }
-        public bool CapNhatSoLuongHangHoa(string maHangHoa, int soLuong)
+        public bool CapNhatSoLuongHangHoa(string MaHang, int soLuong)
         {
-            return HangHoaDAL.CapNhatSoLuongHangHoa(maHangHoa, soLuong);
+            return HangHoaDAL.CapNhatSoLuongHangHoa(MaHang, soLuong);
         }
     }
 }
