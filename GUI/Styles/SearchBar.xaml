@@ -19,7 +19,7 @@
                         <TextBox x:Name="SearchTextBox"
                                  Background="Transparent" 
                                  Padding="35, 0, 0, 0"
-                                 FontSize="22"
+                                 FontSize="20"
                                  BorderThickness="0"
                                  VerticalAlignment="Center" Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"/>
 
@@ -28,7 +28,7 @@
                                    Content="{TemplateBinding Tag}"
                                    Foreground="Gray"
                                    Margin="30, 0, 0, 0"
-                                   FontSize="22"
+                                   FontSize="20"
                                    VerticalAlignment="Center"
                                    IsHitTestVisible="False">
                             <Label.Style>

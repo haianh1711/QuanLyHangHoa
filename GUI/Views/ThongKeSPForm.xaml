@@ -25,14 +25,11 @@
         <Grid Margin="0, 0, 0, 10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition />
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <ComboBox Style="{StaticResource FilterComboBoxStyle}"  Margin="0, 0, 10, 0"
-                SelectedIndex="0">
-                <ComboBoxItem>Tuần</ComboBoxItem>
-                <ComboBoxItem>Tháng</ComboBoxItem>
-                <ComboBoxItem>Năm</ComboBoxItem>
+                SelectedIndex="0" ItemsSource="{Binding DanhSachLoc}">
             </ComboBox>
 
             <Grid Grid.Column="1">
@@ -81,7 +78,10 @@
         </Border>
 
         <Border Grid.Row="3" Style="{StaticResource SimpleBorderStyle}">
-            <lvc:CartesianChart Series="{Binding SeriesLine}"/>
+            <lvc:CartesianChart 
+                Series="{Binding LineChartSeries}"
+                XAxes="{Binding XAxesLine}"
+                />
         </Border>
 
     </Grid>

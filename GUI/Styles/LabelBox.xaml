@@ -125,7 +125,7 @@
     <Style TargetType="{x:Type ComboBox}" x:Key="FilterComboBoxStyle">
         <Setter Property="FontSize" Value="{StaticResource DefaultFonsize}" />
         <Setter Property="Height" Value="60"/>
-        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -136,9 +136,9 @@
                         Background="LightGray">
 
                             <!-- Hiển thị nội dung được chọn -->
-                            <ContentPresenter VerticalAlignment="Center" 
+                            <ContentPresenter  VerticalAlignment="Center" 
                                           HorizontalAlignment="Left" 
-                                          Margin="10, 0, 0, 0"
+                                          Margin="30, 0, 0, 0"
                                           Content="{TemplateBinding SelectedItem}" />
                         </Border>
 
@@ -146,7 +146,7 @@
                         <ToggleButton Grid.Column="1"
                                       Focusable="False" 
                                       BorderThickness="0" 
-                                      Margin="0, 0, 10, 0"
+                                      Margin="0, 0, 20, 0"
                                       Cursor="Hand"
                                       HorizontalAlignment="Right" 
                                       VerticalAlignment="Center" 
