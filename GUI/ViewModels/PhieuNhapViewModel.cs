@@ -11,7 +11,6 @@ using BLL;
 using System.Windows;
 using System.Transactions;
 using GUI.ViewModels.UserControls;
-using GUI.Views.UserControls;
 
 namespace GUI.ViewModels
 {
@@ -56,7 +55,7 @@ namespace GUI.ViewModels
                     PhieuNhapDTO phieuNhapDTO = new()
                     {
                         MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
-                        MaNhanVien = "NV002",
+                        MaNhanVien = "NV001",
                         NgayNhap = DateTime.Now.ToString(),
                         TongTien = '0',
                     };

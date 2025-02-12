@@ -9,8 +9,8 @@ namespace DTO
     public class ChiTietPhieuNhapDTO
     {
         public string? MaCTPN { get; set; }
-        public string? MaSanPham { get; set; }
-        public string? TenSanPham { get; set; }
+        public string? MaHang { get; set; }
+        public string? TenHang { get; set; }
         public decimal? GiaNhap { get; set; }
         public int SoLuongNhap { get; set; }
         public string? MaPhieuNhap { get; set; }

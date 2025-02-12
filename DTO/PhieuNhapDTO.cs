@@ -15,6 +15,6 @@ namespace DTO
         public string? NgayNhap { get; set; }
         public int? SoLuongNhap {  get; set; }
         public double? GiaNhap { get; set; }
-        public decimal? TongTien { get; set; }
+        public decimal TongTien { get; set; }
     }
 }

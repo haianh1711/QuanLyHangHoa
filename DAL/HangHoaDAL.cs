@@ -17,7 +17,7 @@ namespace DAL
         {
             List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHangHoa, TenHangHoa from HangHoa";
+            string query = "Select MaHang, TenHang from HangHoa";
 
             try
             {
@@ -165,14 +165,14 @@ namespace DAL
         }
         public int LaySoLuongHangHoa(string MaHangHoa)
         {
-            string query = $"GET SoLuong WHERE MaHang = @MaHang";
+            string query = $"SELECT SoLuong FROM HangHoa WHERE MaHang = @MaHang";
             SqlParameter[] parameters =
                 [
-                    new SqlParameter("@MaPhieuNhap",MaHangHoa),
+                    new SqlParameter("@MaHang",MaHangHoa),
                 ];
             try
             {
-                int soLuong = (int)dbHelper.ExecuteScalar(query);
+                int soLuong = (int)dbHelper.ExecuteScalar(query, parameters);
                 return soLuong;
             }
             catch (Exception ex)

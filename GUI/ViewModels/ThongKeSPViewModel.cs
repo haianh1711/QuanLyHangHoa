@@ -57,7 +57,7 @@ namespace GUI.ViewModels
         private ICartesianAxis[] xAxesLine;
 
         [ObservableProperty]
-        private ObservableCollection<SanPhamDTO> data;
+        private ObservableCollection<HangHoaDTO> data;
 
         [ObservableProperty]
         private int chartHeight;
@@ -67,15 +67,15 @@ namespace GUI.ViewModels
 
         public ThongKeSPViewModel()
         {
-            Data = new ObservableCollection<SanPhamDTO>(thongKeBLL.GetSanPhamThongKe());
+            Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
             luaChonLoc = "Tuần";
             LoadBarChartSeries();
         }
 
         private void LoadBarChartSeries()
         {
-            List<PhieuNhapDTO> phieuNhapDTOs = thongKeBLL.GetThongKePhieuNhapSanPhamData();
-            string[] dsTenSanPham = phieuNhapDTOs.Select(phieunhap => phieunhap.MaSanPham ?? string.Empty).ToArray();
+            List<PhieuNhapDTO> phieuNhapDTOs = thongKeBLL.GetThongKePhieuNhapHangHoaData();
+            string[] dsTenSanPham = phieuNhapDTOs.Select(phieunhap => phieunhap.MaHang ?? string.Empty).ToArray();
             double[]  dsSoLuongNhap = phieuNhapDTOs.Select(phieunhap => (double?)phieunhap.SoLuongNhap ?? 0).ToArray();
 
             double maxSoLuongNhap = dsSoLuongNhap.Max();

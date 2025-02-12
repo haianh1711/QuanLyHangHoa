@@ -35,7 +35,7 @@ namespace DAL
                         MaNhanVien = row["MaNhanVien"].ToString(),
                         NgayNhap = Convert.ToDateTime(row["NgayNhap"]).ToString("dd/MM/yyyy"),
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
-                        TongTien = (decimal)row["TongTien"]
+                        TongTien = Convert.ToDecimal(row["TongTien"])
                     };
                     ds.Add(kh);
                 }
@@ -52,15 +52,14 @@ namespace DAL
         {
             try
             {
-                string query = @"INSERT INTO PhieuNhap (MaPhieuNhap, MaNhanVien, NgayNhap, TongTien)
-                         VALUES (@MaPhieuNhap, @MaNhanVien, @NgayNhap, @TongTien);";
+                string query = @"INSERT INTO PhieuNhap (MaPhieuNhap, MaNhanVien, NgayNhap)
+                         VALUES (@MaPhieuNhap, @MaNhanVien, @NgayNhap       );";
 
                 SqlParameter[] parameters =
                 [
                     new SqlParameter("@MaPhieuNhap", phieuNhapDTO.MaPhieuNhap),
                     new SqlParameter("@MaNhanVien", phieuNhapDTO.MaNhanVien),
                     new SqlParameter("@NgayNhap", SqlDbType.DateTime) { Value = DateTime.Parse(phieuNhapDTO.NgayNhap) },
-                    new SqlParameter("@TongTien", SqlDbType.Decimal) { Value = Convert.ToDecimal(phieuNhapDTO.TongTien) }
                 ];
 
                 var result = dbHelper.ExecuteNonQuery(query, parameters);

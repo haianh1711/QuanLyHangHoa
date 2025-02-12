@@ -27,9 +27,7 @@ namespace BLL
                 if (chiTietPhieuNhapBLL.XoaTatCaChiTietCuaPhieuNhap(maPhieuNhap))
                 {
                     if (phieuNhapDAL.XoaPhieuNhap(maPhieuNhap))
-                    {
-                        transaction.Complete(); return true;
-                    }
+                            transaction.Complete(); return true;
                 }
 
                 return false;
@@ -42,9 +40,9 @@ namespace BLL
         }
 
 
-        public decimal? TinhTongTien(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
+        public decimal TinhTongTien(List<ChiTietPhieuNhapDTO> chiTietPhieuNhapDTOs)
         {
-            decimal? sum = chiTietPhieuNhapDTOs.Sum(chiTiet => chiTiet.GiaNhap * chiTiet.SoLuongNhap);
+            decimal sum = (decimal)chiTietPhieuNhapDTOs.Sum(chiTiet => chiTiet.GiaNhap * chiTiet.SoLuongNhap);
             return sum;
         }
 

@@ -21,7 +21,7 @@ namespace GUI.ViewModels
 
         private PhieuNhapBLL phieuNhapBLL = new();
         private ChiTietPhieuNhapBLL chiTietPhieuNhapBLL = new();
-        private HangHoaBLL hangHoaBLL = new();
+        private HangHoaBLL sanPhamBLL = new();
 
         // dataGrid
         [ObservableProperty]
@@ -49,18 +49,18 @@ namespace GUI.ViewModels
 
         // ComboBox
         [ObservableProperty]
-        private List<HangHoaDTO> hangHoas;
+        private List<HangHoaDTO> sanPhams;
 
         [ObservableProperty]
-        private HangHoaDTO? selectedHangHoa;
+        private HangHoaDTO? selectedSanPham;
 
         public ChiTietPhieuNhapViewModel()
         {
-            HangHoas = hangHoaBLL.LayMaVaTenSP();
+            sanPhams = sanPhamBLL.LayMaVaTenSP();
 
             phieuNhap = new()
             {
-                MaPhieuNhap = "PN011",
+                MaPhieuNhap = "PN002",
                 TongTien = 0
             };
 
@@ -75,8 +75,8 @@ namespace GUI.ViewModels
                 TempChiTiet = new ChiTietPhieuNhapDTO
                 {
                     MaPhieuNhap = value.MaPhieuNhap,
-                    MaSanPham = value.MaSanPham,
-                    TenSanPham = value.TenSanPham,
+                    MaHang = value.MaHang,
+                    TenHang = value.TenHang,
                     GiaNhap = value.GiaNhap,
                     SoLuongNhap = value.SoLuongNhap
                 };
@@ -87,13 +87,14 @@ namespace GUI.ViewModels
             }
         }
 
-        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
+
+        partial void OnSelectedSanPhamChanged(HangHoaDTO? value)
         {
             if (value != null && TempChiTiet != null)
             {
-                TempChiTiet.MaSanPham = value.MaHang;
+                TempChiTiet.MaHang = value.MaHang;
 
-                TempChiTiet.TenSanPham = value.TenHang;
+                TempChiTiet.TenHang = value.TenHang;
                 // Lỗi không biết: không thể tự động cập nhập tên sp thay đổi
                 // giải pháp code thủ công để thông báo cho giao diện
                 OnPropertyChanged(nameof(TempChiTiet));
@@ -122,8 +123,8 @@ namespace GUI.ViewModels
                 {
                     MaCTPN = chiTietPhieuNhapBLL.TaoMaCTPNMoi(),
                     MaPhieuNhap = PhieuNhap.MaPhieuNhap,
-                    MaSanPham = TempChiTiet.MaSanPham,
-                    TenSanPham = TempChiTiet.TenSanPham,
+                    MaHang = TempChiTiet.MaHang,
+                    TenHang = TempChiTiet.TenHang,
                     GiaNhap = TempChiTiet.GiaNhap,
                     SoLuongNhap = TempChiTiet.SoLuongNhap,
                     ThanhTien = TempChiTiet.GiaNhap * TempChiTiet.SoLuongNhap
@@ -137,19 +138,21 @@ namespace GUI.ViewModels
         }
 
         [RelayCommand]
-        private void SuaChiTiet()
+        private async void SuaChiTiet()
         {
             if (ChiTietPhieuNhaps != null && SelectedChiTiet != null && TempChiTiet != null && PhieuNhap != null)
             {
+
                 int index = ChiTietPhieuNhaps.IndexOf(SelectedChiTiet);
                 if (index >= 0)
                 {
+
                     ChiTietPhieuNhapDTO chiTiet = new ChiTietPhieuNhapDTO
                     {
                         MaCTPN = SelectedChiTiet.MaCTPN,
                         MaPhieuNhap = SelectedChiTiet.MaPhieuNhap,
-                        MaSanPham = TempChiTiet.MaSanPham,
-                        TenSanPham = TempChiTiet.TenSanPham,
+                        MaHang = TempChiTiet.MaHang,
+                        TenHang = TempChiTiet.TenHang,
                         GiaNhap = TempChiTiet.GiaNhap,
                         SoLuongNhap = TempChiTiet.SoLuongNhap,
                         ThanhTien = chiTietPhieuNhapBLL.TinhThanhTien(TempChiTiet),
@@ -170,7 +173,7 @@ namespace GUI.ViewModels
         {
             if (ChiTietPhieuNhaps != null && SelectedChiTiet != null && PhieuNhap != null)
             {
-                ChiTietPhieuNhapDTO chiTietCanXoa = ChiTietPhieuNhaps.First(chiTiet => chiTiet.MaSanPham == SelectedChiTiet.MaSanPham);
+                ChiTietPhieuNhapDTO chiTietCanXoa = ChiTietPhieuNhaps.First(chiTiet => chiTiet.MaHang == SelectedChiTiet.MaHang);
 
                 ChiTietPhieuNhaps.Remove(chiTietCanXoa);
                 danhSachXoa.Add(chiTietCanXoa);

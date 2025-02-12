@@ -89,10 +89,10 @@ namespace BLL
             int SLBanDau = ChiTietPhieuNhapDAL.LaySoLuongNhap(chiTiet.MaPhieuNhap);
             int SLChenhLech = chiTiet.SoLuongNhap - SLBanDau;
 
-            int soLuongTon = HangHoaBLL.LaySoLuongHangHoa(chiTiet.MaSanPham);
+            int soLuongTon = HangHoaBLL.LaySoLuongHangHoa(chiTiet.MaHang);
             soLuongTon += SLChenhLech;
 
-            return HangHoaBLL.CapNhatSoLuongHangHoa(chiTiet.MaSanPham, soLuongTon);
+            return HangHoaBLL.CapNhatSoLuongHangHoa(chiTiet.MaHang, soLuongTon);
         }
 
         public List<ChiTietPhieuNhapDTO> HienThiDanhSachCTPN(string maPhieuNhap)

@@ -17,13 +17,13 @@ namespace DAL
         {
             try
             {
-                string query = @"INSERT INTO ChiTietPhieuNhap (MaCTPN, MaSanPham, GiaNhap, SoLuongNhap, MaPhieuNhap)
-                             VALUES (@MaCTPN, @MaSanPham, @GiaNhap, @SoLuongNhap, @MaPhieuNhap);";
+                string query = @"INSERT INTO ChiTietPhieuNhap (MaCTPN, MaHang, GiaNhap, SoLuongNhap, MaPhieuNhap)
+                             VALUES (@MaCTPN, @MaHang, @GiaNhap, @SoLuongNhap, @MaPhieuNhap);";
 
                 SqlParameter[] parameters = new SqlParameter[]
                 {
                     new SqlParameter("@MaCTPN", chiTietPhieuNhapDTO.MaCTPN),
-                    new SqlParameter("@MaSanPham", chiTietPhieuNhapDTO.MaSanPham),
+                    new SqlParameter("@MaHang", chiTietPhieuNhapDTO.MaHang),
                     new SqlParameter("@GiaNhap", chiTietPhieuNhapDTO.GiaNhap),
                     new SqlParameter("@SoLuongNhap", chiTietPhieuNhapDTO.SoLuongNhap),
                     new SqlParameter("@MaPhieuNhap", chiTietPhieuNhapDTO.MaPhieuNhap)
@@ -92,10 +92,10 @@ namespace DAL
             {
                 List<ChiTietPhieuNhapDTO> list = new();
 
-                string query = @"SELECT ct.MaCTPN, sp.MaSanPham, sp.TenSanPham, ct.GiaNhap, ct.SoLuongNhap, ct.MaPhieuNhap,
+                string query = @"SELECT ct.MaCTPN, sp.MaHang, sp.TenHang, ct.GiaNhap, ct.SoLuongNhap, ct.MaPhieuNhap,
 		                        ct.SoLuongNhap * ct.GiaNhap as ThanhTien
                                 FROM ChiTietPhieuNhap ct INNER JOIN
-                                                      SanPham sp ON ct.MaSanPham = sp.MaSanPham
+                                                      HangHoa sp ON ct.MaHang = sp.MaHang
                                 WHERE (ct.MaPhieuNhap = @MaPhieuNhap)";
                 SqlParameter[] parameters =
                 {
@@ -111,8 +111,8 @@ namespace DAL
                     {
                         MaCTPN = row["MaCTPN"].ToString(),
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
-                        MaSanPham = row["MaSanPham"].ToString(),
-                        TenSanPham = row["TenSanPham"].ToString(),
+                        MaHang = row["MaHang"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
                         GiaNhap = (decimal)row["GiaNhap"],
                         SoLuongNhap = (int)row["SoLuongNhap"],
                         ThanhTien = (decimal)row["ThanhTien"]
@@ -137,11 +137,11 @@ namespace DAL
             {
                 List<ChiTietPhieuNhapDTO> list = new();
 
-                string query = @"SELECT ct.MaCTPN, sp.MaSanPham, sp.TenSanPham, ct.GiaNhap, ct.SoLuongNhap, ct.MaPhieuNhap,
+                string query = @"SELECT ct.MaCTPN, sp.MaHang, sp.TenHang, ct.GiaNhap, ct.SoLuongNhap, ct.MaPhieuNhap,
 		                        ct.SoLuongNhap * ct.GiaNhap as ThanhTien
                                 FROM ChiTietPhieuNhap ct INNER JOIN
-                                                      SanPham sp ON ct.MaSanPham = sp.MaSanPham
-                                WHERE (sp.TenSanPham LIKE '%' + @Info + '%' or ct.MaSanPham = @Info) 
+                                                      HangHoa sp ON ct.MaHang = sp.MaHang
+                                WHERE (sp.TenHang LIKE '%' + @Info + '%' or ct.MaHang = @Info) 
                                         AND ct.MaPhieuNhap = @MaPhieuNhap";
 
                 SqlParameter[] parameters =
@@ -158,8 +158,8 @@ namespace DAL
                     {
                         MaCTPN = row["MaCTPN"].ToString(),
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
-                        MaSanPham = row["MaSanPham"].ToString(),
-                        TenSanPham = row["TenSanPham"].ToString(),
+                        MaHang = row["MaHang"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
                         GiaNhap = (decimal)row["GiaNhap"],
                         SoLuongNhap = (int)row["SoLuongNhap"],
                         ThanhTien = (decimal)row["ThanhTien"]

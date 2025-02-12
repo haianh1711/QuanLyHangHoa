@@ -81,7 +81,7 @@
                     </Grid>
 
                     <!--Thêm sp vào phiếu-->
-                    <ContentControl Grid.Row="1" Tag="Thêm sản phẩm vào phiếu"
+                    <ContentControl Grid.Row="1" Tag="Thêm hàng hóa vào phiếu"
                         Style="{StaticResource BorderWithHeaderStyle}" 
                         Background="#CAD9FF">
                         <Grid>
@@ -104,23 +104,23 @@
 
 
                                 <StackPanel >
-                                    <Label Style="{StaticResource SimpleLabelStyle}"  Content="Mã sản phẩm" />
+                                    <Label Style="{StaticResource SimpleLabelStyle}"  Content="Mã hàng hóa" />
                                     <ComboBox x:Name="cbMaSP"
                                           ItemsSource="{Binding SanPhams}"
-                                          DisplayMemberPath="MaSanPham"
-                                          SelectedValuePath="MaSanPham"
-                                          SelectedValue="{Binding TempChiTiet.MaSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          DisplayMemberPath="MaHang"
+                                          SelectedValuePath="MaHang"
+                                          SelectedValue="{Binding TempChiTiet.MaHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           SelectedItem="{Binding SelectedSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           Style="{StaticResource SimpleComboBoxStyle}">
                                     </ComboBox>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
-                                    <Label Style="{StaticResource SimpleLabelStyle}" Content="Tên sản phẩm" />
+                                    <Label Style="{StaticResource SimpleLabelStyle}" Content="Tên hàng hóa" />
                                     <TextBox x:Name="txtTenSP" 
                                          Style="{StaticResource SimpleTextBoxStyle}"
                                          IsReadOnly="True"
-                                         Text="{Binding TempChiTiet.TenSanPham, Mode=OneWay}"/>
+                                         Text="{Binding TempChiTiet.TenHang, Mode=OneWay}"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="1">
@@ -163,8 +163,8 @@
                   SelectedItem="{Binding SelectedChiTiet, Mode=TwoWay}"
                   Style="{StaticResource DataGridStyle}" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mã sản phẩm" Binding="{Binding MaSanPham}" Width="*"/>
-                    <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding TenSanPham}"  Width="*"/>
+                    <DataGridTextColumn Header="Mã hàng hóa" Binding="{Binding MaHang}" Width="*"/>
+                    <DataGridTextColumn Header="Tên hàng hóa" Binding="{Binding TenHang}"  Width="*"/>
                     <DataGridTextColumn Header="Giá nhập" Binding="{Binding GiaNhap}"  Width="*"/>
                     <DataGridTextColumn Header="Số lượng nhập" Binding="{Binding SoLuongNhap}" Width="*"/>
                     <DataGridTextColumn Header="Thành tiền" Binding="{Binding ThanhTien}" Width="*"/>
