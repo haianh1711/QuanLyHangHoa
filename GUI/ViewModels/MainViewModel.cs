@@ -15,7 +15,7 @@ namespace GUI.ViewModels
     internal partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        public ThongBao thongBaoVM;
+        public ThongBaoViewModel thongBaoVM;
 
         [ObservableProperty]
         public TrangChuViewModel menuVM;
@@ -26,7 +26,7 @@ namespace GUI.ViewModels
         public MainViewModel()
         {
             // khởi tạo menu
-            ThongBaoVM = new ThongBao();
+            ThongBaoVM = new ThongBaoViewModel();
             trangChuMenuVM = new TrangChuMenuViewModel(this);
             Menu = trangChuMenuVM;
 

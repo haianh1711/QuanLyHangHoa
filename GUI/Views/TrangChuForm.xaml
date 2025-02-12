@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GUI.Views.UserControls.TrangChuForm"
+﻿<UserControl x:Class="GUI.Views.TrangChuForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -115,24 +115,20 @@
 
 
                     <!--Btn-->
-                    <Button Grid.Column="1" 
-                        Style="{StaticResource CustomButtonStyle}" 
-                        Content="Đổi mật khẩu" 
-                        Margin="22,436,21,113" Click="Button_Click"/>
-
+                    
                     <Button Grid.Column="1" 
                         Style="{StaticResource CustomButtonStyle}" 
                         Content="Đổi ảnh" 
-                        Margin="23,476,21,73"/>
+                        Margin="22,443,22,106"/>
 
                     <Button Grid.Column="1" 
                         Style="{StaticResource CustomButtonStyle}" 
                         Content="Hướng dẫn" 
-                        Margin="23,516,21,33"/>
+                        Margin="23,483,21,66"/>
                     <Button Grid.Column="1" 
                     Style="{StaticResource CustomButtonStyle}" 
                     Content="Đăng xuất" 
-                    Margin="23,556,21,-7" />
+                    Margin="23,523,21,26" />
 
 
 
