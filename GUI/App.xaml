@@ -2,9 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GUI"
-             xmlns:views="clr-namespace:GUI.Views"
-             xmlns:viewModels="clr-namespace:GUI.ViewModels" 
-             xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
+              xmlns:views="clr-namespace:GUI.Views"
+            xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
+              xmlns:viewModels="clr-namespace:GUI.ViewModels"
+                xmlns:viewModelsUC="clr-namespace:GUI.ViewModels.UserControls"
              StartupUri="Views\KhachHangForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
