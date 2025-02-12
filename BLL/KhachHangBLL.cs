@@ -37,6 +37,27 @@ namespace BLL
         {
             return khachHangDAL.TimKiem(tuKhoa);
         }
+
+        public bool UpdateKhachHang(KhachHangDTO selectedKhachHang)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<KhachHangDTO> GetAllKhachHang()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SearchKhachHang(KhachHangDTO selectedKhachHang)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteKhachHang(Action searchKhachHang)
+        {
+            throw new NotImplementedException();
+        }
+
         public KhachHangBLL()
         {
             khachHangDAL = new KhachHangDAL();

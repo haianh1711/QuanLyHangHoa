@@ -9,24 +9,31 @@
              Height="665" Width="678">
 
     <UserControl.DataContext>
-        <viewModels:KhachHangViewModel />
+        <viewModels:KhachHangViewModel/>
     </UserControl.DataContext>
-    <Grid>
+
+
+    <Grid Margin="18,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-
         <!-- Nút tìm kiếm -->
-        <ContentControl Grid.Row="0"
-                      Margin="0, 0, 0, 10"
-                      Style="{StaticResource SearchTextBox}"
-                      Tag="Nhập mã hoặc tên khách hàng..."></ContentControl>
+        <Grid Margin="0, 0, 0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Tag="Nhập mã hoặc tên khách hàng..." Style="{StaticResource SearchTextBox}" />
+            <Button Grid.Column="1"  Command="{Binding SearchKhachHangCommand}" Style="{StaticResource SearchButton}"/>
+        </Grid>
 
         <!-- Bảng chứa thông tin khách-->
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 
+        <DataGrid Grid.Row="1"
+                  SelectedItem="{Binding SelectedKhachHang}"
+                  ItemsSource="{Binding Data}" 
                 Style="{StaticResource DataGridStyle}">
 
             <DataGrid.Columns>
@@ -34,7 +41,75 @@
                 <DataGridTextColumn Header="Tên Khách hàng" Binding="{Binding TenKhachHang}"  Width="*" />
                 <DataGridTextColumn Header="Số điện thoại" Binding="{Binding SoDienThoai}"  Width="*" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Gmail}"  Width="*" />
+                <DataGridTextColumn Header="DiaChi" Binding="{Binding DiaChi}"  Width="*" />
             </DataGrid.Columns>
         </DataGrid>
+
+        <Border Grid.Row="2" Padding="20" Grid.Column="0" Margin="0,10,0,0" Style="{StaticResource SimpleBorderStyle}">
+            <Grid Margin="-2,0,-19,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="156"/>
+                    <ColumnDefinition Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid Margin="10, 10, 20, 0" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*" />
+                        <ColumnDefinition Width="1.5*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Mã khách hàng -->
+                    <Label Grid.Row="0" Grid.Column="0" Content="Mã khách hàng"
+                   VerticalAlignment="Top" FontSize="16" Margin="0,13,0,0" />
+
+                    <TextBox Grid.Row="0" Text="{Binding SelectedKhachHang.MaKhachHang}" Grid.Column="0"  
+                 Margin="0,43,10,72" Height="35" Padding="2" FontSize="16" Grid.RowSpan="2" Style="{StaticResource SimpleTextBoxStyle}"/>
+
+                    <!-- Tên khách hàng -->
+                    <Label Grid.Row="0" Grid.Column="1" Content="Tên khách hàng"
+                   VerticalAlignment="Top" FontSize="16" Margin="10,13,0,0" />
+
+                    <TextBox Grid.Row="0" Text="{Binding SelectedKhachHang.TenKhachHang}" Grid.Column="1" 
+                 Margin="10,43,0,72" Height="35" Padding="2" FontSize="16" Grid.RowSpan="2" Style="{StaticResource SimpleTextBoxStyle}"/>
+
+                    <!-- Số điện thoại -->
+                    <Label Grid.Row="1" Grid.Column="0" Content="Số điện thoại"
+                   VerticalAlignment="Center" FontSize="16" />
+
+                    <TextBox Grid.Row="1"  Text="{Binding SelectedKhachHang.SoDienThoai}" Grid.Column="0"
+                 Margin="0,77,10,3" Height="35" Padding="2" FontSize="16" Style="{StaticResource SimpleTextBoxStyle}"/>
+
+                    <!-- Email -->
+                    <Label Grid.Row="1" Grid.Column="1" Content="Email"
+                   VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0" />
+
+                    <TextBox Grid.Row="1"  Text="{Binding SelectedKhachHang.Gmail}" Grid.Column="1"
+                 Margin="10,77,0,3" Height="35" Padding="2" FontSize="16" Style="{StaticResource SimpleTextBoxStyle}" />
+
+                    <!-- Địa chỉ -->
+                    <Label Grid.Row="2" Grid.Column="0" Content="Địa chỉ"
+                   VerticalAlignment="Top" FontSize="16" />
+
+                    <TextBox Grid.Row="2"  Text="{Binding SelectedKhachHang.DiaChi}" Grid.ColumnSpan="2"
+                 Margin="0,30,0,10" Height="35" Padding="2" FontSize="16" Style="{StaticResource SimpleTextBoxStyle}"/>
+                </Grid>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Height="90" Width="144" Grid.Column="1" Margin="2,0,0,0">
+                    <Button Content="Sửa"
+                            Command="{Binding SuaKhachHangCommand}" 
+                            Style="{StaticResource SimpleRoundedButton}"/>
+                    <Button Content="Xóa"
+                            Command="{Binding XoaKhachHangCommand}" 
+                            Style="{StaticResource SimpleRoundedButton}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
+
