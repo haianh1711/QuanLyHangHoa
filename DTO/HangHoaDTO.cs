@@ -10,16 +10,16 @@ namespace DTO
      public class HangHoaDTO
     {
         public string? MaHang { get; set; }
-        public string? TenHangHoa { get; set; }
+        public string? TenHang { get; set; }
         public double? GiaNhap { get; set; }
         public int? SoLuong { get; set; }
         public string? MoTa { get; set; }
         public string? HinhAnh { get; set; }
 
-        public HangHoaDTO(string? hangHoaID, string? tenHangHoa, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
+        public HangHoaDTO(string? hangHoaID, string? tenHang, double? giaNhap, int? soLuong, string? moTa, string? hinhAnh = null)
         {
             MaHang = hangHoaID;
-            TenHangHoa = tenHangHoa;
+            TenHang = tenHang;
             GiaNhap = giaNhap;
             SoLuong = soLuong;
             MoTa = moTa;

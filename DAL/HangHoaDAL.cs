@@ -17,7 +17,7 @@ namespace DAL
         {
             List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHang, TenHangHoa from HangHoa";
+            string query = "Select MaHang, TenHang from HangHoa";
 
             try
             {
@@ -28,7 +28,7 @@ namespace DAL
                     HangHoaDTO HangHoa = new HangHoaDTO
                     {
                         MaHang = row["MaHang"].ToString(),
-                        TenHangHoa = row["TenHangHoa"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
                     };
                     HangHoaDTOs.Add(HangHoa);
                 }
@@ -46,7 +46,7 @@ namespace DAL
         {
             List<HangHoaDTO> HangHoaDTOs = new List<HangHoaDTO>();
 
-            string query = "Select MaHang, TenHangHoa from HangHoa";
+            string query = "Select MaHang, TenHang from HangHoa";
 
             try
             {
@@ -57,7 +57,7 @@ namespace DAL
                     HangHoaDTO HangHoa = new HangHoaDTO
                     {
                         MaHang = row["MaHang"].ToString(),
-                        TenHangHoa = row["TenHangHoa"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
                     };
                     HangHoaDTOs.Add(HangHoa);
                 }
@@ -73,13 +73,13 @@ namespace DAL
 
         public bool ThemHangHoa(HangHoaDTO HangHoa)
         {
-            string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaHang, @TenHangHoa, @SoLuong, @MoTa, @HinhAnh)";
+            string query = "INSERT INTO HangHoa (MaHang, TenHang, SoLuong, MoTa, HinhAnh) VALUES (@MaHang, @TenHang, @SoLuong, @MoTa, @HinhAnh)";
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
             {
             new SqlParameter("@MaHang", HangHoa.MaHang),
-            new SqlParameter("@TenHangHoa", HangHoa.TenHangHoa),
+            new SqlParameter("@TenHang", HangHoa.TenHang),
            // new SqlParameter("@DonGia", HangHoa.GiaNhap),
             new SqlParameter("@SoLuong", HangHoa.SoLuong),
             new SqlParameter("@MoTa", HangHoa.MoTa ?? (object)DBNull.Value), // Tránh lỗi nếu null
@@ -109,7 +109,7 @@ namespace DAL
                     HangHoaDTO HangHoa = new HangHoaDTO
                     {
                         MaHang = row["MaHang"].ToString(),
-                        TenHangHoa = row["TenHang"].ToString(),
+                        TenHang = row["TenHang"].ToString(),
                         SoLuong = Convert.ToInt32(row["SoLuong"]),
                         HinhAnh = row["HinhAnh"].ToString(),
                         MoTa = row["MoTa"].ToString()
@@ -130,7 +130,7 @@ namespace DAL
             SqlParameter[] parameters =
             {
                 new SqlParameter("@MaHang", HangHoa.MaHang),
-                new SqlParameter ("@TenHang", HangHoa.TenHangHoa),
+                new SqlParameter ("@TenHang", HangHoa.TenHang),
                 new SqlParameter("@SoLuong", HangHoa.SoLuong),
                 new SqlParameter("@HinhAnh", HangHoa.HinhAnh),
                 new SqlParameter("@MoTa", HangHoa.MoTa)
