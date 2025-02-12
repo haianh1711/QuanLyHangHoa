@@ -5,33 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-            d:DesignHeight="655.25" d:DesignWidth="325">
+                      d:DesignHeight="655.25" d:DesignWidth="270">
+    <UserControl.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="HoverButtonStyle" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#6279B1"/>
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
+    </UserControl.Resources>
 
+    <Border Background="#0F1524" BorderBrush="Transparent" CornerRadius="40">
 
-    <Border Background="#0A0E18" CornerRadius="15,0,0,15" BorderBrush="Transparent">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="310*"/>
-                <ColumnDefinition Width="7*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="258"/>
-                <RowDefinition Height="317.838"/>
-                <RowDefinition Height="179.412"/>
+                <RowDefinition Height="0*"/>
+                <RowDefinition Height="197*"/>
+                <RowDefinition Height="375*"/>
             </Grid.RowDefinitions>
 
-            <!--power-->
+            <!--btnDangXuat-->
+            <!--btnThoat-->
             <Button 
-                 BorderBrush="Transparent"
-                 FontFamily="Segoe MDL2 Assets" 
-                 Content="&#xE7E8;" 
-                 FontSize="26" 
-                 Foreground="#FFF" 
-                 Background="Transparent"
-                 HorizontalAlignment="Left" 
-                 VerticalAlignment="Top" 
-                 Margin="19,19,0,0" Click="Button_Click" Height="26" Width="26">
+                Cursor="Hand"
+                Command="{Binding TatNguonCommand}"
+                Name="btnThoat"
+                BorderBrush="Transparent"
+                FontFamily="Segoe MDL2 Assets" 
+                Content="&#xE7E8;" 
+                FontSize="26" 
+                Foreground="#FFF" 
+                Background="Transparent"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="19,19,0,0"  Height="26" Width="26" Grid.RowSpan="2">
 
                 <!--btnPower-->
                 <Button.Style>
@@ -42,8 +66,8 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="{TemplateBinding Background}"
-                     BorderBrush="{TemplateBinding BorderBrush}"
-                     BorderThickness="{TemplateBinding BorderThickness}">
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
                                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
@@ -53,46 +77,45 @@
                 </Button.Style>
             </Button>
 
-            <!--logo-->
-            <Image 
-             x:Name="Ustock"
-             Grid.Row="0"
-             Source="/Views/UserControls/ustock-removebg-preview.png"
-             Margin="72,54,72,53" Width="150" Height="150" />
+            <!--Nền logo-->
+            <Image Grid.Row="1" Source="pack://application:,,,/Images/ustock-removebg-preview.png" Width="150" Height="150" Margin="50,38,70,38" />
 
             <!--Menu chuc nang-->
-            <StackPanel Background="Transparent" Margin="0,3,0,112" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Cursor="Hand"> 
+            <StackPanel Grid.Row="3" Background="Transparent" Margin="0,10,0,0">
                 <!-- Quản lý hàng hóa -->
-                <Expander Header=" Quản lý hàng hóa" Foreground="White" Background="Transparent" FontSize="18" Margin="9,0,0,0">
-                    <StackPanel>
-                        <TextBlock Text="Quản lý danh sách hàng hóa" Padding="30,15,10,10" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" />
-                        <TextBlock Text="Giao dịch nhập xuất" Padding="30,10,10,10" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" />
-                    </StackPanel>
-                </Expander>
+                <Button Content="Quản lý sản phẩm" Margin="0,0,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
+                        Command="{Binding QlHangHoaCommand}"
+                        Style="{StaticResource HoverButtonStyle}"  />
+
+                <!-- Quản lý phiếu nhập -->
+                <Button Content="Quản lý phiếu nhập" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
+                          Command="{Binding QlPhieuNhapCommand}"
+                        Style="{StaticResource HoverButtonStyle}"  />
+
 
                 <!-- Quản lý nhân viên -->
-                <Button Content="Quản lý nhân viên" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="39,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="317"   />
+                <Button Content="Quản lý nhân viên" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
+                          Command="{Binding QlNhanVienCommand}"
+                        Style="{StaticResource HoverButtonStyle}"  />
 
                 <!-- Quản lý khách hàng -->
-                <Button Content="Quản lý khách hàng"  Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="39,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="317" />
+                <Button Content="Quản lý khách hàng"  Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
+                         Command="{Binding QlKhachHangCommand}"
+                        Style="{StaticResource HoverButtonStyle}"/>
 
                 <!-- Thống kê -->
-                <Button Content="Thống kê" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="39,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="317"  />
+                <Expander Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="19,16,0,0" >
+                    <StackPanel>
+                        <Button Content="Sản phẩm tồn kho" Margin="0,0,0,0" Background="Transparent" BorderBrush="Transparent" Padding="40,10" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
+                                   Command="{Binding QlSpTonKhoCommand}" HorizontalAlignment="Left" Width="240"/>
+                        <Button Content="Sản phẩm được nhập" Padding="40,10" Background="Transparent" BorderBrush="Transparent" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
+                                Command="{Binding QlSpNhapCommand}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240"/>
+                    </StackPanel>
+                </Expander>
             </StackPanel>
 
-            <!--BtnDangXuat-->
-            <Button Grid.Row="2" Background="#485A88" BorderBrush="Transparent" BorderThickness="1"
-                     Content="ĐĂNG XUẤT"
-                     Foreground="Gray"
-                     FontSize="20" Margin="26,22,18,115">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+
+
 
         </Grid>
     </Border>

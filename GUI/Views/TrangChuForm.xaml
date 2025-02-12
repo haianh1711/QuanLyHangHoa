@@ -1,27 +1,144 @@
-﻿<Window x:Class="GUI.Views.TrangChuForm"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:TrangChuMenuC="clr-namespace:GUI.Views.UserControls"
-        xmlns:HienThiTKC="clr-namespace:GUI.Views.UserControls"
-        xmlns:local="clr-namespace:GUI.Views"
-        mc:Ignorable="d"
-        Title="TrangChuForm" 
-         Height="655.25" 
-          Width="1002.7"
-          WindowStyle="None"
-          Background="Transparent"
-          AllowsTransparency="True"
-          WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="325"/>
-            <ColumnDefinition Width="678" />
-        </Grid.ColumnDefinitions>
-        <TrangChuMenuC:TrangChuMenu/>
-        <HienThiTKC:TrangChuHienThiTKForm Grid.Column="1" Height="655.25"/>
+﻿<UserControl x:Class="GUI.Views.UserControls.TrangChuForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.Views.UserControls"
+             mc:Ignorable="d" 
+                     d:DesignHeight="655.25" d:DesignWidth="678">
+    <UserControl.Resources>
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#6279B1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Rectangle Height="3" Fill="#2F00AF" VerticalAlignment="Bottom" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
+    </UserControl.Resources>
+    <Grid>
+        <Border Background="#DFEBF8" Margin="18,0,0,0">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="584"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="194*"/>
+                        <ColumnDefinition Width="149*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock 
+                Grid.Column="0"
+                 Text="Xin chào!" 
+                 Margin="40,158,170,378" 
+                 FontSize="35"
+                 FontFamily="Lato Black" Height="48" Width="173">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
+                                <GradientStop Color="#FF1849C0"/>
+                                <GradientStop Color="#FFF434F1" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+
+                    <Label 
+                Grid.Column="0"
+                 Content="Trần Ngọc Bảo Trân" 
+                 VerticalContentAlignment="Center" 
+                 Margin="38,199,12,327" 
+                 FontSize="35"
+                 FontFamily="Lato Black" Height="58">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
+                                <GradientStop Color="#FF1849C0"/>
+                                <GradientStop Color="#FFF434F1" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </Label>
+
+                    <!--line-->
+                    <Border Grid.Column="0"
+                         Background="Black"
+                      Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
+
+                    <Label Grid.Column="0" Content="Mã Nhân viên: TD00537" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="38,283,22,267"/>
+                    <Label Grid.Column="0" Content="Chức vụ: Trưởng phòng " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,323,22,221"/>
+                    <Label Grid.Column="0" Content="Năm sinh: 01/12/2007 " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,363,22,181"/>
+                    <Label Grid.Column="0" Content="Gmail: trantnbtd00537@gmail.com " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="36,403,21,130"/>
+
+                    <!--ảnh-->
+                    <Rectangle Width="250" 
+                           Height="350" 
+                           Cursor="Hand"
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Top" 
+                           Margin="0,80,0,0" 
+                           Grid.Column="1">
+                        <Rectangle.Clip>
+                            <PathGeometry>
+                                <PathGeometry.Figures>
+                                    <PathFigure StartPoint="0,120">
+                                        <PathFigure.Segments>
+                                            <!-- Góc trên trái -->
+                                            <ArcSegment Point="120,0" Size="120,120" SweepDirection="Clockwise"/>
+                                            <!-- Đường thẳng trên -->
+                                            <LineSegment Point="117.65,0"/>
+                                            <!-- Góc trên phải -->
+                                            <ArcSegment Point="250,120" Size="120,120" SweepDirection="Clockwise"/>
+                                            <!-- Các cạnh còn lại -->
+                                            <LineSegment Point="250,350"/>
+                                            <LineSegment Point="0,350"/>
+                                            <LineSegment Point="0,120"/>
+                                        </PathFigure.Segments>
+                                    </PathFigure>
+                                </PathGeometry.Figures>
+                            </PathGeometry>
+                        </Rectangle.Clip>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="pack://application:,,,/Images/BTran.jpg" Stretch="UniformToFill"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+
+                    <!--Btn-->
+                    <Button Grid.Column="1" 
+                        Style="{StaticResource CustomButtonStyle}" 
+                        Content="Đổi mật khẩu" 
+                        Margin="22,436,21,113" Click="Button_Click"/>
+
+                    <Button Grid.Column="1" 
+                        Style="{StaticResource CustomButtonStyle}" 
+                        Content="Đổi ảnh" 
+                        Margin="23,476,21,73"/>
+
+                    <Button Grid.Column="1" 
+                        Style="{StaticResource CustomButtonStyle}" 
+                        Content="Hướng dẫn" 
+                        Margin="23,516,21,33"/>
+                    <Button Grid.Column="1" 
+                    Style="{StaticResource CustomButtonStyle}" 
+                    Content="Đăng xuất" 
+                    Margin="23,556,21,-7" Click="Button_Click_1"/>
+
+
+
+                </Grid>
+            </Grid>
+        </Border>
 
     </Grid>
-</Window>
+</UserControl>

@@ -13,14 +13,26 @@
          Background="Transparent"
          AllowsTransparency="True"
          WindowStartupLocation="CenterScreen">
-    <Border  Background="#DFEBF8" CornerRadius="15" BorderBrush="Transparent">
+    <!--<Window.DataContext>
+        <viewModels:MainViewModel/>
+    </Window.DataContext>-->
+    <Grid>
+        <Border  Background="#DFEBF8" Padding="10,20" CornerRadius="15" BorderBrush="Transparent">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="270"/>
+                    <ColumnDefinition Width="678"   />
+                </Grid.ColumnDefinitions>
+                <ContentControl x:Name="menu" Content="{Binding Menu}"/>
+                <ContentControl x:Name="view" Grid.Column="1"
+                         Content="{Binding View}" 
+                         Height="655.25" 
+                         Width="678">
+                </ContentControl>
 
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="325" />
-                <ColumnDefinition Width="678*"/>
-            </Grid.ColumnDefinitions>
-            <MainMenuC:MainMenu Margin="0,0,20,0" />
-        </Grid>
-    </Border>
+            </Grid>
+        </Border>
+        <!--<userControl:ThongBao DataContext="{Binding ThongBaoVM}"/>-->
+
+    </Grid>
 </Window>

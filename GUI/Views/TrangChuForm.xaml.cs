@@ -10,18 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GUI.Views
+namespace GUI.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for TrangChuForm.xaml
+    /// Interaction logic for TrangChuHienThiTKForm.xaml
     /// </summary>
-    public partial class TrangChuForm : Window
+    public partial class TrangChuForm : UserControl
     {
         public TrangChuForm()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
