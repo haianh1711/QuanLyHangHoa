@@ -129,7 +129,9 @@ namespace DAL
 
         public bool CapNhatHangHoa(HangHoaDTO HangHoa)
         {
-            string query = $"UPDATE HangHoa SET MaHang = @MaHang, TenHang = @TenHang, SoLuong = @SoLuong, HinhAnh = @HinhAnh, MoTa = @MoTa Where MaHang = @MaHang";
+            string query = @"UPDATE HangHoa 
+                            SET MaHang = @MaHang, TenHang = @TenHang, SoLuong = @SoLuong, HinhAnh = @HinhAnh, MoTa = @MoTa 
+                            Where MaHang = @MaHang";
             SqlParameter[] parameters =
             {
                 new SqlParameter("@MaHang", HangHoa.MaHang),

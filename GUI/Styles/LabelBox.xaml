@@ -199,8 +199,11 @@
                                  BorderThickness="0"
                                  AcceptsReturn="True"       
                                  TextWrapping="Wrap"
-                                 VerticalScrollBarVisibility="Auto"
-                                 Text="{TemplateBinding Text}"/>
+                                 VerticalScrollBarVisibility="Auto">
+                            <TextBox.Text>
+                                <Binding Path="Text" RelativeSource="{RelativeSource TemplatedParent}" />
+                            </TextBox.Text>
+                        </TextBox>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

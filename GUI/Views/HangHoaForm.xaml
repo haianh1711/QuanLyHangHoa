@@ -28,7 +28,7 @@
 
             <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên hàng hóa..." 
              Style="{StaticResource SearchTextBox}"
-             Text="{Binding MaTimKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+             Text="{Binding MaTimKiem, Mode=TwoWay}"/>
             <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemCommand}"/>
         </Grid>
 
@@ -78,7 +78,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã hàng hóa" />
-                        <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.MaHang, Mode=TwoWay}"/>
+                            <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.MaHang, Mode=TwoWay}"/>
                     </Grid>
 
                     <!--TextBox hàng hai-->    
@@ -95,7 +95,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Style="{StaticResource SimpleLabelStyle}" Content="Tên hàng hóa" />
-                        <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.TenHang, Mode=TwoWay}"/>
+                            <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.TenHang, Mode=TwoWay}"/>
 
                         <Label Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Số lượng tồn" />
                         <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ReadOnlyTextBoxStyle}"
