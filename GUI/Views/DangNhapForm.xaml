@@ -89,7 +89,7 @@ Margin="19,19,20,0" Click="Button_Click">
                         </Grid>
                         <!-- Nút đăng nhập -->
                         <Button  
-                            
+                   Command="{Binding loginGmailCommand}"
                    Width="351"
                   Height="43"
                   FontSize="20"

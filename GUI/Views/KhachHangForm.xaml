@@ -105,7 +105,7 @@
                             Command="{Binding SuaKhachHangCommand}" 
                             Style="{StaticResource SimpleRoundedButton}"/>
                     <Button Content="Xóa"
-                            Command="{Binding XoaKhachHangCommand}" 
+                            Command="{Binding XoaKhach`HangCommand}" 
                             Style="{StaticResource SimpleRoundedButton}"/>
                 </StackPanel>
             </Grid>
