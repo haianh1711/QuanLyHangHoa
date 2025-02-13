@@ -123,8 +123,6 @@ namespace GUI.ViewModels
             {
                 TuKhoaTimKiem = TuKhoaTimKiem ?? "";
                 HangHoaDTOs = new ObservableCollection<HangHoaDTO>(hangHoaBLL.TimHangHoa(TuKhoaTimKiem));
-
-
             }
 
         }

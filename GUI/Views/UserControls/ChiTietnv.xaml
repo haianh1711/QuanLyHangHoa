@@ -83,7 +83,6 @@
 
                     <!--Nút-->
                     <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" >
-                        <Button Content="Thêm" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Sửa" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Xóa" Style="{StaticResource SimpleRoundedButton}"/>
                     </StackPanel>

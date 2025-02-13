@@ -41,7 +41,7 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:PhieuXuatViewModel}">
-                <views:PhieuNhapForm/>
+                <views:PhieuXuatForm/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:ThongKeSPNhapViewModel}">

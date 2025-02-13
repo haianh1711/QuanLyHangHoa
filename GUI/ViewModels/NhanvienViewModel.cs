@@ -19,11 +19,11 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
 
-        private NhanVienBLL hangHoaBLL = new();
+        private NhanVienBLL nhanVienBLL = new();
 
         // dataGrid
         [ObservableProperty]
-        private ObservableCollection<NhanVienDTO> hangHoaDTOs = [];
+        private ObservableCollection<NhanVienDTO> nhanVienDTOs = [];
 
         // Thuộc tính của phieu nhạp
         [ObservableProperty]
@@ -42,31 +42,9 @@ namespace GUI.ViewModels
         private void LoadDanhSachNhanVien()
         {
             NhanVienDTOs.Clear();
-            NhanVienDTOs = new ObservableCollection<NhanVienDTO>(BLL.HienThiDanhSachHH());
+            NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
         }
 
-        [RelayCommand]
-        private async Task ThemNhanVien()
-        {
-            try
-            {
-                if (SelectedNhanVien != null)
-                {
-
-                    bool result = hangHoaBLL.ThemNhanVien(SelectedNhanVien);
-                    if (result)
-                    {
-                        await ThongBaoVM.MessageOK("Thêm hàng hóa thành công");
-                        LoadDanhSachNhanVien();
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                await ThongBaoVM.MessageOK(ex.ToString());
-            }
-        }
 
         [RelayCommand]
         private async Task SuaNhanVien()
@@ -75,7 +53,7 @@ namespace GUI.ViewModels
             {
                 if (SelectedNhanVien != null)
                 {
-                    bool result = hangHoaBLL.CapnhatNhanVien(SelectedNhanVien);
+                    bool result = nhanVienBLL.SuaNhanVien(SelectedNhanVien);
                     if (result)
                     {
                         await ThongBaoVM.MessageOK("Sửa hàng hóa thành công");
@@ -100,7 +78,7 @@ namespace GUI.ViewModels
                     bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa phiếu nhập này? Dữ liệu sẽ bị mất vĩnh viễn.");
                     if (isXoaPhieuNhap)
                     {
-                        bool result = hangHoaBLL.XoaNhanVien(SelectedNhanVien.MaHang);
+                        bool result = nhanVienBLL.XoaNhanVien(SelectedNhanVien.MaNhanVien);
                         if (result)
                         {
                             await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
@@ -117,17 +95,15 @@ namespace GUI.ViewModels
 
         }
 
-        [RelayCommand]
-        private async Task TimKiem()
-        {
-            if (SelectedNhanVien != null)
-            {
-                TuKhoaTimKiem = TuKhoaTimKiem ?? "";
-                NhanVienDTOs = new ObservableCollection<NhanVienDTO>(hangHoaBLL.TimNhanVien(TuKhoaTimKiem));
+        //[RelayCommand]
+        //private async Task TimKiem()
+        //{
+        //    if (SelectedNhanVien != null)
+        //    {
+        //        TuKhoaTimKiem = TuKhoaTimKiem ?? "";
+        //        NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.Tim(TuKhoaTimKiem));
+        //    }
 
-
-            }
-
-        }
+        //}
     }
 }
