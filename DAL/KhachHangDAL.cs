@@ -91,5 +91,22 @@ namespace DAL
 
             return danhSachKhachHang;
         }
+        public List<string> LayDanhSachMaKhachHang()
+        {
+            List<string> danhSachMaKH = new List<string>();
+            string query = "SELECT MaKhachHang FROM KhachHang";
+
+            DataTable dt = dbHelper.ExecuteQuery(query);
+            foreach (DataRow row in dt.Rows)
+            {
+                string? maKH = row["MaKhachHang"]?.ToString();
+                if (!string.IsNullOrEmpty(maKH)) // Kiểm tra null trước khi thêm vào danh sách
+                {
+                    danhSachMaKH.Add(maKH);
+                }
+            }
+
+            return danhSachMaKH;
+        }
     }
 }
