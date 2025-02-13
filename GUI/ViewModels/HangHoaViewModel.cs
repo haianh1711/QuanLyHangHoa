@@ -22,18 +22,15 @@ namespace GUI.ViewModels
 
         // dataGrid
         [ObservableProperty]
-        private ObservableCollection<HangHoaDTO> hangHoaDTOs= [];
+        private ObservableCollection<HangHoaDTO> hangHoaDTOs = [];
 
         // Thuộc tính của phieu nhạp
         [ObservableProperty]
         private HangHoaDTO? selectedHangHoa;
 
-        [ObservableProperty]
-        private bool isSelectedHangHoa;
-
         // Tìm kiếm
         [ObservableProperty]
-        private string? tuKhoaTimKiem;
+        private string? maTimKiem;
 
         public HangHoaViewModel()
         {
@@ -41,35 +38,42 @@ namespace GUI.ViewModels
             SelectedHangHoa = new();
         }
 
-        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
-        {
-            if(value != null)
-            {
-                IsSelectedHangHoa = true;
-            }
-        }
-
         private void LoadDanhSachHangHoa()
         {
             HangHoaDTOs.Clear();
             HangHoaDTOs = new ObservableCollection<HangHoaDTO>(hangHoaBLL.HienThiDanhSachHH());
         }
-
+        // xong thêm
         [RelayCommand]
         private async Task ThemHangHoa()
         {
             try
             {
-                if (SelectedHangHoa != null)
+                if (string.IsNullOrEmpty(selectedHangHoa.MaHang))
                 {
-
-                    bool result = hangHoaBLL.ThemHangHoa(SelectedHangHoa);
+                    await ThongBaoVM.MessageOK("Vui lòng nhập mã hàng hoá");
+                    return;
+                }
+                else
+                {
+                    var danhsach = hangHoaBLL.HienThiDanhSachHH();
+                    bool result = danhsach.Any(hh => hh.MaHang.Equals(SelectedHangHoa.MaHang, StringComparison.OrdinalIgnoreCase));
                     if (result)
                     {
-                        await ThongBaoVM.MessageOK("Thêm hàng hóa thành công");
+                        await ThongBaoVM.MessageOK($"Mã hàng {selectedHangHoa.TenHang} đã tồn tại.");
+                        return;
+                    }
+                    bool result1 = hangHoaBLL.ThemHangHoa(SelectedHangHoa);
+                    if (result1)
+                    {
+                        await ThongBaoVM.MessageOK("Thêm hàng hoá thành công");
                         LoadDanhSachHangHoa();
                     }
-
+                    else
+                    {
+                        await ThongBaoVM.MessageOK("Thêm hàng hoá thất bại");
+                        return;
+                    }
                 }
             }
             catch (Exception ex)
@@ -107,18 +111,14 @@ namespace GUI.ViewModels
             {
                 if (SelectedHangHoa != null)
                 {
-                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa phiếu nhập này? Dữ liệu sẽ bị mất vĩnh viễn.");
+                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa hàng hoá này? Dữ liệu sẽ bị mất vĩnh viễn.");
                     if (isXoaPhieuNhap)
                     {
                         bool result = hangHoaBLL.XoaHangHoa(SelectedHangHoa.MaHang);
                         if (result)
                         {
-                            await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
+                            await ThongBaoVM.MessageOK("Xóa hàng hoá thành công");
                             LoadDanhSachHangHoa();
-                        }else
-                        {
-                            await ThongBaoVM.MessageOK("Xóa phiếu nhập thất bại");
-
                         }
                     }
 
@@ -134,13 +134,37 @@ namespace GUI.ViewModels
         [RelayCommand]
         private async Task TimKiem()
         {
-            if(SelectedHangHoa != null)
+            if (string.IsNullOrWhiteSpace(maTimKiem))
             {
-                TuKhoaTimKiem = TuKhoaTimKiem ?? "";
-                HangHoaDTOs = new ObservableCollection<HangHoaDTO>(hangHoaBLL.TimHangHoa(TuKhoaTimKiem));
+                await thongBaoVM.MessageOK("Vui lòng nhập mã hàng hoặc tên để tìm kiếm.");
+                return;
             }
 
-        }
+            string maCanTim = maTimKiem.ToUpper();
 
+            var danhSach = hangHoaBLL
+                .TimHangHoa(maCanTim)
+                .Where(hh => hh.MaHang.Equals(maCanTim, StringComparison.OrdinalIgnoreCase)
+                             || hh.TenHang.IndexOf(maCanTim, StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList();
+
+            if (danhSach == null || !danhSach.Any())
+            {
+                await ThongBaoVM.MessageOK($"Không tìm thấy {maCanTim}");
+                return;
+            }
+
+            HangHoaDTOs.Clear();
+            foreach (var item in danhSach)
+            {
+                HangHoaDTOs.Add(item);
+            }
+
+            if (HangHoaDTOs.Count == 1)
+            {
+                SelectedHangHoa = HangHoaDTOs.First();
+               // LoadDanhSachHangHoa();
+            }
+        }
     }
 }

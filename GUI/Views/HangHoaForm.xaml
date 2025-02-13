@@ -13,130 +13,130 @@
     </UserControl.DataContext>
     <Grid>
         <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="0.7*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
-        <!-- Nút tìm kiếm -->
-        <Grid Margin="0, 0, 0, 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
+            <!-- Nút tìm kiếm -->
+            <Grid Margin="0, 0, 0, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên hàng hóa..." 
+                <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên hàng hóa..." 
              Style="{StaticResource SearchTextBox}"
-             Text="{Binding MaTimKiem, Mode=TwoWay}"/>
-            <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemCommand}"/>
-        </Grid>
+             Text="{Binding MaTimKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemCommand}"/>
+            </Grid>
 
-        <!-- Bảng chứa thông tin khách-->
-        <DataGrid Grid.Row="1" ItemsSource="{Binding HangHoaDTOs}" 
+            <!-- Bảng chứa thông tin khách-->
+            <DataGrid Grid.Row="1" ItemsSource="{Binding HangHoaDTOs}" 
                   Style="{StaticResource DataGridStyle}" 
                   Margin="0, 0, 0, 10"
                   SelectedItem="{Binding SelectedHangHoa, Mode=TwoWay}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã hàng hóa" Binding="{Binding MaHang}" Width="*"  />
-                <DataGridTextColumn Header="Tên hàng hóa" Binding="{Binding TenHang}"  Width="*" />
-                <DataGridTextColumn Header="Số lượng tồn" Binding="{Binding SoLuong}" Width="*" />
-                <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}"  Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã hàng hóa" Binding="{Binding MaHang}" Width="*"  />
+                    <DataGridTextColumn Header="Tên hàng hóa" Binding="{Binding TenHang}"  Width="*" />
+                    <DataGridTextColumn Header="Số lượng tồn" Binding="{Binding SoLuong}" Width="*" />
+                    <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}"  Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <!--Ô nhập dữ liệu-->
-        <Border Grid.Row="2"    
+            <!--Ô nhập dữ liệu-->
+            <Border Grid.Row="2"    
                 Style="{StaticResource SimpleBorderStyle}" 
                 Padding="20">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="150"/>
-                </Grid.ColumnDefinitions>
-
-                <!--Chỗ nhập thông tin-->
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="2*"/>
-                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
 
-                    
-                    <!--TextBox hàng đầu-->
+                    <!--Chỗ nhập thông tin-->
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
-                        
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
 
-                        <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã hàng hóa" />
+
+                        <!--TextBox hàng đầu-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã hàng hóa" />
                             <TextBox Grid.Row="1" IsReadOnly="{Binding I}" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.MaHang, Mode=TwoWay}"/>
-                    </Grid>
+                        </Grid>
 
-                    <!--TextBox hàng hai-->    
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                        <!--TextBox hàng hai-->
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                        <Label Style="{StaticResource SimpleLabelStyle}" Content="Tên hàng hóa" />
+                            <Label Style="{StaticResource SimpleLabelStyle}" Content="Tên hàng hóa" />
                             <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.TenHang, Mode=TwoWay}"/>
 
-                        <Label Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Số lượng tồn" />
-                        <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ReadOnlyTextBoxStyle}"
+                            <Label Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Số lượng tồn" />
+                            <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ReadOnlyTextBoxStyle}"
                                  Text="{Binding SelectedHangHoa.SoLuong, Mode=TwoWay}"
                                  IsReadOnly="True"/>
 
+                        </Grid>
+
+                        <!--TextBox hàng ba-->
+                        <Grid Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Style="{StaticResource SimpleLabelStyle}" Content="Mô tả" />
+                            <TextBox Grid.Row="1" 
+                                 Style="{StaticResource MultilineTextBoxStyle}" 
+                                 Text="{Binding SelectedHangHoa.MoTa, Mode=TwoWay}" />
+                        </Grid>
+
                     </Grid>
 
-                    <!--TextBox hàng ba-->
-                    <Grid Grid.Row="3">
+                    <!--Hình ảnh và button-->
+                    <Grid Grid.Column="2" HorizontalAlignment="Right">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Label Style="{StaticResource SimpleLabelStyle}" Content="Mô tả" />
-                        <TextBox Grid.Row="1" 
-                                 Style="{StaticResource MultilineTextBoxStyle}" 
-                                 Text="{Binding SelectedHangHoa.MoTa, Mode=TwoWay}" />
+                        <Image  Style="{StaticResource ImageDefault}"/>
+
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                            <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
+                            <Button Content="Sửa" Command="{Binding SuaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
+                            <Button Content="Xóa" Command="{Binding XoaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
+                        </StackPanel>
                     </Grid>
-
                 </Grid>
-
-                <!--Hình ảnh và button-->
-                <Grid Grid.Column="2" HorizontalAlignment="Right">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Image  Style="{StaticResource ImageDefault}"/>
-                    
-                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-                        <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
-                        <Button Content="Sửa" Command="{Binding SuaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
-                        <Button Content="Xóa" Command="{Binding XoaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Border>
-    </Grid>
+            </Border>
+        </Grid>
         <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
     </Grid>
 </UserControl>

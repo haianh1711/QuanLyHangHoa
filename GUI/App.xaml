@@ -6,7 +6,7 @@
             xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
               xmlns:viewModels="clr-namespace:GUI.ViewModels"
                 xmlns:viewModelsUC="clr-namespace:GUI.ViewModels.UserControls"
-             StartupUri="Views\MainForm.xaml">
+             StartupUri="Views\NhanVienForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
