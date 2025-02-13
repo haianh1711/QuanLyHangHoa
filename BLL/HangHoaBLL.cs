@@ -38,22 +38,33 @@ namespace BLL
                 return false;
             return HangHoaDAL.CapNhatHangHoa(HangHoa);
         }
-        public bool XoaHangHoa(string maHangHoa)
+        public bool XoaHangHoa(string? maHangHoa)
         {
-            if (string.IsNullOrEmpty(maHangHoa))
-                return false;
-
-            using(TransactionScope transaction = new())
+            try
             {
-                if (ChiTietPhieuNhapBLL.XoaTatCaChiTietCuaPhieuNhap(maHangHoa))
-                {
-                    if(HangHoaDAL.XoaHangHoa(maHangHoa))
-                        transaction.Complete(); return true;
-                }
+                if (string.IsNullOrEmpty(maHangHoa))
+                    throw new Exception("Vui lòng nhập chọn hàng hóa muốn xóa");
 
-                return false;
+                using (TransactionScope transaction = new())
+                {
+                    ChiTietPhieuNhapBLL.XoaTatCaCTPNTHeoMaHH(maHangHoa);
+
+                    if (HangHoaDAL.XoaHangHoa(maHangHoa))
+                    {
+                        transaction.Complete();
+                        return true;
+                    }else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Xảy ra lỗi trong quá trình xóa hàng hóa: " + ex.Message, ex);
             }
         }
+
 
         public int LaySoLuongHangHoa(string MaHang)
         {

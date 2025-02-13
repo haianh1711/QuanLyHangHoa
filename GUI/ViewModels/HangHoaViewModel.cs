@@ -28,6 +28,9 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private HangHoaDTO? selectedHangHoa;
 
+        [ObservableProperty]
+        private bool isSelectedHangHoa;
+
         // Tìm kiếm
         [ObservableProperty]
         private string? tuKhoaTimKiem;
@@ -36,6 +39,14 @@ namespace GUI.ViewModels
         {
             LoadDanhSachHangHoa();
             SelectedHangHoa = new();
+        }
+
+        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
+        {
+            if(value != null)
+            {
+                IsSelectedHangHoa = true;
+            }
         }
 
         private void LoadDanhSachHangHoa()
@@ -104,6 +115,10 @@ namespace GUI.ViewModels
                         {
                             await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
                             LoadDanhSachHangHoa();
+                        }else
+                        {
+                            await ThongBaoVM.MessageOK("Xóa phiếu nhập thất bại");
+
                         }
                     }
 

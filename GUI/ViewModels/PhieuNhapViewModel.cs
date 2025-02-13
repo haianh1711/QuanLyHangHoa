@@ -80,7 +80,7 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (SelectedPhieuNhap != null)
+                if (SelectedPhieuNhap != null && SelectedPhieuNhap.MaPhieuNhap != null)
                 {
                     bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa phiếu nhập này? Dữ liệu sẽ bị mất vĩnh viễn.");
                     if (isXoaPhieuNhap)
@@ -91,6 +91,9 @@ namespace GUI.ViewModels
                             await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
                             LoadDanhSachPhieuNhap();
                         }
+                    }else
+                    {
+                        await ThongBaoVM.MessageOK("Vui lòng chọn phiếu nhập muốn xóa");
                     }
 
                 }

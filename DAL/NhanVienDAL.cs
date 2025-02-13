@@ -28,7 +28,7 @@ namespace DAL
                         NgayBatDau = row["NgayBatDau"]?.ToString(),
                         ChucVu = row["ChucVu"]?.ToString(),
                         HinhAnh = row["HinhAnh"]?.ToString(),
-                        Gmail = row["Gmail"]?.ToString()
+                        //Gmail = row["Gmail"]?.ToString()
 
                     });
                 }

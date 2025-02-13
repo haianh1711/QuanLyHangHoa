@@ -116,7 +116,7 @@
                                 Command="{Binding XoaPhieuNhapCommand}"/>
                         <Grid Margin="0, 30, 0, 0"/>
                         <Button Content="Chi tiết phiếu" Style="{StaticResource SimpleRoundedButton}"
-                                Command="{Binding XoaChiTietCommand}"/>
+                                Command="{Binding XemChiTietCommand}"/>
                     </StackPanel>
                 </Grid>
             </Border>

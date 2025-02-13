@@ -104,7 +104,7 @@ namespace DAL
                 return "PN" + (lastID + 1).ToString("D3");
             }
 
-            return "SP001";
+            return "PN001";
         }
     }
 }
