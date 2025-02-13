@@ -43,5 +43,9 @@ namespace BLL
         {
             khachHangDAL = new KhachHangDAL();
         }
+        public List<string> LayDanhSachMaKhachHang()
+        {
+            return khachHangDAL.LayDanhSachMaKhachHang();
+        }
     }
 }
