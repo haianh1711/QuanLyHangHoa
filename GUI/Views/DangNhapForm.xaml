@@ -4,14 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.Views"
+        xmlns:viewModels="clr-namespace:GUI.ViewModels"
         mc:Ignorable="d"
         Title="DangNhapForm" Height="454" Width="683"
         Background="Transparent" 
           WindowStyle="None"
           ResizeMode="NoResize"
           WindowStartupLocation="CenterScreen"
-          AllowsTransparency="True"
-          MouseDown="Window_MouseDown">
+          AllowsTransparency="True">
+    <Window.DataContext>
+        <viewModels:DangNhapViewModel/>
+    </Window.DataContext>
 
     <Border CornerRadius="10"
      Background="#161F36"
@@ -53,7 +56,7 @@ Foreground="#FFF"
 Background="Transparent"
 HorizontalAlignment="Right" 
 VerticalAlignment="Top" 
-Margin="19,19,20,0" Click="Button_Click">
+Margin="19,19,20,0" >
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <!-- Tắt mọi trạng thái mặc định -->
@@ -89,12 +92,11 @@ Margin="19,19,20,0" Click="Button_Click">
                         </Grid>
                         <!-- Nút đăng nhập -->
                         <Button  
-                   Command="{Binding loginGmailCommand}"
+                   Command="{Binding DangNhapGmailCommand}"
                    Width="351"
                   Height="43"
                   FontSize="20"
                   FontWeight="Light"
-                  Click="Btn_Login"
                   Margin="0,20,0,0" 
                   Foreground="White">
                             <Button.Style>

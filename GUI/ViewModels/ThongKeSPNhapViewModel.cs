@@ -72,6 +72,7 @@ namespace GUI.ViewModels
         {
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
             luaChonLoc = "Tuần";
+            LoadLineChartSeries(thongKeBLL.GetThongKePhieuNhapHangTuanData());
             LoadBarChartSeries();
         }
 
@@ -124,9 +125,9 @@ namespace GUI.ViewModels
             UpdateChartHeight();
         }
 
-
         private void LoadLineChartSeries(List<ThongKePhieuNhapDTO> thongKePhieus)
         {
+            MessageBox.Show("he");
             DataPoint[] dataPoints = thongKePhieus.Select(tk => new DataPoint() {
                 Value = tk.TongSoLuongNhap ?? 0,
                 Label = tk.ThangNam ?? ""

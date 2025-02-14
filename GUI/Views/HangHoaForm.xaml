@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:GUI.Views"
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:userControls="clr-namespace:GUI.Views.UserControls"
@@ -78,7 +79,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã hàng hóa" />
-                            <TextBox Grid.Row="1" IsReadOnly="{Binding I}" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.MaHang, Mode=TwoWay}"/>
+                            <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.MaHang, Mode=TwoWay}"/>
                     </Grid>
 
                     <!--TextBox hàng hai-->    
@@ -126,9 +127,17 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Image  Style="{StaticResource ImageDefault}"/>
-                    
-                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Image Style="{StaticResource ImageDefault}" Cursor="Hand"
+                                >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding SelectImageCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Image>
+
+
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
                         <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Sửa" Command="{Binding SuaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Xóa" Command="{Binding XoaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
