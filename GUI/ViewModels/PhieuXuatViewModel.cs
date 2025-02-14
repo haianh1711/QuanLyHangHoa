@@ -24,6 +24,7 @@ namespace GUI.ViewModels
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
 
         private PhieuXuatBLL phieuXuatBLL = new();
+        private KhachHangBLL khachHangBLL = new();
 
         // dataGrid
         [ObservableProperty]
@@ -37,9 +38,14 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string? maTimKiem;
 
+        [ObservableProperty]
+        private List<string> maKhachHangs;
+
         public PhieuXuatViewModel(MainViewModel mainViewModel)
         {
             this.mainVM = mainViewModel;
+
+            MaKhachHangs = khachHangBLL.LayDanhSachMaKhachHang();
 
             LoadDanhSachPhieuXuat();
             SelectedPhieuXuat = new();
@@ -57,22 +63,28 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (SelectedPhieuXuat != null)
+                if (selectedPhieuXuat != null && !string.IsNullOrEmpty(SelectedPhieuXuat.MaKhachHang))
                 {
                     PhieuXuatDTO phieuXuatDTO = new()
                     {
                         MaPhieuXuat = phieuXuatBLL.TaoMaPXMoi(),
-                        MaNhanVien = "NV002",
+                        MaNhanVien = "NV001",
                         NgayXuat = DateTime.Now.ToString(),
+                        MaKhachHang = SelectedPhieuXuat.MaKhachHang,
                         TongTien = '0',
                     };
 
                     bool result = phieuXuatBLL.ThemPhieuXuat(phieuXuatDTO);
                     if (result)
                     {
-                        await ThongBaoVM.MessageOK("Thêm phiếu nhập thành công");
+                        await ThongBaoVM.MessageOK("Thêm phiếu xuất thành công");
                         LoadDanhSachPhieuXuat();
                     }
+
+                }
+                else
+                {
+                    await ThongBaoVM.MessageOK("Vui lòng chọn mã khách hàng");
 
                 }
             }
@@ -97,6 +109,7 @@ namespace GUI.ViewModels
                         {
                             await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
                             LoadDanhSachPhieuXuat();
+                            SelectedPhieuXuat = new();
                         }
                     }
 

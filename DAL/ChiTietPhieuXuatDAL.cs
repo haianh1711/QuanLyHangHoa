@@ -17,7 +17,7 @@ namespace DAL
         {
             try
             {
-                string query = @"INSERT INTO ChiTietPhieuNhap (MaCTPX, MaHang, GiaXuat, SoLuongXuat, MaPhieuXuat)
+                string query = @"INSERT INTO ChiTietPhieuXuat (MaCTPX, MaHang, GiaXuat, SoLuongXuat, MaPhieuXuat)
                              VALUES (@MaCTPX, @MaHang, @GiaXuat, @SoLuongXuat, @MaPhieuXuat);";
 
                 SqlParameter[] parameters = new SqlParameter[]
@@ -35,7 +35,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception("Thêm CTPX lỗi: " + ex.Message, ex);
             }
         }
 
@@ -43,7 +43,7 @@ namespace DAL
         {
             try
             {
-                string query = @"UPDATE ChiTietPhieuNhap 
+                string query = @"UPDATE ChiTietPhieuXuat 
                          SET GiaXuat = @GiaXuat, 
                              SoLuongXuat = @SoLuongXuat
                          WHERE MaCTPX = @MaCTPX";
@@ -69,7 +69,7 @@ namespace DAL
         {
             try
             {
-                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaCTPX = @MaCTPX";
+                string query = @"DELETE FROM ChiTietPhieuXuat WHERE MaCTPX = @MaCTPX";
 
                 SqlParameter[] parameters = new SqlParameter[]
                 {
@@ -94,7 +94,7 @@ namespace DAL
 
                 string query = @"SELECT ct.MaCTPX, sp.MaHang, sp.TenHang, ct.GiaXuat, ct.SoLuongXuat, ct.MaPhieuXuat,
 		                        ct.SoLuongXuat * ct.GiaXuat as ThanhTien
-                                FROM ChiTietPhieuNhap ct INNER JOIN
+                                FROM ChiTietPhieuXuat ct INNER JOIN
                                                       HangHoa sp ON ct.MaHang = sp.MaHang
                                 WHERE (ct.MaPhieuXuat = @MaPhieuXuat)";
                 SqlParameter[] parameters =
@@ -133,7 +133,7 @@ namespace DAL
         {
             try
             {
-                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaHang = @maHH";
+                string query = @"DELETE FROM ChiTietPhieuXuat WHERE MaHang = @maHH";
 
                 SqlParameter[] parameters = new SqlParameter[]
                 {
@@ -159,7 +159,7 @@ namespace DAL
 
                 string query = @"SELECT ct.MaCTPX, sp.MaHang, sp.TenHang, ct.GiaXuat, ct.SoLuongXuat, ct.MaPhieuXuat,
 		                        ct.SoLuongXuat * ct.GiaXuat as ThanhTien
-                                FROM ChiTietPhieuNhap ct INNER JOIN
+                                FROM ChiTietPhieuXuat ct INNER JOIN
                                                       HangHoa sp ON ct.MaHang = sp.MaHang
                                 WHERE (sp.TenHang LIKE '%' + @Info + '%' or ct.MaHang = @Info) 
                                         AND ct.MaPhieuXuat = @MaPhieuXuat";
@@ -200,7 +200,7 @@ namespace DAL
         {
             try
             {
-                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaPhieuXuat = @MaPhieuXuat";
+                string query = @"DELETE FROM ChiTietPhieuXuat WHERE MaPhieuXuat = @MaPhieuXuat";
 
                 SqlParameter[] parameters = new SqlParameter[]
                 {
@@ -220,7 +220,7 @@ namespace DAL
 
         public int LaySoLuongXuat(string MaCTPX)
         {
-            string query = @"SELECT SoLuongXuat FROM ChiTietPhieuNhap
+            string query = @"SELECT SoLuongXuat FROM ChiTietPhieuXuat
                             WHERE MaCTPX = @MaCTPX";
 
             SqlParameter[] parameters = new SqlParameter[]
@@ -237,13 +237,13 @@ namespace DAL
             return 0;
         }
 
-        public string? TaoMaCTPXMoi()
+        public string TaoMaCTPXMoi()
         {
             // Chưa chỉnh 
             try
             {
                 string query = @"select SUBSTRING(MaCTPX, 5, LEN(MaCTPX) - 2) as LastID 
-                                 from ChiTietPhieuNhap
+                                 from ChiTietPhieuXuat
                                  order by LastID desc";
 
                 var result = dbHelper.ExecuteScalar(query);
@@ -258,8 +258,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi " + ex.ToString());
-                return null;
+                throw new Exception("Lỗi khi tạo phiếu nhập: " + ex.Message, ex);
             }
         }
     }

@@ -103,7 +103,7 @@ namespace DAL
             foreach (DataRow row in dt.Rows)
             {
                 string? maKH = row["MaKhachHang"]?.ToString();
-                if (!string.IsNullOrEmpty(maKH)) // Kiểm tra null trước khi thêm vào danh sách
+                if (!string.IsNullOrEmpty(maKH)) 
                 {
                     danhSachMaKH.Add(maKH);
                 }

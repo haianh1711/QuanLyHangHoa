@@ -91,13 +91,20 @@ namespace BLL
 
         private bool CapNhapSoLuongTon(ChiTietPhieuXuatDTO chiTiet)
         {
-            int SLBanDau = ChiTietPhieuXuatDAL.LaySoLuongXuat(chiTiet.MaPhieuXuat);
-            int SLChenhLech = chiTiet.SoLuongXuat - SLBanDau;
+            try
+            {
+                int SLBanDau = ChiTietPhieuXuatDAL.LaySoLuongXuat(chiTiet.MaPhieuXuat);
+                int SLChenhLech = chiTiet.SoLuongXuat - SLBanDau;
 
-            int soLuongTon = HangHoaDAL.LaySoLuongHangHoa(chiTiet.MaHang);
-            soLuongTon += SLChenhLech;
+                int soLuongTon = HangHoaDAL.LaySoLuongHangHoa(chiTiet.MaHang);
+                soLuongTon += SLChenhLech;
 
-            return HangHoaDAL.CapNhatSoLuongHangHoa(chiTiet.MaHang, soLuongTon);
+                return HangHoaDAL.CapNhatSoLuongHangHoa(chiTiet.MaHang, soLuongTon);
+
+            }catch(Exception ex)
+            {
+                throw new Exception("cập nhập số lương tồn thất bại thất bại: " + ex.Message, ex);
+            }
         }
 
         public List<ChiTietPhieuXuatDTO> HienThiDanhSachCTPX(string maPhieuNhap)

@@ -24,11 +24,12 @@ namespace BLL
         {
             using (TransactionScope transaction = new())
             {
-                if (chiTietPhieuXuatBLL.XoaTatCaChiTietCuaPhieuXuat(maPhieuXuat))
-                {
+                chiTietPhieuXuatBLL.XoaTatCaChiTietCuaPhieuXuat(maPhieuXuat);
+
+
                     if (phieuXuatDAL.XoaPhieuXuat(maPhieuXuat))
-                            transaction.Complete(); return true;
-                }
+                { transaction.Complete(); return true; }
+                
 
                 return false;
             }

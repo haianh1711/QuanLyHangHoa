@@ -62,7 +62,7 @@ namespace DAL
                     new SqlParameter("@MaPhieuXuat", PhieuXuatDTO.MaPhieuXuat),
                     new SqlParameter("@MaKhachHang", PhieuXuatDTO.MaKhachHang),
                     new SqlParameter("@MaNhanVien", PhieuXuatDTO.MaNhanVien),
-                    new SqlParameter("@NgayXuat", SqlDbType.DateTime) { Value = DateTime.Parse(PhieuXuatDTO.MaPhieuXuat) },
+                    new SqlParameter("@NgayXuat", PhieuXuatDTO.NgayXuat),
                 ];
 
                 var result = dbHelper.ExecuteNonQuery(query, parameters);
@@ -104,7 +104,7 @@ namespace DAL
 
             if (result != null && int.TryParse(result.ToString(), out int lastID))
             {
-                return "PN" + (lastID + 1).ToString("D3");
+                return "PX" + (lastID + 1).ToString("D3");
             }
 
             return "PX001";

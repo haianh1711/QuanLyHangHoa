@@ -33,15 +33,16 @@
             </Grid>
 
             <!--Bảng-->
-            <DataGrid x:Name="dgPhieuNhap" Grid.Row="1" 
+            <DataGrid x:Name="dgPhieuXuat" Grid.Row="1" 
                     Margin="0,0,0,10" 
-                  ItemsSource="{Binding PhieuNhaps, Mode=TwoWay}" 
-                  SelectedItem="{Binding SelectedPhieuNhap}"
-                  Style="{StaticResource DataGridStyle}" SelectionChanged="dgPhieuNhap_SelectionChanged" >
+                  ItemsSource="{Binding PhieuXuats, Mode=TwoWay}" 
+                  SelectedItem="{Binding SelectedPhieuXuat}"
+                  Style="{StaticResource DataGridStyle}" SelectionChanged="dgPhieuXuat_SelectionChanged" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mã phiếu nhập" Binding="{Binding MaPhieuNhap}" Width="*"  />
-                    <DataGridTextColumn Header="Ngày tạo" Binding="{Binding NgayNhap}"  Width="*" />
+                    <DataGridTextColumn Header="Mã phiếu xuất" Binding="{Binding MaPhieuXuat}" Width="*"  />
+                    <DataGridTextColumn Header="Ngày tạo" Binding="{Binding NgayXuat}"  Width="*" />
                     <DataGridTextColumn Header="Nhân viên thực hiện" Binding="{Binding MaNhanVien}"  Width="*" />
+                    <DataGridTextColumn Header="Khách hàng" Binding="{Binding MaKhachHang}"  Width="*" />
                     <DataGridTextColumn Header="Tống tiền" Binding="{Binding TongTien}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
@@ -72,18 +73,20 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0">
-                                <Label Style="{StaticResource SimpleLabelStyle}"  Content="Mã phiếu nhập" />
+                                <Label Style="{StaticResource SimpleLabelStyle}"  Content="Mã phiếu xuất" />
                                 <TextBox x:Name="txtMaPX" 
-                                     Text="{Binding SelectedPhieuNhap.MaPhieuNhap}"
+                                     Text="{Binding SelectedPhieuXuat.MaPhieuXuat}"
                                      Style="{StaticResource ReadOnlyTextBoxStyle}"
                                      IsReadOnly="True"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2" Grid.Row="1">
                                 <Label Style="{StaticResource SimpleLabelStyle}" Content="Khách hàng"/>
-                                <ComboBox x:Name="txtMaKH" Grid.Row="1" IsReadOnly="True"
-                                         Style="{StaticResource SimpleComboBoxStyle}" 
-                                         Text="{Binding SelectedPhieuNhap.NgayNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ComboBox x:Name="cbMaSP"
+                                          ItemsSource="{Binding MaKhachHangs}"
+                                          SelectedValue="{Binding SelectedPhieuXuat.MaKhachHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Style="{StaticResource SimpleComboBoxStyle}" />
+
                             </StackPanel>
                         </Grid>
 
@@ -98,14 +101,14 @@
                             <StackPanel Grid.Row="1">
                                 <Label Style="{StaticResource SimpleLabelStyle}" Content="Nhân viên thực hiện" />
                                 <TextBox x:Name="txtMaNV" Style="{StaticResource ReadOnlyTextBoxStyle}" 
-                                         Text="{Binding SelectedPhieuNhap.MaNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                         Text="{Binding SelectedPhieuXuat.MaNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2" Grid.Row="1">
                                 <Label Style="{StaticResource SimpleLabelStyle}" Content="Ngày tạo"/>
-                                <TextBox x:Name="txtNgayNhap" Grid.Row="1" IsReadOnly="True"
+                                <TextBox x:Name="txtNgayXuat" Grid.Row="1" IsReadOnly="True"
                                          Style="{StaticResource ReadOnlyTextBoxStyle}" 
-                                         Text="{Binding SelectedPhieuNhap.NgayNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                         Text="{Binding SelectedPhieuXuat.NgayXuat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </Grid>
 
@@ -115,16 +118,16 @@
                             <TextBox x:Name="txtTongTien" 
                                      Style="{StaticResource ReadOnlyTextBoxStyle}"
                                      IsReadOnly="True"
-                                     Text="{Binding SelectedPhieuNhap.TongTien, Mode=OneWay}"/>
+                                     Text="{Binding SelectedPhieuXuat.TongTien, Mode=OneWay}"/>
                         </StackPanel>
                     </Grid>
 
                     <!--Các nút-->
                     <StackPanel Grid.Column="2" VerticalAlignment="Center">
                         <Button Content="Thêm" Style="{StaticResource SimpleRoundedButton}" 
-                                Command="{Binding ThemPhieuNhapCommand}"/>
+                                Command="{Binding ThemPhieuXuatCommand}"/>
                         <Button Content="Xóa" Style="{StaticResource SimpleRoundedButton}"
-                                Command="{Binding XoaPhieuNhapCommand}"/>
+                                Command="{Binding XoaPhieuXuatCommand}"/>
                         <Grid Margin="0, 30, 0, 0"/>
                         <Button Content="Chi tiết phiếu" Style="{StaticResource SimpleRoundedButton}"
                                 Command="{Binding XemChiTietCommand}"/>
