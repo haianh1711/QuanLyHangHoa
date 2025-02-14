@@ -16,13 +16,13 @@ namespace GUI.ViewModels
         [RelayCommand]
         public void GiaoDichNhap()
         {
-            MainVM.View = new PhieuNhapViewModel();
+            MainVM.View = new PhieuNhapViewModel(MainVM);
         }
 
         [RelayCommand]
         public void GiaoDichXuat()
         {
-            MainVM.View = new PhieuXuatViewModel();
+            MainVM.View = new PhieuXuatViewModel(MainVM);
         }
 
 

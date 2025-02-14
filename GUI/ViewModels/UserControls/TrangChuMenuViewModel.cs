@@ -25,11 +25,6 @@ namespace GUI.ViewModels.UserControls
             MainViewModel.View = new KhachHangViewModel();
         }
 
-        [RelayCommand]
-        private void QlNhapXuat()
-        {
-            MainViewModel.View = new PhieuNhapViewModel();
-        }
 
         [RelayCommand]
         private void QlHangHoa()

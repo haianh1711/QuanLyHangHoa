@@ -9,9 +9,6 @@
              xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
              Height="665" Width="678">
-    <UserControl.DataContext>
-        <viewModels:PhieuXuatViewModel/>
-    </UserControl.DataContext>
     <Grid>
 
         <!--Form-->

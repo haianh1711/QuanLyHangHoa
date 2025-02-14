@@ -60,6 +60,14 @@
                 <views:ChonGiaoDichForm/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:ChiTietPhieuNhapViewModel}">
+                <views:ChiTietPhieuNhapForm/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModels:ChiTietPhieuXuatViewModel}">
+                <views:ChiTietPhieuXuatForm/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

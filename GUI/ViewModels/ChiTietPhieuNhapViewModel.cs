@@ -19,6 +19,9 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
 
+        [ObservableProperty]
+        private MainViewModel mainVM;
+
         private PhieuNhapBLL phieuNhapBLL = new();
         private ChiTietPhieuNhapBLL chiTietPhieuNhapBLL = new();
         private HangHoaBLL sanPhamBLL = new();
@@ -54,19 +57,24 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private HangHoaDTO? selectedSanPham;
 
-        public ChiTietPhieuNhapViewModel()
+        PhieuNhapViewModel formTruoc;
+
+        public ChiTietPhieuNhapViewModel(PhieuNhapDTO phieuNhap, MainViewModel mainViewModel, PhieuNhapViewModel formTruoc)
         {
+            this.mainVM = mainViewModel;
+            this.formTruoc = formTruoc;
             sanPhams = sanPhamBLL.LayMaVaTenSP();
 
-            phieuNhap = new()
-            {
-                MaPhieuNhap = "PN002",
-                TongTien = 0
-            };
+            this.phieuNhap = phieuNhap;
 
             chiTietPhieuNhaps = new ObservableCollection<ChiTietPhieuNhapDTO>(chiTietPhieuNhapBLL.HienThiDanhSachCTPN(phieuNhap.MaPhieuNhap));
         }
 
+        [RelayCommand]
+        private void TroVe()
+        {
+            MainVM.View = formTruoc;
+        }
 
         partial void OnSelectedChiTietChanged(ChiTietPhieuNhapDTO? value)
         {

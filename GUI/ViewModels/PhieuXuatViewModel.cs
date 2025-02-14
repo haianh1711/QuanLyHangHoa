@@ -18,54 +18,60 @@ namespace GUI.ViewModels
     internal partial class PhieuXuatViewModel : ObservableObject
     {
         [ObservableProperty]
+        private MainViewModel mainVM;
+
+        [ObservableProperty]
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
 
-        private PhieuNhapBLL phieuNhapBLL = new();
+        private PhieuXuatBLL phieuXuatBLL = new();
 
         // dataGrid
         [ObservableProperty]
-        private ObservableCollection<PhieuNhapDTO> phieuNhaps = [];
+        private ObservableCollection<PhieuXuatDTO> phieuXuats = [];
 
         // Thuộc tính của phieu nhạp
         [ObservableProperty]
-        private PhieuNhapDTO? selectedPhieuNhap;
+        private PhieuXuatDTO? selectedPhieuXuat;
 
         // Tìm kiếm
         [ObservableProperty]
         private string? maTimKiem;
 
-        public PhieuXuatViewModel()
+        public PhieuXuatViewModel(MainViewModel mainViewModel)
         {
-            LoadDanhSachPhieuNhap();
-            SelectedPhieuNhap = new();
+            this.mainVM = mainViewModel;
+
+            LoadDanhSachPhieuXuat();
+            SelectedPhieuXuat = new();
         }
 
-        private void LoadDanhSachPhieuNhap()
+        private void LoadDanhSachPhieuXuat()
         {
-            PhieuNhaps.Clear();
-            PhieuNhaps = new ObservableCollection<PhieuNhapDTO>(phieuNhapBLL.HienThiDanhSachPhieuNhap());
+            PhieuXuats.Clear();
+            PhieuXuats = new ObservableCollection<PhieuXuatDTO>(phieuXuatBLL.HienThiDanhSachPhieuXuat());
         }
+
 
         [RelayCommand]
-        private async Task ThemPhieuNhap()
+        private async Task ThemPhieuXuat()
         {
             try
             {
-                if (SelectedPhieuNhap != null)
+                if (SelectedPhieuXuat != null)
                 {
-                    PhieuNhapDTO phieuNhapDTO = new()
+                    PhieuXuatDTO phieuXuatDTO = new()
                     {
-                        MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
+                        MaPhieuXuat = phieuXuatBLL.TaoMaPXMoi(),
                         MaNhanVien = "NV002",
-                        NgayNhap = DateTime.Now.ToString(),
+                        NgayXuat = DateTime.Now.ToString(),
                         TongTien = '0',
                     };
 
-                    bool result = phieuNhapBLL.ThemPhieuNhap(phieuNhapDTO);
+                    bool result = phieuXuatBLL.ThemPhieuXuat(phieuXuatDTO);
                     if (result)
                     {
                         await ThongBaoVM.MessageOK("Thêm phiếu nhập thành công");
-                        LoadDanhSachPhieuNhap();
+                        LoadDanhSachPhieuXuat();
                     }
 
                 }
@@ -77,20 +83,20 @@ namespace GUI.ViewModels
         }
 
         [RelayCommand]
-        private async Task XoaPhieuNhap()
+        private async Task XoaPhieuXuat()
         {
             try
             {
-                if (SelectedPhieuNhap != null)
+                if (SelectedPhieuXuat != null)
                 {
-                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa phiếu nhập này? Dữ liệu sẽ bị mất vĩnh viễn.");
-                    if (isXoaPhieuNhap)
+                    bool isXoaPhieuXuat = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa phiếu nhập này? Dữ liệu sẽ bị mất vĩnh viễn.");
+                    if (isXoaPhieuXuat)
                     {
-                        bool result = phieuNhapBLL.XoaPhieuNhap(SelectedPhieuNhap.MaPhieuNhap);
+                        bool result = phieuXuatBLL.XoaPhieuXuat(SelectedPhieuXuat.MaPhieuXuat);
                         if (result)
                         {
                             await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
-                            LoadDanhSachPhieuNhap();
+                            LoadDanhSachPhieuXuat();
                         }
                     }
 
@@ -104,6 +110,15 @@ namespace GUI.ViewModels
         }
 
         [RelayCommand]
+        private void XemChiTiet()
+        {
+            if(selectedPhieuXuat != null)
+            {
+                MainVM.View = new ChiTietPhieuXuatViewModel(SelectedPhieuXuat, MainVM, this);
+            }
+        }
+
+        [RelayCommand]
         private async Task TimKiem()
         {
             if (string.IsNullOrWhiteSpace(MaTimKiem))
@@ -112,10 +127,10 @@ namespace GUI.ViewModels
                 return;
             }
 
-            if (phieuNhapBLL != null)
+            if (phieuXuatBLL != null)
             {
-                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == MaTimKiem.ToUpper());
-                if (SelectedPhieuNhap == null)
+                SelectedPhieuXuat = PhieuXuats.FirstOrDefault(pn => pn.MaPhieuXuat == MaTimKiem.ToUpper());
+                if (SelectedPhieuXuat == null)
                 {
                     await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
                 }

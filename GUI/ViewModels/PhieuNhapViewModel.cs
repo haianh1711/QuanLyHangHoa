@@ -33,11 +33,17 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string? maTimKiem;
 
-        public PhieuNhapViewModel()
+        [ObservableProperty]
+        private MainViewModel mainVM;
+
+        public PhieuNhapViewModel(MainViewModel mainViewModel)
         {
+            this.mainVM = mainViewModel;
+
             LoadDanhSachPhieuNhap();
             SelectedPhieuNhap = new();
         }
+
 
         private void LoadDanhSachPhieuNhap()
         {
@@ -72,6 +78,15 @@ namespace GUI.ViewModels
             catch (Exception ex)
             {
                 await ThongBaoVM.MessageOK(ex.ToString());
+            }
+        }
+
+        [RelayCommand]
+        private void XemChiTiet()
+        {
+            if (SelectedPhieuNhap != null)
+            {
+                MainVM.View = new ChiTietPhieuNhapViewModel(SelectedPhieuNhap, MainVM, this);
             }
         }
 

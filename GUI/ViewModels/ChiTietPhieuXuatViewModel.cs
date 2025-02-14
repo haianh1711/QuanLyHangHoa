@@ -17,6 +17,9 @@ namespace GUI.ViewModels
     partial class ChiTietPhieuXuatViewModel : ObservableObject
     {
         [ObservableProperty]
+        private MainViewModel mainVM;
+
+        [ObservableProperty]
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
 
         private PhieuXuatBLL phieuXuatBLL = new();
@@ -54,17 +57,23 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private HangHoaDTO? selectedSanPham;
 
-        public ChiTietPhieuXuatViewModel()
+        PhieuXuatViewModel formTruoc;
+
+        public ChiTietPhieuXuatViewModel(PhieuXuatDTO phieuXuatDTO, MainViewModel mainViewModel, PhieuXuatViewModel formTruoc)
         {
+            this.mainVM = mainViewModel;
+            this.formTruoc = formTruoc;
             sanPhams = sanPhamBLL.LayMaVaTenSP();
 
-            phieuXuat = new()
-            {
-                MaPhieuXuat = "PN002",
-                TongTien = 0
-            };
+            this.phieuXuat = phieuXuatDTO;
 
-            chiTietPhieuXuats = new ObservableCollection<ChiTietPhieuXuatDTO>(chiTietPhieuXuatBLL.HienThiDanhSachCTPX(phieuXuat.MaPhieuXuat));
+            chiTietPhieuXuats = new ObservableCollection<ChiTietPhieuXuatDTO>(chiTietPhieuXuatBLL.HienThiDanhSachCTPX(this.phieuXuat.MaPhieuXuat));
+        }
+
+        [RelayCommand]
+        private void TroVe()
+        {
+            MainVM.View = formTruoc;
         }
 
 

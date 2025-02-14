@@ -23,10 +23,10 @@ namespace DAL
                                 pn.NgayXuat, 
                                 pn.MaPhieuXuat, 
                                 pn.MaKhachHang, 
-                                ISNULL(SUM(ct.SoLuongNhap * ct.GiaNhap), 0) AS TongTien
+                                ISNULL(SUM(ct.SoLuongXuat * ct.GiaXuat), 0) AS TongTien
                                 FROM PhieuXuat pn
                                 LEFT JOIN ChiTietPhieuXuat ct ON pn.MaPhieuXuat = ct.MaPhieuXuat
-                                GROUP BY pn.MaNhanVien, pn.NgayXuat, pn.MaPhieuXuat;";
+                                GROUP BY pn.MaNhanVien,pn.MaKhachHang, pn.NgayXuat, pn.MaPhieuXuat;";
 
                 DataTable dt = dbHelper.ExecuteQuery(query);
                 foreach (DataRow row in dt.Rows)

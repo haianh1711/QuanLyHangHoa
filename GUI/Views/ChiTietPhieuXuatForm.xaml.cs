@@ -18,9 +18,9 @@ namespace GUI.Views
     /// <summary>
     /// Interaction logic for ChiTietPhieuNhapForm.xaml
     /// </summary>
-    public partial class ChiTietPhieuForm : UserControl
+    public partial class ChiTietPhieuXuatForm : UserControl
     {
-        public ChiTietPhieuForm()
+        public ChiTietPhieuXuatForm()
         {
             InitializeComponent();
         }   
