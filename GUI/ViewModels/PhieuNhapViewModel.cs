@@ -56,23 +56,19 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (SelectedPhieuNhap != null)
+                PhieuNhapDTO phieuNhapDTO = new()
                 {
-                    PhieuNhapDTO phieuNhapDTO = new()
-                    {
-                        MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
-                        MaNhanVien = "NV001",
-                        NgayNhap = DateTime.Now.ToString(),
-                        TongTien = '0',
-                    };
+                    MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
+                    MaNhanVien = "NV001",
+                    NgayNhap = DateTime.Now.ToString(),
+                    TongTien = '0',
+                };
 
-                    bool result = phieuNhapBLL.ThemPhieuNhap(phieuNhapDTO);
-                    if (result)
-                    {
-                        await ThongBaoVM.MessageOK("Thêm phiếu nhập thành công");
-                        LoadDanhSachPhieuNhap();
-                    }
-
+                bool result = phieuNhapBLL.ThemPhieuNhap(phieuNhapDTO);
+                if (result)
+                {
+                    await ThongBaoVM.MessageOK("Thêm phiếu nhập thành công");
+                    LoadDanhSachPhieuNhap();
                 }
             }
             catch (Exception ex)
