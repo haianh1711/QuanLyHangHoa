@@ -45,7 +45,7 @@ namespace DAL
                 {
                     if (parameters != null)
                     {
-                        cmd.Parameters.AddRange(parameters);
+                        cmd.Parameters.AddRange(parameters); // Đảm bảo thêm tham số vào query
                     }
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))

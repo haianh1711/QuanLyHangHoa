@@ -16,7 +16,7 @@ namespace DAL
         public List<KhachHangDTO> HienThiDanhSachKH()
         {
             List<KhachHangDTO> danhSachKhachHang = new List<KhachHangDTO>();
-            string query = "SELECT MaKhachHang, TenKhachHang, SoDienThoai, Gmail FROM KhachHang";
+            string query = "SELECT MaKhachHang, TenKhachHang, SoDienThoai,DiaChi, Gmail FROM KhachHang";
 
             DataTable dt = dbHelper.ExecuteQuery(query);
             foreach (DataRow row in dt.Rows)
@@ -27,6 +27,7 @@ namespace DAL
                     TenKhachHang = row["TenKhachHang"].ToString(),
                     SoDienThoai = row["SoDienThoai"].ToString(),
                     Gmail = row["Gmail"].ToString(),
+                    DiaChi = row["DiaChi"].ToString()
                 };
                 danhSachKhachHang.Add(kh);
             }
@@ -43,7 +44,8 @@ namespace DAL
                 new SqlParameter("@MaKhachHang", khachHang.MaKhachHang),
                 new SqlParameter("@TenKhachHang", khachHang.TenKhachHang),
                 new SqlParameter("@SoDienThoai", khachHang.SoDienThoai),
-                new SqlParameter("@Gmail", khachHang.Gmail)
+                new SqlParameter("@Gmail", khachHang.Gmail),
+                new SqlParameter("@DiaChi", khachHang.Gmail)
             };
 
             return dbHelper.ExecuteNonQuery(query, parameters) > 0;
@@ -67,8 +69,8 @@ namespace DAL
             List<KhachHangDTO> danhSachKhachHang = new List<KhachHangDTO>();
             string query = @"SELECT MaKhachHang, TenKhachHang, SoDienThoai, Gmail 
                      FROM KhachHang 
-                     WHERE MaKhachHang LIKE '%' + @TuKhoa + '%' 
-                        OR TenKhachHang LIKE '%' + @TuKhoa + '%'";
+                     WHERE MaKhachHang LIKE @TuKhoa  
+                        OR TenKhachHang LIKE @TuKhoa ";
 
             SqlParameter[] parameters =
             {
@@ -85,7 +87,8 @@ namespace DAL
                     MaKhachHang = row["MaKhachHang"].ToString(),
                     TenKhachHang = row["TenKhachHang"].ToString(),
                     SoDienThoai = row["SoDienThoai"].ToString(),
-                    Gmail = row["Gmail"].ToString()
+                    Gmail = row["Gmail"].ToString(),
+                    DiaChi = row["DiaChi"].ToString()
                 });
             }
 
