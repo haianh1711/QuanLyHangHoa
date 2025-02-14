@@ -15,13 +15,13 @@ namespace DTO
         public string? DiaChi { get; set; }
 
         
-        public KhachHangDTO(string maKhachHang, string tenKhachHang, string soDienThoai, string gmail)
+        public KhachHangDTO(string maKhachHang, string tenKhachHang, string soDienThoai, string diaChi, string gmail)
         {
             MaKhachHang = maKhachHang;
             TenKhachHang = tenKhachHang;
             SoDienThoai = soDienThoai;
             Gmail = gmail;
-            DiaChi = DiaChi;
+            DiaChi = diaChi;
         }
 
         public KhachHangDTO() { }

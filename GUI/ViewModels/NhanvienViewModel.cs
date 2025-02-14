@@ -56,7 +56,7 @@ namespace GUI.ViewModels
                     bool result = nhanVienBLL.SuaNhanVien(SelectedNhanVien);
                     if (result)
                     {
-                        await ThongBaoVM.MessageOK("Sửa hàng hóa thành công");
+                        await ThongBaoVM.MessageOK("Sửa nhân viên thành công");
                         LoadDanhSachNhanVien();
                     }
 
@@ -75,13 +75,13 @@ namespace GUI.ViewModels
             {
                 if (SelectedNhanVien != null)
                 {
-                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa phiếu nhập này? Dữ liệu sẽ bị mất vĩnh viễn.");
+                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa nhân viên này? Dữ liệu sẽ bị mất vĩnh viễn.");
                     if (isXoaPhieuNhap)
                     {
                         bool result = nhanVienBLL.XoaNhanVien(SelectedNhanVien.MaNhanVien);
                         if (result)
                         {
-                            await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
+                            await ThongBaoVM.MessageOK("Xoá nhân viên thành công");
                             LoadDanhSachNhanVien();
                         }
                     }
