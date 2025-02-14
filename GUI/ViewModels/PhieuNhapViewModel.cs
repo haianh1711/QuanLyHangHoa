@@ -84,7 +84,7 @@ namespace GUI.ViewModels
         [RelayCommand]
         private void XemChiTiet()
         {
-            if (SelectedPhieuNhap != null)
+            if (!string.IsNullOrEmpty(SelectedPhieuNhap.MaPhieuNhap))
             {
                 MainVM.View = new ChiTietPhieuNhapViewModel(SelectedPhieuNhap, MainVM, this);
             }

@@ -49,7 +49,6 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private ChiTietPhieuXuatDTO? tempChiTiet = new();
 
-
         // ComboBox
         [ObservableProperty]
         private List<HangHoaDTO> sanPhams;
