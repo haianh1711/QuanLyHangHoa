@@ -13,40 +13,40 @@
         <viewModels:NhanvienViewModel/>
     </UserControl.DataContext>
     <Grid>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="229.567"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="273"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <!-- Nút tìm kiếm -->
-        <Grid Margin="0, 0, 0, 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
+            <!-- Nút tìm kiếm -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên nhân viên..." Text="{Binding TuKhoaTimKiem}" Style="{StaticResource SearchTextBox}" />
-            <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemComand}"/>
-        </Grid>
+                <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên nhân viên..." Text="{Binding TuKhoaTimKiem}" Style="{StaticResource SearchTextBox}" />
+                <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemComand}"/>
+            </Grid>
 
-        <!-- Bảng chứa thông tin nhân viên-->
-        <DataGrid Grid.Row="1" ItemsSource="{Binding NhanVienDTOs}" 
+            <!-- Bảng chứa thông tin nhân viên-->
+            <DataGrid Grid.Row="1" ItemsSource="{Binding NhanVienDTOs}" 
               Style="{StaticResource DataGridStyle}"
-                Margin="0, 0, 0, 5"
+                Margin="0,0,0,5"
                 SelectedItem="{Binding SelectedNhanVien, Mode=TwoWay}">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding MaNhanVien}" Width="*"  />
-                <DataGridTextColumn Header="Tên nhân viên" Binding="{Binding TenNhanVien}"  Width="*" />
-                <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding NgayBatDau}"  Width="*" />
-                <DataGridTextColumn Header="Chức vụ" Binding="{Binding ChucVu}"  Width="*" />
-                <DataGridTextColumn Header="Hình ảnh" Binding="{Binding HinhAnh}"  Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding MaNhanVien}" Width="*"  />
+                    <DataGridTextColumn Header="Tên nhân viên" Binding="{Binding TenNhanVien}"  Width="*" />
+                    <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding NgayBatDau}"  Width="*" />
+                    <DataGridTextColumn Header="Chức vụ" Binding="{Binding ChucVu}"  Width="*" />
+                    <DataGridTextColumn Header="Hình ảnh" Binding="{Binding HinhAnh}"  Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-            <Border Grid.Row="2" Width="678" Background="#A7BFFC" Margin="0,20,0,0"
+            <Border Grid.Row="2" Background="#A7BFFC" Margin="0,20,0,0"
               CornerRadius="14">
 
                 <Grid>
@@ -133,7 +133,7 @@
                     </Border>
                 </Grid>
             </Border>
-        </Grid> 
+        </Grid>
         <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
     </Grid>
 </UserControl>
