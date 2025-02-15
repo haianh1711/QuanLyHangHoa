@@ -86,52 +86,60 @@
                 <!-- Quản lý hàng hóa -->
                 <Button Click="Btn_Click" Content="Quản lý sản phẩm" Margin="0,0,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
                         Command="{Binding QlHangHoaCommand}"
-                        Style="{StaticResource HoverButtonStyle}"  />
+                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand" />
 
                 <!-- Quản lý phiếu nhập -->
                 <Button Click="Btn_Click" Content="Quản lý giao dịch" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
                           Command="{Binding ChonGiaoDienCommand}"
-                        Style="{StaticResource HoverButtonStyle}"  />
+                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand"  />
 
 
                 <!-- Quản lý nhân viên -->
                 <Button Click="Btn_Click" Content="Quản lý nhân viên" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
                           Command="{Binding QlNhanVienCommand}"
-                        Style="{StaticResource HoverButtonStyle}"  />
+                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand"  />
 
                 <!-- Quản lý khách hàng -->
                 <Button Click="Btn_Click" Content="Quản lý khách hàng"  Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
                          Command="{Binding QlKhachHangCommand}"
-                        Style="{StaticResource HoverButtonStyle}"/>
+                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand" />
 
                 <!-- Thống kê -->
-                <Expander Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="19,16,0,0" >
+                <Expander Cursor="Hand" Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="19,16,0,0" >
                     <StackPanel>
                         <Button Click="Btn_Click" Content="Thống kê nhập" Margin="0,0,0,0" Background="Transparent" BorderBrush="Transparent" Padding="40,10" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
-                                   Command="{Binding QlThongKeNhapCommand}" HorizontalAlignment="Left" Width="240"/>
+                                   Command="{Binding QlThongKeNhapCommand}" HorizontalAlignment="Left" Width="240" />
                         <Button Click="Btn_Click" Content="Thống kê xuất" Padding="40,10" Background="Transparent" BorderBrush="Transparent" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
                                 Command="{Binding QlThongKeXuâtCommand}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240"/>
                     </StackPanel>
                 </Expander>
             </StackPanel>
-
+            <!--Quaylai-->
             <Button Grid.Row="3" x:Name="btnQuayLai" Content="Quay lại"
                     Foreground="LightGray"
-                    Cursor="Arrow"
+                    Cursor="Hand"
                     Background="Transparent"
                     FontSize="18"
                     BorderBrush="Transparent"
                     Click="btnQuayLai_Click"
                     Command="{Binding GoBackCommand}"
-                    Visibility="{Binding BackButtonVisibility}" Margin="78,15,98,14">
+                    Visibility="{Binding BackButtonVisibility}" 
+                    Margin="78,15,98,14"
+                    OverridesDefaultStyle="True">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="Transparent"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
-                            </Trigger>
-                        </Style.Triggers>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </Button.Style>
             </Button>
