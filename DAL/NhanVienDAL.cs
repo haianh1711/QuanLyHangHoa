@@ -61,22 +61,30 @@ namespace DAL
             }
         }
 
-        public  bool XoaNhanVien(string maNhanVien)
+        public bool XoaNhanVien(string maNhanVien)
         {
             if (string.IsNullOrEmpty(maNhanVien)) return false;
             try
             {
-                string query = "DELETE FROM NhanVien WHERE MaNhanVien=@Ma";
-                SqlParameter[] parameters = {
-                    new SqlParameter("@Ma", maNhanVien)
-                };
-                return dbHelper.ExecuteNonQuery(query, parameters) > 0;
+                // Xóa tài khoản trước
+                string queryTaiKhoan = "DELETE FROM TaiKhoan WHERE MaNhanVien=@Ma";
+                SqlParameter[] parametersTaiKhoan = { new SqlParameter("@Ma", maNhanVien) };
+                dbHelper.ExecuteNonQuery(queryTaiKhoan, parametersTaiKhoan);
+
+                // Xóa nhân viên
+                string queryNhanVien = "DELETE FROM NhanVien WHERE MaNhanVien=@Ma";
+                SqlParameter[] parametersNhanVien = { new SqlParameter("@Ma", maNhanVien) };
+                return dbHelper.ExecuteNonQuery(queryNhanVien, parametersNhanVien) > 0;
             }
             catch (Exception ex)
             {
-                throw new Exception($"[DAL ERROR] DeleteNhanVien: {ex.Message}");
+                throw new Exception($"[DAL ERROR] XoaNhanVien: {ex.Message}");
             }
         }
-    }
 
+    }
 }
+
+   
+
+
