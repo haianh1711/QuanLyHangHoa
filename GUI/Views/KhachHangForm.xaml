@@ -6,14 +6,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views"
              mc:Ignorable="d" 
-             Height="665" Width="678">
+             d:Height="655.25">
 
     <UserControl.DataContext>
         <viewModels:KhachHangViewModel/>
     </UserControl.DataContext>
 
 
-    <Grid Margin="18,0,0,0">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="1*"/>

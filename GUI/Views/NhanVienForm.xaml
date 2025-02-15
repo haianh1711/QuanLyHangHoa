@@ -8,8 +8,7 @@
              xmlns:local="clr-namespace:GUI.Views"
                 xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-             Height="655.25" 
-             Width="678">
+             d:Height="655.25">
     <UserControl.DataContext>
         <viewModels:NhanvienViewModel/>
     </UserControl.DataContext>

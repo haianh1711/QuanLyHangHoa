@@ -8,24 +8,25 @@
          xmlns:viewModels="clr-namespace:GUI.ViewModels"
         mc:Ignorable="d"
         Title="MainForm"  
-        Height="755.25" 
-         Width="1002.7"
-         WindowStyle="None"
-         Background="Transparent"
-         AllowsTransparency="True"
-         WindowStartupLocation="CenterScreen">
+       Height="755.25" 
+     Width="1100.7"
+     WindowStyle="None"
+     Background="Transparent"
+     AllowsTransparency="True"
+     WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <Border  Background="#DFEBF8" Padding="10,20" CornerRadius="15" BorderBrush="Transparent">
+        <Border  Background="#DFEBF8" Padding="30,20" CornerRadius="15" BorderBrush="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="270"/>
-                    <ColumnDefinition Width="678"   />
+                    <ColumnDefinition   />
                 </Grid.ColumnDefinitions>
                 <ContentControl x:Name="menu" Content="{Binding Menu}"/>
-                <ContentControl x:Name="view" Content="{Binding View}" Grid.Column="1"/>
+                <ContentControl x:Name="view" Content="{Binding View}" Grid.Column="1"
+                           HorizontalAlignment="Stretch" Margin="30, 0, 0, 0" d:DesignHeight="655.25"/>
 
             </Grid>
         </Border>

@@ -29,5 +29,18 @@ namespace GUI.Views
         {
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DangNhapForm loginWindow = new DangNhapForm();
+            loginWindow.Show();
+
+            // Đóng cửa sổ cha chứa UserControl nà
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Close();
+            }
+        }
     }
 }

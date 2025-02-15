@@ -37,7 +37,15 @@ namespace GUI.Views
 
         private void Btn_back(object sender, RoutedEventArgs e)
         {
+            DoiMKForm DoiMatKhau = new DoiMKForm();
+            DoiMatKhau.Show();
 
+            // Đóng cửa sổ cha chứa UserControl nà
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Close();
+            }
         }
 
         private void txtMKCu_TextChanged(object sender, TextChangedEventArgs e)
