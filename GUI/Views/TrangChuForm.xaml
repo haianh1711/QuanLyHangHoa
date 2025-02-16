@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-                     d:DesignHeight="655.25" d:DesignWidth="678">
+                     d:DesignHeight="655.25" Width="698">
     <UserControl.Resources>
         <Style x:Key="CustomButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#6279B1"/>
@@ -128,7 +128,7 @@
                     <Button Grid.Column="1" 
                     Style="{StaticResource CustomButtonStyle}" 
                     Content="Đăng xuất" 
-                    Margin="23,523,21,26" />
+                    Margin="23,523,21,26" Click="Button_Click_1" />
 
 
 

@@ -7,8 +7,17 @@ using System.Threading.Tasks;
 
 namespace GUI.ViewModels
 {
-    internal class TrangChuViewModel : ObservableObject
+    partial class TrangChuViewModel : ObservableObject
     {
+        private readonly MainViewModel _mainViewModel;
 
+        public TrangChuViewModel()
+        {
+        }
+
+        public TrangChuViewModel(MainViewModel mainViewModel)
+        {
+            _mainViewModel = mainViewModel;
+        }
     }
 }

@@ -15,12 +15,11 @@ namespace BLL
     public class NhanVienBLL
     {
         private NhanVienDAL nhanVienDAL = new();
-        
+
         public List<NhanVienDTO> HienThiDanhSachNV()
         {
             return nhanVienDAL.HienThiDanhSachNV();
         }
-
 
         public bool SuaNhanVien(NhanVienDTO nv)
         {
@@ -37,8 +36,5 @@ namespace BLL
 
             return nhanVienDAL.XoaNhanVien(maNhanVien);
         }
-
-
     }
-
 }

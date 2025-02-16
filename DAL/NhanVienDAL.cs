@@ -23,14 +23,13 @@ namespace DAL
                 {
                     list.Add(new NhanVienDTO()
                     {
-                        MaNhanVien = row["MaNhanVien"]?.ToString(),
-                        TenNhanVien = row["TenNhanVien"]?.ToString(),
-                        NgayBatDau = row["NgayBatDau"]?.ToString(),
-                        ChucVu = row["ChucVu"]?.ToString(),
-                        HinhAnh = row["HinhAnh"]?.ToString(),
-                        //Gmail = row["Gmail"]?.ToString()
-
+                        MaNhanVien = row["MaNhanVien"]?.ToString() ?? "",
+                        TenNhanVien = row["TenNhanVien"]?.ToString() ?? "",
+                        NgayBatDau = row["NgayBatDau"]?.ToString() ?? "",
+                        ChucVu = row["ChucVu"]?.ToString() ?? "",
+                        HinhAnh = row["HinhAnh"]?.ToString() ?? ""
                     });
+
                 }
             }
             catch (Exception ex)
@@ -39,20 +38,20 @@ namespace DAL
             }
             return list;
         }
-        public  bool SuaNhanVien(NhanVienDTO nv)
+        public bool SuaNhanVien(NhanVienDTO nv)
         {
             if (nv == null) return false;
             try
             {
-                string query = "UPDATE NhanVien SET TenNhanVien=@Ten, NgayBatDau=@Ngay, ChucVu=@ChucVu, HinhAnh=@HinhAnh, Gmail=@Gmail WHERE MaNhanVien=@Ma";
+                // Loại bỏ Gmail khỏi câu lệnh UPDATE
+                string query = "UPDATE NhanVien SET TenNhanVien=@Ten, NgayBatDau=@Ngay, ChucVu=@ChucVu, HinhAnh=@HinhAnh WHERE MaNhanVien=@Ma";
                 SqlParameter[] parameters = {
-                    new SqlParameter("@Ma", nv.MaNhanVien),
-                    new SqlParameter("@Ten", nv.TenNhanVien),
-                    new SqlParameter("@Ngay", nv.NgayBatDau),
-                    new SqlParameter("@ChucVu", nv.ChucVu),
-                    new SqlParameter("@HinhAnh", nv.HinhAnh ?? ""),
-                    new SqlParameter("@Gmail", nv.Gmail ?? "")
-                };
+            new SqlParameter("@Ma", nv.MaNhanVien),
+            new SqlParameter("@Ten", nv.TenNhanVien),
+            new SqlParameter("@Ngay", nv.NgayBatDau),
+            new SqlParameter("@ChucVu", nv.ChucVu),
+            new SqlParameter("@HinhAnh", nv.HinhAnh ?? "")
+        };
                 return dbHelper.ExecuteNonQuery(query, parameters) > 0;
             }
             catch (Exception ex)
@@ -61,22 +60,31 @@ namespace DAL
             }
         }
 
-        public  bool XoaNhanVien(string maNhanVien)
+
+        public bool XoaNhanVien(string maNhanVien)
         {
             if (string.IsNullOrEmpty(maNhanVien)) return false;
             try
             {
-                string query = "DELETE FROM NhanVien WHERE MaNhanVien=@Ma";
-                SqlParameter[] parameters = {
-                    new SqlParameter("@Ma", maNhanVien)
-                };
-                return dbHelper.ExecuteNonQuery(query, parameters) > 0;
+                // Xóa tài khoản trước
+                string queryTaiKhoan = "DELETE FROM TaiKhoan WHERE MaNhanVien=@Ma";
+                SqlParameter[] parametersTaiKhoan = { new SqlParameter("@Ma", maNhanVien) };
+                dbHelper.ExecuteNonQuery(queryTaiKhoan, parametersTaiKhoan);
+
+                // Xóa nhân viên
+                string queryNhanVien = "DELETE FROM NhanVien WHERE MaNhanVien=@Ma";
+                SqlParameter[] parametersNhanVien = { new SqlParameter("@Ma", maNhanVien) };
+                return dbHelper.ExecuteNonQuery(queryNhanVien, parametersNhanVien) > 0;
             }
             catch (Exception ex)
             {
-                throw new Exception($"[DAL ERROR] DeleteNhanVien: {ex.Message}");
+                throw new Exception($"[DAL ERROR] XoaNhanVien: {ex.Message}");
             }
         }
-    }
 
+    }
 }
+
+   
+
+

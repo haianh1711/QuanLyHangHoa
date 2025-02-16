@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-             Height="665" Width="678">
+             d:Height="655.25">
     <Grid>
 
         <!--Form-->

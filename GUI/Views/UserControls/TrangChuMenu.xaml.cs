@@ -33,5 +33,15 @@ namespace GUI.Views.UserControls
                 Application.Current.Shutdown();
             }
         }
+
+        private void btnQuayLai_Click(object sender, RoutedEventArgs e)
+        {
+             btnQuayLai.Visibility = Visibility.Collapsed;
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            btnQuayLai.Visibility = Visibility.Visible;
+        }
     }
 }
