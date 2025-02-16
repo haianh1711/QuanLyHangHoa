@@ -16,7 +16,7 @@
         <viewModels:DangNhapViewModel/>
     </Window.DataContext>
 
-    <Border CornerRadius="10"
+    <Border 
      Background="#161F36"
      BorderBrush="Transparent"
      BorderThickness="1">
