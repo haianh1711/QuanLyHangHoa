@@ -127,7 +127,6 @@ namespace GUI.ViewModels
 
         private void LoadLineChartSeries(List<ThongKePhieuNhapDTO> thongKePhieus)
         {
-            MessageBox.Show("he");
             DataPoint[] dataPoints = thongKePhieus.Select(tk => new DataPoint() {
                 Value = tk.TongSoLuongNhap ?? 0,
                 Label = tk.ThangNam ?? ""
