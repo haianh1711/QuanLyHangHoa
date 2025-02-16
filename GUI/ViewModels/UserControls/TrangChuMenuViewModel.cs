@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GUI.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GUI.ViewModels.UserControls
 {
@@ -12,6 +14,17 @@ namespace GUI.ViewModels.UserControls
     {
         [ObservableProperty]
         private MainViewModel mainViewModel = mainViewModel;
+
+        [ObservableProperty]
+        private Visibility backButtonVisibility = Visibility.Collapsed;
+
+        [RelayCommand]
+        private void GoBack()
+        {
+            BackButtonVisibility = Visibility.Collapsed; // Ẩn nút khi quay lại
+            MainViewModel.View = new TrangChuViewModel(MainViewModel);
+            // Quay lại trang chính
+        }
 
         [RelayCommand]
         private void QlNhanVien()
