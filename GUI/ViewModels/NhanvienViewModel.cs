@@ -53,13 +53,22 @@ namespace GUI.ViewModels
             {
                 if (SelectedNhanVien != null)
                 {
-                    bool result = nhanVienBLL.SuaNhanVien(SelectedNhanVien);
+                    // Chỉ truyền dữ liệu có trong bảng NhanVien
+                    var nhanVienCapNhat = new NhanVienDTO
+                    {
+                        MaNhanVien = SelectedNhanVien.MaNhanVien,
+                        TenNhanVien = SelectedNhanVien.TenNhanVien,
+                        NgayBatDau = SelectedNhanVien.NgayBatDau,
+                        ChucVu = SelectedNhanVien.ChucVu,
+                        HinhAnh = SelectedNhanVien.HinhAnh
+                    };
+
+                    bool result = nhanVienBLL.SuaNhanVien(nhanVienCapNhat);
                     if (result)
                     {
                         await ThongBaoVM.MessageOK("Sửa nhân viên thành công");
                         LoadDanhSachNhanVien();
                     }
-
                 }
             }
             catch (Exception ex)
@@ -67,6 +76,8 @@ namespace GUI.ViewModels
                 await ThongBaoVM.MessageOK(ex.ToString());
             }
         }
+
+
 
         [RelayCommand]
         private async Task XoaNhanVien()
