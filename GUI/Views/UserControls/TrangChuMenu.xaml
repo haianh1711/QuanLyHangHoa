@@ -110,7 +110,7 @@
                         <Button Click="Btn_Click" Content="Thống kê nhập" Margin="0,0,0,0" Background="Transparent" BorderBrush="Transparent" Padding="40,10" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
                                    Command="{Binding QlThongKeNhapCommand}" HorizontalAlignment="Left" Width="240" />
                         <Button Click="Btn_Click" Content="Thống kê xuất" Padding="40,10" Background="Transparent" BorderBrush="Transparent" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
-                                Command="{Binding QlThongKeXuâtCommand}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240"/>
+                                Command="{Binding QlThongKeXuatCommand}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240"/>
                     </StackPanel>
                 </Expander>
             </StackPanel>

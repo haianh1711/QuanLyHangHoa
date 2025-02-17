@@ -63,7 +63,7 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (selectedPhieuXuat != null && !string.IsNullOrEmpty(SelectedPhieuXuat.MaKhachHang))
+                if (SelectedPhieuXuat != null && !string.IsNullOrEmpty(SelectedPhieuXuat.MaKhachHang))
                 {
                     PhieuXuatDTO phieuXuatDTO = new()
                     {
