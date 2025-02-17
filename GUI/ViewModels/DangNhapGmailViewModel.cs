@@ -27,6 +27,9 @@ namespace GUI.ViewModels
         private ObservableCollection<TaiKhoanDTO> data;
 
         [ObservableProperty]
+        private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
+
+        [ObservableProperty]
         private TaiKhoanDTO selectTaiKhoan;
 
 

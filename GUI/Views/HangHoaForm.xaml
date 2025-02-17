@@ -138,7 +138,7 @@
 
 
                         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-                        <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
+                            <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Sửa" Command="{Binding SuaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Xóa" Command="{Binding XoaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                     </StackPanel>
