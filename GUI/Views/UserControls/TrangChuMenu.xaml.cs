@@ -81,6 +81,17 @@ namespace GUI.Views.UserControls
 
         }
 
+        // Bắt sự kiện khi click vào cửa sổ
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // Kiểm tra nếu click vào bên ngoài Expander
+            if (!expanderThongKe.IsMouseOver)
+            {
+                expanderThongKe.IsExpanded = false; // Đóng Expander
+            }
+        }
+
+
 
     }
 }
