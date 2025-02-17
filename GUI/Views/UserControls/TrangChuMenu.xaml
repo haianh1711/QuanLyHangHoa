@@ -86,7 +86,7 @@
                         Cursor="Hand" />
 
                 <!-- Thống kê -->
-                <Expander x:Name="expanderThongKe" Cursor="Hand" Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="13,16,0,0" >
+                <Expander x:Name="expanderThongKe" Cursor="Hand" Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="10,16,0,0" >
                     <StackPanel Background="#2D746DC3" Margin="0,5,0,0" >
                         <Button Click="Btn_Click" Content="Thống kê nhập" BorderThickness="3,0,0,0" BorderBrush="Purple" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand" 
                                    Command="{Binding QlThongKeNhapCommand}" 
