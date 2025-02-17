@@ -141,11 +141,7 @@ namespace GUI.ViewModels
         [RelayCommand]
         private async Task TimKiem()
         {
-            if (string.IsNullOrWhiteSpace(maTimKiem))
-            {
-                await thongBaoVM.MessageOK("Vui lòng nhập mã hàng hoặc tên để tìm kiếm.");
-                return;
-            }
+            
 
             string maCanTim = maTimKiem.ToUpper();
 

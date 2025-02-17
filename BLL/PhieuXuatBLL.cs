@@ -27,7 +27,7 @@ namespace BLL
                 chiTietPhieuXuatBLL.XoaTatCaChiTietCuaPhieuXuat(maPhieuXuat);
 
 
-                    if (phieuXuatDAL.XoaPhieuXuat(maPhieuXuat))
+                if (phieuXuatDAL.XoaPhieuXuat(maPhieuXuat))
                 { transaction.Complete(); return true; }
                 
 
