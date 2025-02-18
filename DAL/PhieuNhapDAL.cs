@@ -13,7 +13,7 @@ namespace DAL
     {
         private DatabaseHelper dbHelper = new DatabaseHelper();
 
-        public List<PhieuNhapDTO> HienThiDanhSachPhieuNhap()
+        public List<PhieuNhapDTO> HienThiDanhSachPN()
         {
             try
             {

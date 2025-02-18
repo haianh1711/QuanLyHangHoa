@@ -54,7 +54,7 @@ namespace GUI.ViewModels
         private void LoadDanhSachPhieuXuat()
         {
             PhieuXuats.Clear();
-            PhieuXuats = new ObservableCollection<PhieuXuatDTO>(phieuXuatBLL.HienThiDanhSachPhieuXuat());
+            PhieuXuats = new ObservableCollection<PhieuXuatDTO>(phieuXuatBLL.HienThiDanhSachPX());
         }
 
 

@@ -36,9 +36,9 @@ namespace BLL
             }
         }
 
-        public List<PhieuNhapDTO> HienThiDanhSachPhieuNhap()
+        public List<PhieuNhapDTO> HienThiDanhSachPN()
         {
-            return phieuNhapDAL.HienThiDanhSachPhieuNhap();
+            return phieuNhapDAL.HienThiDanhSachPN();
         }
 
 

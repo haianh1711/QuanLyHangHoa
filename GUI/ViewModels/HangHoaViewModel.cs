@@ -4,12 +4,15 @@ using CommunityToolkit.Mvvm.Input;
 using DAL;
 using DTO;
 using GUI.ViewModels.UserControls;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GUI.ViewModels
 {
@@ -32,10 +35,40 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string? maTimKiem;
 
+        [ObservableProperty]
+        private string? hinhAnhPath;
+
         public HangHoaViewModel()
         {
             LoadDanhSachHangHoa();
             SelectedHangHoa = new();
+        }
+
+        [RelayCommand]
+        private void SelectImage()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "Chọn ảnh",
+                Filter = "Ảnh (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string thuMucLuuAnh = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+
+                // Gửi đường dẫn file gốc và thư mục lưu ảnh xuống BLL
+                //string newFilePath = hangHoaBLL.LuuHinhAnh(openFileDialog.FileName, thuMucLuuAnh);
+
+                //if (!string.IsNullOrEmpty(newFilePath))
+                //{
+                //    // Cập nhật đường dẫn ảnh vào CSDL
+                //    hangHoaBLL.CapNhatDuongDanAnh(SelectedHangHoa.MaHang, newFilePath);
+
+                //    // Hiển thị ảnh lên giao diện
+                //    HinhAnhPath = newFilePath;
+                //}
+            }
         }
 
         private void LoadDanhSachHangHoa()
@@ -130,6 +163,12 @@ namespace GUI.ViewModels
             }
 
         }
+        [RelayCommand]        
+        private void ClearSelection()
+        {
+            SelectedHangHoa = null;
+        }
+
 
         [RelayCommand]
         private async Task TimKiem()
@@ -155,7 +194,7 @@ namespace GUI.ViewModels
             {
                 HangHoaDTOs.Add(item);
             }
-
+            
             if (HangHoaDTOs.Count == 1)
             {
                 SelectedHangHoa = HangHoaDTOs.First();

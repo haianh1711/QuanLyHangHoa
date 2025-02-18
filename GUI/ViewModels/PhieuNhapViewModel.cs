@@ -48,7 +48,7 @@ namespace GUI.ViewModels
         private void LoadDanhSachPhieuNhap()
         {
             PhieuNhaps.Clear();
-            PhieuNhaps = new ObservableCollection<PhieuNhapDTO>(phieuNhapBLL.HienThiDanhSachPhieuNhap());
+            PhieuNhaps = new ObservableCollection<PhieuNhapDTO>(phieuNhapBLL.HienThiDanhSachPN());
         }
 
         [RelayCommand]
