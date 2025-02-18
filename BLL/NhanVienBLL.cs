@@ -36,5 +36,27 @@ namespace BLL
 
             return nhanVienDAL.XoaNhanVien(maNhanVien);
         }
+        public List<NhanVienDTO> TimKiemNhanVien(string tuKhoa)
+        {
+            if (string.IsNullOrWhiteSpace(tuKhoa))
+            {
+                return HienThiDanhSachNV(); // Trả về danh sách đầy đủ nếu không nhập từ khóa
+            }
+
+            return HienThiDanhSachNV().Where(nv =>
+                nv.TenNhanVien.Contains(tuKhoa, StringComparison.OrdinalIgnoreCase) ||
+                nv.MaNhanVien.ToString().Contains(tuKhoa) ||
+                nv.ChucVu.Contains(tuKhoa, StringComparison.OrdinalIgnoreCase)
+            ).ToList();
+        }
+            public string SaveImage(string imagePath)
+            {
+                string destinationPath = Path.Combine("Images", Path.GetFileName(imagePath));
+                File.Copy(imagePath, destinationPath, true);
+                return destinationPath;
+            }
+        
+
+
     }
 }

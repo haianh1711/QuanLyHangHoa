@@ -39,7 +39,7 @@ namespace GUI.ViewModels
 
         partial void OnSelectedHangHoaChanging(HangHoaDTO? value)
         {
-            
+
         }
 
         [ObservableProperty]
@@ -170,7 +170,7 @@ namespace GUI.ViewModels
             }
 
         }
-        [RelayCommand]        
+        [RelayCommand]
         private void ClearSelection()
         {
             SelectedHangHoa = null;
@@ -180,7 +180,7 @@ namespace GUI.ViewModels
         [RelayCommand]
         private async Task TimKiem()
         {
-            
+
 
             string maCanTim = maTimKiem.ToUpper();
 
@@ -201,11 +201,11 @@ namespace GUI.ViewModels
             {
                 HangHoaDTOs.Add(item);
             }
-            
+
             if (HangHoaDTOs.Count == 1)
             {
-               // SelectedHangHoa = HangHoaDTOs.First();
-               // LoadDanhSachHangHoa();
+                // SelectedHangHoa = HangHoaDTOs.First();
+                // LoadDanhSachHangHoa();
             }
         }
         partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
@@ -213,9 +213,6 @@ namespace GUI.ViewModels
             dangsua = value == null;
         }
         [RelayCommand]
-        private void ClearSelection()
-        {
-            SelectedHangHoa = null;
-        }
     }
+
 }

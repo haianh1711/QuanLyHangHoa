@@ -11,6 +11,7 @@ using BLL;
 using CommunityToolkit.Mvvm.Input;
 using GUI.ViewModels.UserControls;
 using GUI.Views.UserControls;
+using Microsoft.Win32;
 
 namespace GUI.ViewModels
 {
@@ -123,5 +124,29 @@ namespace GUI.ViewModels
         //    }
 
         //}
+        [RelayCommand]
+        private void SearchNhanVien()
+        {
+            if (!string.IsNullOrWhiteSpace(TuKhoaTimKiem))
+            {
+                NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.TimKiemNhanVien(TuKhoaTimKiem));
+            }
+            else
+            {
+                LoadDanhSachNhanVien(); // Nếu không nhập từ khóa, hiển thị danh sách đầy đủ
+            }
+        }
+
+        [RelayCommand]
+        private async Task ChonHinhAnh()
+        {
+            var openFileDialog = new OpenFileDialog { Filter = "Image Files|*.jpg;*.jpeg;*.png" };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SelectedNhanVien.HinhAnh = nhanVienBLL.SaveImage(openFileDialog.FileName);
+            }
+        }
+
+
     }
 }

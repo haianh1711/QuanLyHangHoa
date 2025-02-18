@@ -81,6 +81,15 @@ namespace DAL
                 throw new Exception($"[DAL ERROR] XoaNhanVien: {ex.Message}");
             }
         }
+        public bool CapNhatHinhAnh(string maNhanVien, string hinhAnhPath)
+        {
+            string query = "UPDATE NhanVien SET HinhAnh=@HinhAnh WHERE MaNhanVien=@Ma";
+            SqlParameter[] parameters = {
+        new SqlParameter("@Ma", maNhanVien),
+        new SqlParameter("@HinhAnh", hinhAnhPath)
+    };
+            return dbHelper.ExecuteNonQuery(query, parameters) > 0;
+        }
 
     }
 }
