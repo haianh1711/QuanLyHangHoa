@@ -111,7 +111,10 @@
                                     <Label Grid.Row="3" Style="{StaticResource SimpleLabelStyle}" Content="Ngày bắt đầu" />
                                     <TextBox Grid.Row="3" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.NgayBatDau, Mode=TwoWay}"/>
                                     <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Chức vụ" />
-                                    <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.ChucVu, Mode=TwoWay}"/>
+                                    <ComboBox Grid.Row="1" Grid.Column="2"
+          ItemsSource="{Binding DanhSachChucVu}"  
+          SelectedValue="{Binding SelectedNhanVien.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          Style="{StaticResource SimpleComboBoxStyle}"/>
                                 </Grid>
                             </Grid>
 

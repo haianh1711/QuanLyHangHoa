@@ -13,6 +13,11 @@
         <viewModels:HangHoaViewModel />
     </UserControl.DataContext>
     <Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="PreviewMouseDown">
+                <i:InvokeCommandAction Command="{Binding ClearSelectionCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

@@ -32,6 +32,10 @@ namespace GUI.ViewModels
         // Tìm kiếm
         [ObservableProperty]
         private string? tuKhoaTimKiem;
+        [ObservableProperty]
+        private ObservableCollection<NhanVienDTO> nhanVien = new();
+        [ObservableProperty]
+        private ObservableCollection<string> danhSachChucVu = new();
 
         public NhanvienViewModel()
         {
@@ -43,6 +47,9 @@ namespace GUI.ViewModels
         {
             NhanVienDTOs.Clear();
             NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
+            danhSachChucVu = new ObservableCollection<string>(
+    NhanVienDTOs.Select(nv => nv.ChucVu).Distinct().ToList()
+);
         }
 
 
