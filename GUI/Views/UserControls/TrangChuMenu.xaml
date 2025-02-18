@@ -5,32 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-                      d:DesignHeight="655.25" d:DesignWidth="270">
-    <UserControl.Resources>
-        <Style x:Key="RoundedButtonStyle" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="HoverButtonStyle" TargetType="Button">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#6279B1"/>
-                    <Setter Property="Foreground" Value="Black" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+              d:DesignHeight="655.25" d:DesignWidth="270"
+             PreviewMouseDown="Window_PreviewMouseDown">
 
-    </UserControl.Resources>
 
     <Border Background="#0F1524" BorderBrush="Transparent" CornerRadius="40">
 
@@ -82,35 +59,41 @@
             <Image Grid.Row="1" Source="pack://application:,,,/Images/ustock-removebg-preview.png" Margin="50,38,70,37" />
 
             <!--Menu chuc nang-->
-            <StackPanel Grid.Row="2" Background="Transparent" Margin="0,10,0,0">
+            <StackPanel  Grid.Row="2" Background="Transparent" Margin="0,10,0,0">
                 <!-- Quản lý hàng hóa -->
                 <Button Click="Btn_Click" Content="Quản lý hàng hóa" Margin="0,0,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
                         Command="{Binding QlHangHoaCommand}"
-                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand" />
+                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                        Cursor="Hand" />
 
                 <!-- Quản lý phiếu nhập -->
                 <Button Click="Btn_Click" Content="Quản lý giao dịch" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
                           Command="{Binding ChonGiaoDienCommand}"
-                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand"  />
+                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                        Cursor="Hand"  />
 
 
                 <!-- Quản lý nhân viên -->
                 <Button Click="Btn_Click" Content="Quản lý nhân viên" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
                           Command="{Binding QlNhanVienCommand}"
-                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand"  />
+                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                        Cursor="Hand"  />
 
                 <!-- Quản lý khách hàng -->
                 <Button Click="Btn_Click" Content="Quản lý khách hàng"  Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
                          Command="{Binding QlKhachHangCommand}"
-                        Style="{StaticResource HoverButtonStyle}" Cursor="Hand" />
+                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                        Cursor="Hand" />
 
                 <!-- Thống kê -->
-                <Expander Cursor="Hand" Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="13,16,0,0" >
-                    <StackPanel>
-                        <Button Click="Btn_Click" Content="Thống kê nhập" Margin="0,0,0,0" Background="Transparent" BorderBrush="Transparent" Padding="40,10" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
-                                   Command="{Binding QlThongKeNhapCommand}" HorizontalAlignment="Left" Width="240" />
-                        <Button Click="Btn_Click" Content="Thống kê xuất" Padding="40,10" Background="Transparent" BorderBrush="Transparent" FontSize="16" Foreground="#AAAAFF" Cursor="Hand" 
-                                Command="{Binding QlThongKeXuatCommand}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240"/>
+                <Expander x:Name="expanderThongKe" Cursor="Hand" Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="10,16,0,0" >
+                    <StackPanel Background="#2D746DC3" Margin="0,5,0,0" >
+                        <Button Click="Btn_Click" Content="Thống kê nhập" BorderThickness="3,0,0,0" BorderBrush="Purple" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand" 
+                                   Command="{Binding QlThongKeNhapCommand}" 
+                                MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" HorizontalAlignment="Center" Width="252" Background="{x:Null}" />
+                        <Button  Click="Btn_Click" Content="Thống kê xuất"  Margin="0,0,0,0"
+                                MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" Padding="40,10" Background="{x:Null}" BorderThickness="3,0,0,0" BorderBrush="Purple" FontSize="16" Foreground="White" Cursor="Hand" 
+                                Command="{Binding QlThongKeXuatCommand}" HorizontalAlignment="Center" Width="252"/>
                     </StackPanel>
                 </Expander>
             </StackPanel>

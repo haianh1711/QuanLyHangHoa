@@ -39,9 +39,59 @@ namespace GUI.Views.UserControls
              btnQuayLai.Visibility = Visibility.Collapsed;
         }
 
+        private Button currentSelectedButton = null;
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             btnQuayLai.Visibility = Visibility.Visible;
+            if (sender is Button clickedButton)
+            {
+                // Reset màu của nút trước đó
+                if (currentSelectedButton != null)
+                {
+                    currentSelectedButton.Background = new SolidColorBrush(Colors.Transparent);
+                }
+
+                // Đổi màu nút vừa click
+                clickedButton.Background = new SolidColorBrush(Color.FromRgb(112, 144, 221)); // Màu khi click
+
+                // Cập nhật nút đang được chọn
+                currentSelectedButton = clickedButton;
+            }
         }
+
+        private void ClickMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is Button hoveredButton)
+            {
+                // Nếu nút này không phải nút đang được chọn, đổi màu khi hover
+                if (hoveredButton != currentSelectedButton)
+                {
+                    hoveredButton.Background = new SolidColorBrush(Color.FromRgb(112, 144, 221)); // Màu hover
+                }
+            }
+
+        }
+
+        private void ClickMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Button hoveredButton && hoveredButton != currentSelectedButton) // Không đổi màu nếu nút đang được chọn
+            {
+                hoveredButton.Background = new SolidColorBrush(Colors.Transparent); // Trở về màu cũ
+            }
+
+        }
+
+        // Bắt sự kiện khi click vào cửa sổ
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // Kiểm tra nếu click vào bên ngoài Expander
+            if (!expanderThongKe.IsMouseOver)
+            {
+                expanderThongKe.IsExpanded = false; // Đóng Expander
+            }
+        }
+
+
+
     }
 }
