@@ -212,10 +212,5 @@ namespace GUI.ViewModels
         {
             dangsua = value == null;
         }
-        [RelayCommand]
-        private void ClearSelection()
-        {
-            SelectedHangHoa = null;
-        }
     }
 }
