@@ -69,7 +69,15 @@
                         <Label Grid.Row="3" Style="{StaticResource SimpleLabelStyle}" Content="Ngày bắt đầu" />
                         <TextBox Grid.Row="3" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding NgayBatDau, Mode=TwoWay}"/>
                         <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Chức vụ" />
-                        <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding ChucVu, Mode=TwoWay}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="2"
+                            x:Name="cbMaSP"
+                           ItemsSource="{Binding NhanViens}"
+                           DisplayMemberPath="ChucVu"
+                           SelectedValuePath="ChucVu"
+                           SelectedValue="{Binding TempChiTiet.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           SelectedItem="{Binding SelectedSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           Style="{StaticResource SimpleComboBoxStyle}">
+                        </ComboBox>
                     </Grid>
                 </Grid>
 

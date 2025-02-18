@@ -34,6 +34,13 @@ namespace GUI.ViewModels
         // Tìm kiếm
         [ObservableProperty]
         private string? maTimKiem;
+        [ObservableProperty]
+        private bool dangsua = true;
+
+        partial void OnSelectedHangHoaChanging(HangHoaDTO? value)
+        {
+            
+        }
 
         [ObservableProperty]
         private string? hinhAnhPath;
@@ -82,9 +89,9 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (string.IsNullOrEmpty(selectedHangHoa.MaHang))
+                if (string.IsNullOrEmpty(selectedHangHoa.MaHang) || string.IsNullOrEmpty(selectedHangHoa.TenHang))
                 {
-                    await ThongBaoVM.MessageOK("Vui lòng nhập mã hàng hoá");
+                    await ThongBaoVM.MessageOK("Vui lòng nhập đầy đủ thông tin hàng hoá");
                     return;
                 }
                 else
@@ -93,7 +100,7 @@ namespace GUI.ViewModels
                     bool result = danhsach.Any(hh => hh.MaHang.Equals(SelectedHangHoa.MaHang, StringComparison.OrdinalIgnoreCase));
                     if (result)
                     {
-                        await ThongBaoVM.MessageOK($"Mã hàng {selectedHangHoa.TenHang} đã tồn tại.");
+                        await ThongBaoVM.MessageOK($"hàng hóa tên {selectedHangHoa.TenHang} đã tồn tại.");
                         return;
                     }
                     bool result1 = hangHoaBLL.ThemHangHoa(SelectedHangHoa);
@@ -197,9 +204,18 @@ namespace GUI.ViewModels
             
             if (HangHoaDTOs.Count == 1)
             {
-                SelectedHangHoa = HangHoaDTOs.First();
+               // SelectedHangHoa = HangHoaDTOs.First();
                // LoadDanhSachHangHoa();
             }
+        }
+        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
+        {
+            dangsua = value == null;
+        }
+        [RelayCommand]
+        private void ClearSelection()
+        {
+            SelectedHangHoa = null;
         }
     }
 }

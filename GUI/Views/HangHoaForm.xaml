@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-            d:Height="655.25" d:Width="600">
+            d:Height="655.25">
     <UserControl.DataContext>
         <viewModels:HangHoaViewModel />
     </UserControl.DataContext>
@@ -18,7 +18,6 @@
                 <i:InvokeCommandAction Command="{Binding ClearSelectionCommand}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
-
         <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -44,8 +43,7 @@
                   Style="{StaticResource DataGridStyle}" 
                   Margin="0, 0, 0, 10"
                   SelectedItem="{Binding SelectedHangHoa, Mode=TwoWay}">
-                
-                <DataGrid.Columns>
+            <DataGrid.Columns>
                 <DataGridTextColumn Header="Mã hàng hóa" Binding="{Binding MaHang}" Width="*"  />
                 <DataGridTextColumn Header="Tên hàng hóa" Binding="{Binding TenHang}"  Width="*" />
                 <DataGridTextColumn Header="Số lượng tồn" Binding="{Binding SoLuong}" Width="*" />
@@ -145,7 +143,7 @@
 
 
                         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-                        <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
+                            <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Sửa" Command="{Binding SuaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Xóa" Command="{Binding XoaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                     </StackPanel>
