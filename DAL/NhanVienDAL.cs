@@ -38,6 +38,40 @@ namespace DAL
             }
             return list;
         }
+        public List<NhanVienDTO> TimKiemNhanVien(string tuKhoa)
+        {
+            List<NhanVienDTO> danhSachNhanVien = new List<NhanVienDTO>();
+            string query = "SELECT MaNhanVien, TenNhanVien, NgayBatDau, ChucVu, HinhAnh FROM NhanVien WHERE MaNhanVien LIKE @TuKhoa OR TenNhanVien LIKE @TuKhoa";
+
+            SqlParameter[] parameters =
+            {
+        new SqlParameter("@TuKhoa", $"%{tuKhoa}%")
+    };
+
+            try
+            {
+                DataTable dt = dbHelper.ExecuteQuery(query, parameters);
+                foreach (DataRow row in dt.Rows)
+                {
+                    NhanVienDTO nv = new NhanVienDTO
+                    {
+                        MaNhanVien = row["MaNhanVien"]?.ToString() ?? "",
+                        TenNhanVien = row["TenNhanVien"]?.ToString() ?? "",
+                        NgayBatDau = row["NgayBatDau"]?.ToString() ?? "",
+                        ChucVu = row["ChucVu"]?.ToString() ?? "",
+                        HinhAnh = row["HinhAnh"]?.ToString() ?? ""
+                    };
+                    danhSachNhanVien.Add(nv);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi tìm kiếm nhân viên: " + ex.Message);
+            }
+
+            return danhSachNhanVien;
+        }
+
         public bool SuaNhanVien(NhanVienDTO nv)
         {
             if (nv == null) return false;
