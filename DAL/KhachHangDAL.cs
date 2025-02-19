@@ -30,7 +30,6 @@ namespace DAL
                 };
                 danhSachKhachHang.Add(kh);
             }
-
             return danhSachKhachHang;
         }
 
