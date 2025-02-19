@@ -11,108 +11,83 @@ using BLL;
 using CommunityToolkit.Mvvm.Input;
 using GUI.ViewModels.UserControls;
 using GUI.Views.UserControls;
+using DAL;
 
-namespace GUI.ViewModels
-{
-    internal partial class NhanvienViewModel : ObservableObject
+    namespace GUI.ViewModels
     {
-        [ObservableProperty]
-        private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
+        internal partial class NhanvienViewModel : ObservableObject
+        {
+            private NhanVienBLL nhanVienBLL = new();
 
-        private NhanVienBLL nhanVienBLL = new();
+            [ObservableProperty]
+            private ThongBaoViewModel thongBaoVM = new();
 
-        // dataGrid
-        [ObservableProperty]
-        private ObservableCollection<NhanVienDTO> nhanVienDTOs = [];
+            [ObservableProperty]
+            private ObservableCollection<NhanVienDTO> data;
 
-        // Thuộc tính của phieu nhạp
-        [ObservableProperty]
-        private NhanVienDTO? selectedNhanVien;
+            [ObservableProperty]
+            private NhanVienDTO? selectedNhanVien;
 
-        // Tìm kiếm
-        [ObservableProperty]
-        private string? tuKhoaTimKiem;
-        [ObservableProperty]
-        private ObservableCollection<NhanVienDTO> nhanVien = new();
-        [ObservableProperty]
-        private ObservableCollection<string> danhSachChucVu = new();
+            [ObservableProperty]
+            private string? tuKhoaTimKiem;
 
         public NhanvienViewModel()
         {
-            LoadDanhSachNhanVien();
-            SelectedNhanVien = new();
-        }
+            var danhSach = nhanVienBLL.HienThiDanhSachNV();
+            Console.WriteLine($"Số nhân viên lấy được: {danhSach.Count}");
 
-        private void LoadDanhSachNhanVien()
-        {
-            NhanVienDTOs.Clear();
-            NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
-            danhSachChucVu = new ObservableCollection<string>(
-    NhanVienDTOs.Select(nv => nv.ChucVu).Distinct().ToList()
-);
+            Data = new ObservableCollection<NhanVienDTO>(danhSach);
         }
 
 
         [RelayCommand]
-        private async Task SuaNhanVien()
-        {
-            try
+            private async Task SuaNhanVien()
             {
                 if (SelectedNhanVien != null)
                 {
-                    // Chỉ truyền dữ liệu có trong bảng NhanVien
-                    var nhanVienCapNhat = new NhanVienDTO
-                    {
-                        MaNhanVien = SelectedNhanVien.MaNhanVien,
-                        TenNhanVien = SelectedNhanVien.TenNhanVien,
-                        NgayBatDau = SelectedNhanVien.NgayBatDau,
-                        ChucVu = SelectedNhanVien.ChucVu,
-                        HinhAnh = SelectedNhanVien.HinhAnh
-                    };
-
-                    bool result = nhanVienBLL.SuaNhanVien(nhanVienCapNhat);
-                    if (result)
+                    bool daSua = nhanVienBLL.SuaNhanVien(SelectedNhanVien);
+                    if (daSua)
                     {
                         await ThongBaoVM.MessageOK("Sửa nhân viên thành công");
-                        LoadDanhSachNhanVien();
+                        Data = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
+                        OnPropertyChanged(nameof(Data));
                     }
                 }
             }
-            catch (Exception ex)
+
+            [RelayCommand]
+            private async Task XoaNhanVien()
             {
-                await ThongBaoVM.MessageOK(ex.ToString());
-            }
-        }
-
-
-
-        [RelayCommand]
-        private async Task XoaNhanVien()
-        {
-            try
-            {
-                if (SelectedNhanVien != null)
+                try
                 {
-                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa nhân viên này? Dữ liệu sẽ bị mất vĩnh viễn.");
-                    if (isXoaPhieuNhap)
+                    bool isXoa = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa nhân viên này?");
+                    if (SelectedNhanVien != null && isXoa)
                     {
                         bool result = nhanVienBLL.XoaNhanVien(SelectedNhanVien.MaNhanVien);
                         if (result)
                         {
-                            await ThongBaoVM.MessageOK("Xoá nhân viên thành công");
-                            LoadDanhSachNhanVien();
+                            await ThongBaoVM.MessageOK("Xóa nhân viên thành công");
+                            Data = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
+                            OnPropertyChanged(nameof(Data));
                         }
                     }
-
+                }
+                catch (Exception ex)
+                {
+                    await ThongBaoVM.MessageOK(ex.ToString());
                 }
             }
-            catch (Exception ex)
+
+            [RelayCommand]
+            public void SearchNhanVien()
             {
-                await ThongBaoVM.MessageOK(ex.ToString());
+                TuKhoaTimKiem ??= "";
+                Data = new ObservableCollection<NhanVienDTO>(nhanVienBLL.TimKiemNhanVien(TuKhoaTimKiem));
+                OnPropertyChanged(nameof(Data));
             }
-
         }
-
+    }
+    
         //[RelayCommand]
         //private async Task TimKiem()
         //{
@@ -123,5 +98,4 @@ namespace GUI.ViewModels
         //    }
 
         //}
-    }
-}
+   

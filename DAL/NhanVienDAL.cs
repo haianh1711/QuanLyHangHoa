@@ -13,41 +13,40 @@ namespace DAL
     {
         private  DatabaseHelper dbHelper = new DatabaseHelper();
 
-        public  List<NhanVienDTO> HienThiDanhSachNV()
+        public List<NhanVienDTO> HienThiDanhSachNV()
         {
-            var list = new List<NhanVienDTO>();
-            try
-            {
-                DataTable table = dbHelper.ExecuteQuery("SELECT * FROM NhanVien");
-                foreach (DataRow row in table.Rows)
-                {
-                    list.Add(new NhanVienDTO()
-                    {
-                        MaNhanVien = row["MaNhanVien"]?.ToString() ?? "",
-                        TenNhanVien = row["TenNhanVien"]?.ToString() ?? "",
-                        NgayBatDau = row["NgayBatDau"]?.ToString() ?? "",
-                        ChucVu = row["ChucVu"]?.ToString() ?? "",
-                        HinhAnh = row["HinhAnh"]?.ToString() ?? ""
-                    });
+            List<NhanVienDTO> danhSachNhanVien = new List<NhanVienDTO>();
+            string query = "SELECT MaNhanVien, TenNhanVien, NgayBatDau, ChucVu, HinhAnh FROM NhanVien";
 
-                }
-            }
-            catch (Exception ex)
+            DataTable dt = dbHelper.ExecuteQuery(query);
+            foreach (DataRow row in dt.Rows)
             {
-                throw new Exception($"[DAL ERROR] GetAllNhanVien: {ex.Message}");
+                NhanVienDTO nv = new NhanVienDTO
+                {
+                    MaNhanVien = row["MaNhanVien"]?.ToString() ?? "",
+                    TenNhanVien = row["TenNhanVien"]?.ToString() ?? "",
+                    NgayBatDau = row["NgayBatDau"]?.ToString() ?? "",
+                    ChucVu = row["ChucVu"]?.ToString() ?? "",
+                    HinhAnh = row["HinhAnh"]?.ToString() ?? ""
+                };
+                danhSachNhanVien.Add(nv);
             }
-            return list;
+            return danhSachNhanVien;
         }
         public List<NhanVienDTO> TimKiemNhanVien(string tuKhoa)
         {
             List<NhanVienDTO> danhSachNhanVien = new List<NhanVienDTO>();
-            string query = "SELECT MaNhanVien, TenNhanVien, NgayBatDau, ChucVu, HinhAnh FROM NhanVien WHERE MaNhanVien LIKE @TuKhoa OR TenNhanVien LIKE @TuKhoa";
 
+            if (string.IsNullOrWhiteSpace(tuKhoa))
+            {
+                return danhSachNhanVien; // Tránh truy vấn SQL không cần thiết
+            }
+
+            string query = "SELECT MaNhanVien, TenNhanVien, NgayBatDau, ChucVu, HinhAnh FROM NhanVien WHERE MaNhanVien LIKE @TuKhoa OR TenNhanVien LIKE @TuKhoa";
             SqlParameter[] parameters =
             {
         new SqlParameter("@TuKhoa", $"%{tuKhoa}%")
     };
-
             try
             {
                 DataTable dt = dbHelper.ExecuteQuery(query, parameters);
@@ -64,6 +63,10 @@ namespace DAL
                     danhSachNhanVien.Add(nv);
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"Lỗi SQL: {sqlEx.Message}");
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("Lỗi khi tìm kiếm nhân viên: " + ex.Message);
@@ -71,6 +74,7 @@ namespace DAL
 
             return danhSachNhanVien;
         }
+
 
         public bool SuaNhanVien(NhanVienDTO nv)
         {
@@ -115,6 +119,7 @@ namespace DAL
                 throw new Exception($"[DAL ERROR] XoaNhanVien: {ex.Message}");
             }
         }
+
 
     }
 }

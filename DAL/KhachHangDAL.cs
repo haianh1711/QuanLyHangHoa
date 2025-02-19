@@ -22,11 +22,11 @@ namespace DAL
             {
                 KhachHangDTO kh = new KhachHangDTO
                 {
-                    MaKhachHang = row["MaKhachHang"].ToString(),
-                    TenKhachHang = row["TenKhachHang"].ToString(),
-                    SoDienThoai = row["SoDienThoai"].ToString(),
-                    Gmail = row["Gmail"].ToString(),
-                    DiaChi = row["DiaChi"].ToString()
+                    MaKhachHang = row["MaKhachHang"].ToString() ??"",
+                    TenKhachHang = row["TenKhachHang"].ToString() ?? "",
+                    SoDienThoai = row["SoDienThoai"].ToString() ?? "",
+                    Gmail = row["Gmail"].ToString() ?? "",
+                    DiaChi = row["DiaChi"].ToString() ?? ""
                 };
                 danhSachKhachHang.Add(kh);
             }
