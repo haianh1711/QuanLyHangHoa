@@ -59,43 +59,40 @@
             <Image Grid.Row="1" Source="pack://application:,,,/Images/ustock-removebg-preview.png" Margin="50,38,70,37" />
 
             <!--Menu chuc nang-->
-            <StackPanel  Grid.Row="2" Background="Transparent" Margin="0,10,0,0">
+            <StackPanel  Grid.Row="2" Background="Transparent">
                 <!-- Quản lý hàng hóa -->
-                <Button Click="Btn_Click" Content="Quản lý hàng hóa" Margin="0,0,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
-                        Command="{Binding QlHangHoaCommand}"
-                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                <RadioButton Click="Btn_Click" Content="Quản lý hàng hóa" 
+                        Command="{Binding QlHangHoaCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand" />
 
                 <!-- Quản lý phiếu nhập -->
-                <Button Click="Btn_Click" Content="Quản lý giao dịch" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305" 
-                          Command="{Binding ChonGiaoDienCommand}"
-                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                <RadioButton Click="Btn_Click" Content="Quản lý giao dịch" 
+                          Command="{Binding ChonGiaoDienCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand"  />
 
 
                 <!-- Quản lý nhân viên -->
-                <Button Click="Btn_Click" Content="Quản lý nhân viên" Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
-                          Command="{Binding QlNhanVienCommand}"
-                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                <RadioButton Click="Btn_Click" Content="Quản lý nhân viên"  
+                          Command="{Binding QlNhanVienCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand"  />
 
                 <!-- Quản lý khách hàng -->
-                <Button Click="Btn_Click" Content="Quản lý khách hàng"  Margin="0,16,0,0" Foreground="White" Background="Transparent" FontSize="18" Padding="38,10,10,10" BorderBrush="Transparent" HorizontalContentAlignment="Left" Width="305"
-                         Command="{Binding QlKhachHangCommand}"
-                        MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" 
+                <RadioButton Click="Btn_Click" Content="Quản lý khách hàng"   
+                         Command="{Binding QlKhachHangCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand" />
+                <RadioButton Style="{StaticResource ResourceKey=MenuBtnThongKe}" >
+
+                    <Expander x:Name="expanderThongKe" IsExpanded="{Binding IsThongKeExpanded, Mode=TwoWay}" Cursor="Hand" Header=" Thống kê" Foreground="White"  FontSize="18" Width="240" Margin="8,0,0,0">
+                        <StackPanel  Background="Transparent" Margin="0,5,0,0" >
+                            <RadioButton Click="Btn_Click" Content="Thống kê nhập" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand" 
+                                   Command="{Binding QlThongKeNhapCommand}"  Style="{StaticResource MenuBtnThongKe}" HorizontalAlignment="Center" Width="252" Background="{x:Null}" />
+                            <RadioButton  Click="Btn_Click" Content="Thống kê xuất"  Margin="0,0,0,0" Padding="40,10" Background="{x:Null}" Foreground="White" Cursor="Hand" 
+                                Command="{Binding QlThongKeXuatCommand}" Style="{StaticResource MenuBtnThongKe}" HorizontalAlignment="Center" Width="252"/>
+                        </StackPanel>
+                    </Expander>
+                </RadioButton>
 
                 <!-- Thống kê -->
-                <Expander x:Name="expanderThongKe" Cursor="Hand" Header=" Thống kê" Foreground="White" Background="Transparent" FontSize="18" Margin="10,16,0,0" >
-                    <StackPanel Background="#2D746DC3" Margin="0,5,0,0" >
-                        <Button Click="Btn_Click" Content="Thống kê nhập" BorderThickness="3,0,0,0" BorderBrush="Purple" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand" 
-                                   Command="{Binding QlThongKeNhapCommand}" 
-                                MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" HorizontalAlignment="Center" Width="252" Background="{x:Null}" />
-                        <Button  Click="Btn_Click" Content="Thống kê xuất"  Margin="0,0,0,0"
-                                MouseEnter="ClickMouseEnter" MouseLeave="ClickMouseLeave" Padding="40,10" Background="{x:Null}" BorderThickness="3,0,0,0" BorderBrush="Purple" FontSize="16" Foreground="White" Cursor="Hand" 
-                                Command="{Binding QlThongKeXuatCommand}" HorizontalAlignment="Center" Width="252"/>
-                    </StackPanel>
-                </Expander>
             </StackPanel>
             <!--Quaylai-->
             <Button Grid.Row="3" x:Name="btnQuayLai" Content="Quay lại"

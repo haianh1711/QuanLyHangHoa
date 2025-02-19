@@ -90,13 +90,11 @@ namespace GUI.ViewModels
         [RelayCommand]
         public void SearchKhachHang()
         {
-            if (selectedKhachHang != null)
-            {
+            
                 TuKhoaTimKiem = TuKhoaTimKiem ?? "";
                 Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.TimKiem(TuKhoaTimKiem));
 
 
-            }
         }
 
     }

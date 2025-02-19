@@ -18,6 +18,8 @@ namespace GUI.ViewModels.UserControls
         [ObservableProperty]
         private Visibility backButtonVisibility = Visibility.Collapsed;
 
+
+
         [RelayCommand]
         private void GoBack()
         {
@@ -81,5 +83,17 @@ namespace GUI.ViewModels.UserControls
 
             }
         }
+
+        private bool _isThongKeSelected;
+        public bool IsThongKeSelected
+        {
+            get => _isThongKeSelected;
+            set
+            {
+                _isThongKeSelected = value;
+                OnPropertyChanged(nameof(IsThongKeSelected));
+            }
+        }
+
     }
 }
