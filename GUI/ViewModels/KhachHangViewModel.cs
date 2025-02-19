@@ -45,7 +45,7 @@ namespace GUI.ViewModels
 
 
         [RelayCommand]
-        public void SuaKhachHang()
+        public async Task SuaKhachHang()
         {
             if(SelectedKhachHang != null)
             {
@@ -53,7 +53,7 @@ namespace GUI.ViewModels
 
                 if (daSua)
                 {
-                    MessageBox.Show("Đã sửa thành công!");
+                    await ThongBaoVM.MessageOK("Sửa khách hàng thành công");
                     Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
 
                 }
@@ -65,9 +65,9 @@ namespace GUI.ViewModels
         {
             try
             {
+             bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa khách hàng này? Dữ liệu sẽ bị mất vĩnh viễn.");
                 if (SelectedKhachHang != null)
                 {
-                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa khách hàng này? Dữ liệu sẽ bị mất vĩnh viễn.");
                     if (isXoaPhieuNhap)
                     {
                         bool result = khachHangBLL.DeleteKhachHang(SelectedKhachHang.MaKhachHang);

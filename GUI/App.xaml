@@ -24,6 +24,7 @@
                 <viewsUC:TrangChuMenu/>
             </DataTemplate>
 
+
             <DataTemplate DataType="{x:Type viewModels:TrangChuViewModel}">
                 <views:TrangChuForm/>
             </DataTemplate>
