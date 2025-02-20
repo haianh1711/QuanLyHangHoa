@@ -27,8 +27,11 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên nhân viên..." Text="{Binding TuKhoaTimKiem}" Style="{StaticResource SearchTextBox}" />
-                <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemComand}"/>
+                <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên nhân viên..." 
+                     Text="{Binding TuKhoaTimKiem, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource SearchTextBox}" />
+                <Button Grid.Column="1" Style="{StaticResource SearchButton}" 
+                    Command="{Binding TimKiemCommand}" />
             </Grid>
 
             <!-- Bảng chứa thông tin nhân viên-->
@@ -113,8 +116,9 @@
                                     <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Chức vụ" />
                                     <ComboBox Grid.Row="1" Grid.Column="2"
           ItemsSource="{Binding DanhSachChucVu}"  
-          SelectedValue="{Binding SelectedNhanVien.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-          Style="{StaticResource SimpleComboBoxStyle}"/>
+          SelectedItem="{Binding SelectedNhanVien.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          Style="{StaticResource SimpleComboBoxStyle}"
+          IsEditable="True"/>
                                 </Grid>
                             </Grid>
 
