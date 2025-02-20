@@ -39,11 +39,21 @@ namespace GUI.ViewModels
             LoadDanhSachNhanVien();
             SelectedNhanVien = new();
         }
-
+        [ObservableProperty]
+        private ObservableCollection<string> danhSachChucVu = [];
         private void LoadDanhSachNhanVien()
         {
             NhanVienDTOs.Clear();
             NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
+            var danhSachNhanVien = nhanVienBLL.HienThiDanhSachNV();
+            NhanVienDTOs.Clear();
+            foreach (var nv in danhSachNhanVien)
+            {
+                NhanVienDTOs.Add(nv);
+            }
+
+            danhSachChucVu = new ObservableCollection<string>(
+                danhSachNhanVien.Select(nv => nv.ChucVu).Distinct().ToList());
         }
 
 
@@ -106,17 +116,38 @@ namespace GUI.ViewModels
             }
 
         }
+        [RelayCommand]
+        private async Task TimKiem()
+        {
+            if (string.IsNullOrWhiteSpace(tuKhoaTimKiem))
+            {
+                await ThongBaoVM.MessageOK("Vui lòng nhập từ khóa tìm kiếm.");
+                return;
+            }
+
+            string TuKhoa = tuKhoaTimKiem.Trim().ToUpper();
+
+            var danhSach = nhanVienBLL
+                .TimKiemNhanVien(TuKhoa)
+                .Where(hh => (hh.MaNhanVien != null && hh.MaNhanVien.Contains(TuKhoa, StringComparison.OrdinalIgnoreCase))
+                          || (hh.TenNhanVien != null && hh.TenNhanVien.Contains(TuKhoa, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            if (!danhSach.Any())
+            {
+                await ThongBaoVM.MessageOK($"Không tìm thấy {TuKhoa}");
+                return;
+            }
+
+            nhanVienDTOs.Clear();
+            foreach (var item in danhSach)
+            {
+                nhanVienDTOs.Add(item);
+            }
+        }
+
     }
 }
 
-        //[RelayCommand]
-        //private async Task TimKiem()
-        //{
-        //    if (SelectedNhanVien != null)
-        //    {
-        //        TuKhoaTimKiem = TuKhoaTimKiem ?? "";
-        //        NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.Tim(TuKhoaTimKiem));
-        //    }
 
-//}
 
