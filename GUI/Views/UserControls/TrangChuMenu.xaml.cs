@@ -38,27 +38,37 @@ namespace GUI.Views.UserControls
         {
             btnQuayLai.Visibility = Visibility.Collapsed;
 
-            // Duyệt qua tất cả các RadioButton trong menuContainer
-            foreach (var child in menuContainer.Children)
+            // Kiểm tra menuContainer có phải là Panel không
+            if (menuContainer is Panel panel)
             {
-                if (child is RadioButton radioButton)
+                foreach (var child in panel.Children)
                 {
-                    radioButton.IsChecked = false; // Bỏ chọn tất cả các RadioButton
-                }
-                else if (child is Expander expander) // Kiểm tra trong Expander (Thống kê)
-                {
-                    foreach (var expChild in ((StackPanel)expander.Content).Children)
+                    if (child is RadioButton radioButton)
                     {
-                        if (expChild is RadioButton expRadioButton)
+                        radioButton.IsChecked = false; // Bỏ chọn tất cả RadioButton
+                    }
+                    else if (child is Expander expander)
+                    {
+                        // Kiểm tra nếu nội dung của Expander là StackPanel
+                        if (expander.Content is Panel expPanel)
                         {
-                            expRadioButton.IsChecked = false; // Bỏ chọn các RadioButton trong Expander
+                            foreach (var expChild in expPanel.Children)
+                            {
+                                if (expChild is RadioButton expRadioButton)
+                                {
+                                    expRadioButton.IsChecked = false; // Bỏ chọn các RadioButton trong Expander
+                                }
+                            }
                         }
                     }
                 }
             }
 
-            // Đóng Expander nếu nó đang mở
-            expanderThongKe.IsExpanded = false;
+            // Kiểm tra expanderThongKe có null không trước khi sử dụng
+            if (expanderThongKe != null)
+            {
+                expanderThongKe.IsExpanded = false;
+            }
         }
 
         private Button currentSelectedButton = null;
@@ -68,27 +78,30 @@ namespace GUI.Views.UserControls
 
             if (sender is RadioButton clickedButton)
             {
-                // Chỉ cho phép chọn một nút tại một thời điểm
-                foreach (var child in menuContainer.Children)
+                if (menuContainer is Panel panel) // Đảm bảo menuContainer có thể chứa Children
                 {
-                    if (child is RadioButton radioButton)
+                    foreach (var child in panel.Children)
                     {
-                        radioButton.IsChecked = (radioButton == clickedButton);
-                    }
-                    else if (child is Expander expander) // Nếu là Expander (Thống kê)
-                    {
-                        foreach (var expChild in ((StackPanel)expander.Content).Children)
+                        if (child is RadioButton radioButton)
                         {
-                            if (expChild is RadioButton expRadioButton)
+                            radioButton.IsChecked = (radioButton == clickedButton);
+                        }
+                        else if (child is Expander expander && expander.Content is StackPanel expPanel)
+                        {
+                            foreach (var expChild in expPanel.Children)
                             {
-                                expRadioButton.IsChecked = (expRadioButton == clickedButton);
+                                if (expChild is RadioButton expRadioButton)
+                                {
+                                    expRadioButton.IsChecked = (expRadioButton == clickedButton);
+                                }
                             }
                         }
                     }
                 }
             }
-
         }
+
+
 
         // Bắt sự kiện khi click vào cửa sổ
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)

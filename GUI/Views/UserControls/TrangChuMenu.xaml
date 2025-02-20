@@ -83,12 +83,14 @@
                 <RadioButton Style="{StaticResource ResourceKey=MenuBtnThongKe}" >
 
                     <Expander x:Name="expanderThongKe" IsExpanded="{Binding IsThongKeExpanded, Mode=TwoWay}" Cursor="Hand" Header=" Thống kê" Foreground="White"  FontSize="18" Width="240" Margin="9,0,0,0">
-                        <StackPanel  Background="Transparent" Margin="0,5,0,0" >
+                        <Border BorderThickness="0,1,0,0" BorderBrush="White" Margin="0,10,0,0">
+                            <StackPanel  Background="Transparent" Margin="0,5,0,0" >
                             <RadioButton Click="Btn_Click" Content="Thống kê nhập" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand"  HorizontalAlignment="Center" Width="252" Background="{x:Null}"
                                    Command="{Binding QlThongKeNhapCommand}"  Style="{StaticResource MenuBtnThongKe}" />
-                            <RadioButton  Click="Btn_Click" Content="Thống kê xuất"  Margin="0,0,0,0" Padding="40,10" Background="{x:Null}" Foreground="White" Cursor="Hand" HorizontalAlignment="Center" Width="252"
+                                <RadioButton  Click="Btn_Click" Content="Thống kê xuất"  Margin="0,0,0,0" Padding="40,10" FontSize="16" Background="{x:Null}" Foreground="White" Cursor="Hand" HorizontalAlignment="Center" Width="252"
                                 Command="{Binding QlThongKeXuatCommand}" Style="{StaticResource MenuBtnThongKe}" />
                         </StackPanel>
+                        </Border>
                     </Expander>
                 </RadioButton>
 
