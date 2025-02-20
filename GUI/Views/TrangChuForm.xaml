@@ -76,9 +76,8 @@
                       Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
 
                     <Label Grid.Column="0" Content="Mã Nhân viên: TD00537" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="38,283,22,267"/>
-                    <Label Grid.Column="0" Content="Chức vụ: Trưởng phòng " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,323,22,221"/>
-                    <Label Grid.Column="0" Content="Năm sinh: 01/12/2007 " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,363,22,181"/>
-                    <Label Grid.Column="0" Content="Gmail: trantnbtd00537@gmail.com " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="36,403,21,130"/>
+                    <Label Grid.Column="0" Content="Chức vụ: Trưởng phòng " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,327,22,217"/>
+                    <Label Grid.Column="0" Content="Gmail: trantnbtd00537@gmail.com " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,364,20,169"/>
 
                     <!--ảnh-->
                     <Rectangle Width="250" 
