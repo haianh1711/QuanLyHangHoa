@@ -88,11 +88,18 @@ namespace GUI.ViewModels
         }
 
         [RelayCommand]
-        public void SearchKhachHang()
+        public async Task SearchKhachHang()
         {
-            
-                TuKhoaTimKiem = TuKhoaTimKiem ?? "";
-                Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.TimKiem(TuKhoaTimKiem));
+            TuKhoaTimKiem = TuKhoaTimKiem ?? "";
+            var ketQua = khachHangBLL.TimKiem(TuKhoaTimKiem);
+            Data = new ObservableCollection<KhachHangDTO>(ketQua);
+
+            if (Data.Count == 0)
+            {
+                await ThongBaoVM.MessageOK("Không tìm thấy khách hàng với từ khóa: " + TuKhoaTimKiem);
+            }
+
+
 
 
         }
