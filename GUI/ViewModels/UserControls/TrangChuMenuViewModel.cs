@@ -17,9 +17,6 @@ namespace GUI.ViewModels.UserControls
 
         [ObservableProperty]
         private Visibility backButtonVisibility = Visibility.Collapsed;
-
-
-
         [RelayCommand]
         private void GoBack()
         {
