@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-                     d:DesignHeight="655.25" Width="698">
+            d:DesignHeight="655.25" Width="698">
     <UserControl.Resources>
         <Style x:Key="CustomButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#6279B1"/>
