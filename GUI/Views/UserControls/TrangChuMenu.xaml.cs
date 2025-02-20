@@ -36,50 +36,59 @@ namespace GUI.Views.UserControls
 
         private void btnQuayLai_Click(object sender, RoutedEventArgs e)
         {
-             btnQuayLai.Visibility = Visibility.Collapsed;
+            btnQuayLai.Visibility = Visibility.Collapsed;
+
+            // Duyệt qua tất cả các RadioButton trong menuContainer
+            foreach (var child in menuContainer.Children)
+            {
+                if (child is RadioButton radioButton)
+                {
+                    radioButton.IsChecked = false; // Bỏ chọn tất cả các RadioButton
+                }
+                else if (child is Expander expander) // Kiểm tra trong Expander (Thống kê)
+                {
+                    foreach (var expChild in ((StackPanel)expander.Content).Children)
+                    {
+                        if (expChild is RadioButton expRadioButton)
+                        {
+                            expRadioButton.IsChecked = false; // Bỏ chọn các RadioButton trong Expander
+                        }
+                    }
+                }
+            }
+
+            // Đóng Expander nếu nó đang mở
+            expanderThongKe.IsExpanded = false;
         }
 
-        //private Button currentSelectedButton = null;
+        private Button currentSelectedButton = null;
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             btnQuayLai.Visibility = Visibility.Visible;
-            //if (sender is Button clickedButton)
-            //{
-            //    // Reset màu của nút trước đó
-            //    if (currentSelectedButton != null)
-            //    {
-            //        currentSelectedButton.Background = new SolidColorBrush(Colors.Transparent);
-            //    }
 
-            //    // Đổi màu nút vừa click
-            //    clickedButton.Background = new SolidColorBrush(Color.FromRgb(112, 144, 221)); // Màu khi click
+            if (sender is RadioButton clickedButton)
+            {
+                // Chỉ cho phép chọn một nút tại một thời điểm
+                foreach (var child in menuContainer.Children)
+                {
+                    if (child is RadioButton radioButton)
+                    {
+                        radioButton.IsChecked = (radioButton == clickedButton);
+                    }
+                    else if (child is Expander expander) // Nếu là Expander (Thống kê)
+                    {
+                        foreach (var expChild in ((StackPanel)expander.Content).Children)
+                        {
+                            if (expChild is RadioButton expRadioButton)
+                            {
+                                expRadioButton.IsChecked = (expRadioButton == clickedButton);
+                            }
+                        }
+                    }
+                }
+            }
 
-            //    // Cập nhật nút đang được chọn
-            //    currentSelectedButton = clickedButton;
-            //}
         }
-
-        //private void ClickMouseEnter(object sender, MouseEventArgs e)
-        //{
-        //    if (sender is Button hoveredButton)
-        //    {
-        //        // Nếu nút này không phải nút đang được chọn, đổi màu khi hover
-        //        if (hoveredButton != currentSelectedButton)
-        //        {
-        //            hoveredButton.Background = new SolidColorBrush(Color.FromRgb(112, 144, 221)); // Màu hover
-        //        }
-        //    }
-
-        //}
-
-        //private void ClickMouseLeave(object sender, MouseEventArgs e)
-        //{
-        //    if (sender is Button hoveredButton && hoveredButton != currentSelectedButton) // Không đổi màu nếu nút đang được chọn
-        //    {
-        //        hoveredButton.Background = new SolidColorBrush(Colors.Transparent); // Trở về màu cũ
-        //    }
-
-        //}
 
         // Bắt sự kiện khi click vào cửa sổ
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)

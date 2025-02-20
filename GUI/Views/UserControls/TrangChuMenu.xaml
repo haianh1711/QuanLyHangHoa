@@ -59,7 +59,7 @@
             <Image Grid.Row="1" Source="pack://application:,,,/Images/ustock-removebg-preview.png" Margin="50,38,70,37" />
 
             <!--Menu chuc nang-->
-            <StackPanel  Grid.Row="2" Background="Transparent">
+            <StackPanel x:Name="menuContainer"  Grid.Row="2" Background="Transparent">
                 <!-- Quản lý hàng hóa -->
                 <RadioButton Click="Btn_Click" Content="Quản lý hàng hóa" 
                         Command="{Binding QlHangHoaCommand}" Style="{StaticResource MenuButtonTheme}"
