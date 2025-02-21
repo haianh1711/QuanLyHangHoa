@@ -78,17 +78,18 @@ namespace GUI.Views.UserControls
 
             if (sender is RadioButton clickedButton)
             {
-                if (menuContainer is Panel panel) // Đảm bảo menuContainer có thể chứa Children
+                // Duyệt qua tất cả các RadioButton trong menuContainer để bỏ chọn
+                foreach (var child in menuContainer.Children)
                 {
-                    foreach (var child in panel.Children)
+                    if (child is RadioButton radioButton)
                     {
-                        if (child is RadioButton radioButton)
+                        radioButton.IsChecked = (radioButton == clickedButton);
+                    }
+                    else if (child is Expander expander) // Nếu là Expander (Thống kê)
+                    {
+                        if (expander.Content is StackPanel expanderPanel)
                         {
-                            radioButton.IsChecked = (radioButton == clickedButton);
-                        }
-                        else if (child is Expander expander && expander.Content is StackPanel expPanel)
-                        {
-                            foreach (var expChild in expPanel.Children)
+                            foreach (var expChild in expanderPanel.Children)
                             {
                                 if (expChild is RadioButton expRadioButton)
                                 {
