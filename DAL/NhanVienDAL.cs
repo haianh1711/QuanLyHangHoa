@@ -11,9 +11,9 @@ namespace DAL
 {
     public class NhanVienDAL
     {
-        private  DatabaseHelper dbHelper = new DatabaseHelper();
+        private DatabaseHelper dbHelper = new DatabaseHelper();
 
-        public  List<NhanVienDTO> HienThiDanhSachNV()
+        public List<NhanVienDTO> HienThiDanhSachNV()
         {
             var list = new List<NhanVienDTO>();
             try
@@ -90,10 +90,33 @@ namespace DAL
     };
             return dbHelper.ExecuteNonQuery(query, parameters) > 0;
         }
+        public NhanVienDTO GetNhanVienByMa(string maNhanVien)
+        {
+            string query = "SELECT * FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
+
+            SqlParameter[] parameters = {
+        new SqlParameter("@MaNhanVien", maNhanVien)
+    };
+
+            DataTable dt = dbHelper.ExecuteQuery(query, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                return new NhanVienDTO
+                {
+                    MaNhanVien = row["MaNhanVien"].ToString(),
+                    TenNhanVien = row["TenNhanVien"].ToString(),
+                    NgayBatDau = row["NgayBatDau"].ToString(),
+                    ChucVu = row["ChucVu"].ToString(),
+                    HinhAnh = row["HinhAnh"].ToString()
+                };
+            }
+
+            return null;
+        }
+
+
 
     }
 }
-
-   
-
-

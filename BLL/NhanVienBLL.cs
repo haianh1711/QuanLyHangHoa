@@ -49,13 +49,18 @@ namespace BLL
                 nv.ChucVu.Contains(tuKhoa, StringComparison.OrdinalIgnoreCase)
             ).ToList();
         }
-            public string SaveImage(string imagePath)
-            {
-                string destinationPath = Path.Combine("Images", Path.GetFileName(imagePath));
-                File.Copy(imagePath, destinationPath, true);
-                return destinationPath;
-            }
-        
+        public string SaveImage(string imagePath)
+        {
+            string destinationPath = Path.Combine("Images", Path.GetFileName(imagePath));
+            File.Copy(imagePath, destinationPath, true);
+            return destinationPath;
+        }
+        public NhanVienDTO GetNhanVienByMa(string maNhanVien)
+        {
+            return nhanVienDAL.GetNhanVienByMa(maNhanVien);
+        }
+
+
 
 
     }

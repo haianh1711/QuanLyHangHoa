@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.Input;
 using GUI.ViewModels.UserControls;
 using GUI.Views.UserControls;
 using Microsoft.Win32;
+using System.Windows.Input;
 
 namespace GUI.ViewModels
 {
@@ -26,7 +27,7 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private ObservableCollection<NhanVienDTO> nhanVienDTOs = [];
 
-        // Thuộc tính của phieu nhạp
+        // Thuộc tính của phiếu nhập
         [ObservableProperty]
         private NhanVienDTO? selectedNhanVien;
 
@@ -38,6 +39,10 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private ObservableCollection<string> danhSachChucVu = new();
 
+        // Tìm kiếm nhân viên theo mã
+        [ObservableProperty]
+        private string? maNhanVienTimKiem;
+
         public NhanvienViewModel()
         {
             LoadDanhSachNhanVien();
@@ -48,11 +53,11 @@ namespace GUI.ViewModels
         {
             NhanVienDTOs.Clear();
             NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
-            danhSachChucVu = new ObservableCollection<string>(
-    NhanVienDTOs.Select(nv => nv.ChucVu).Distinct().ToList()
-);
-        }
 
+            danhSachChucVu = new ObservableCollection<string>(
+                NhanVienDTOs.Select(nv => nv.ChucVu).Distinct().ToList()
+            );
+        }
 
         [RelayCommand]
         private async Task SuaNhanVien()
@@ -61,7 +66,6 @@ namespace GUI.ViewModels
             {
                 if (SelectedNhanVien != null)
                 {
-                    // Chỉ truyền dữ liệu có trong bảng NhanVien
                     var nhanVienCapNhat = new NhanVienDTO
                     {
                         MaNhanVien = SelectedNhanVien.MaNhanVien,
@@ -85,8 +89,6 @@ namespace GUI.ViewModels
             }
         }
 
-
-
         [RelayCommand]
         private async Task XoaNhanVien()
         {
@@ -104,26 +106,14 @@ namespace GUI.ViewModels
                             LoadDanhSachNhanVien();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
             {
                 await ThongBaoVM.MessageOK(ex.ToString());
             }
-
         }
 
-        //[RelayCommand]
-        //private async Task TimKiem()
-        //{
-        //    if (SelectedNhanVien != null)
-        //    {
-        //        TuKhoaTimKiem = TuKhoaTimKiem ?? "";
-        //        NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.Tim(TuKhoaTimKiem));
-        //    }
-
-        //}
         [RelayCommand]
         private void SearchNhanVien()
         {
@@ -133,7 +123,7 @@ namespace GUI.ViewModels
             }
             else
             {
-                LoadDanhSachNhanVien(); // Nếu không nhập từ khóa, hiển thị danh sách đầy đủ
+                LoadDanhSachNhanVien();
             }
         }
 
@@ -147,6 +137,14 @@ namespace GUI.ViewModels
             }
         }
 
+        [RelayCommand]
+        private void TimKiemNhanVien()
+        {
+            if (!string.IsNullOrEmpty(maNhanVienTimKiem))
+            {
+                SelectedNhanVien = nhanVienBLL.GetNhanVienByMa(maNhanVienTimKiem);
+            }
+        }
 
     }
 }
