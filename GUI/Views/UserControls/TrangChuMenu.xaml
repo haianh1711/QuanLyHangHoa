@@ -61,70 +61,70 @@
             <!--Menu chuc nang-->
             <StackPanel x:Name="menuContainer"  Grid.Row="2" Background="Transparent">
                 <!-- Quản lý hàng hóa -->
-                <RadioButton Click="Btn_Click" Content="Quản lý hàng hóa" 
+                 <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý hàng hóa" 
                         Command="{Binding QlHangHoaCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand" />
 
                 <!-- Quản lý phiếu nhập -->
-                <RadioButton Click="Btn_Click" Content="Quản lý giao dịch" 
+                 <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý giao dịch" 
                           Command="{Binding ChonGiaoDienCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand"  />
 
 
                 <!-- Quản lý nhân viên -->
-                <RadioButton Click="Btn_Click" Content="Quản lý nhân viên"  
+                 <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý nhân viên"  
                           Command="{Binding QlNhanVienCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand"  />
 
                 <!-- Quản lý khách hàng -->
-                <RadioButton Click="Btn_Click" Content="Quản lý khách hàng"   
+                 <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý khách hàng"   
                          Command="{Binding QlKhachHangCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand" />
-                <RadioButton Style="{StaticResource ResourceKey=MenuBtnThongKe}" >
+                 <RadioButton GroupName =  "ButtonMenu" Style="{StaticResource ResourceKey=MenuBtnThongKe}" >
 
+                <!-- Thống kê -->
                     <Expander x:Name="expanderThongKe" IsExpanded="{Binding IsThongKeExpanded, Mode=TwoWay}" Cursor="Hand" Header=" Thống kê" Foreground="White"  FontSize="18" Width="240" Margin="9,0,0,0">
-                        <StackPanel  Background="Transparent" Margin="0,5,0,0" >
-                            <RadioButton Click="Btn_Click" Content="Thống kê nhập" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand"  HorizontalAlignment="Center" Width="252" Background="{x:Null}"
+                        <Border BorderThickness="0,1,0,0" BorderBrush="White" Margin="0,10,0,0">
+                            <StackPanel  Background="Transparent" Margin="0,5,0,0" >
+                             <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Thống kê nhập" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand"  HorizontalAlignment="Center" Width="252" Background="{x:Null}"
                                    Command="{Binding QlThongKeNhapCommand}"  Style="{StaticResource MenuBtnThongKe}" />
-                            <RadioButton  Click="Btn_Click" Content="Thống kê xuất"  Margin="0,0,0,0" Padding="40,10" Background="{x:Null}" Foreground="White" Cursor="Hand" HorizontalAlignment="Center" Width="252"
+                                 <RadioButton GroupName =  "ButtonMenu"  Click="Btn_Click" Content="Thống kê xuất"  Margin="0,0,0,0" Padding="40,10" FontSize="16" Background="{x:Null}" Foreground="White" Cursor="Hand" HorizontalAlignment="Center" Width="252"
                                 Command="{Binding QlThongKeXuatCommand}" Style="{StaticResource MenuBtnThongKe}" />
                         </StackPanel>
+                        </Border>
                     </Expander>
                 </RadioButton>
 
-                <!-- Thống kê -->
             </StackPanel>
-            <!--Quaylai-->
-            <Button Grid.Row="3" x:Name="btnQuayLai" Content="Quay lại"
-                    Foreground="LightGray"
-                    Cursor="Hand"
-                    Background="Transparent"
-                    FontSize="18"
-                    BorderBrush="Transparent"
-                    Click="btnQuayLai_Click"
-                    Command="{Binding GoBackCommand}"
-                    Visibility="{Binding BackButtonVisibility}" 
-                    Margin="78,15,98,14"
-                    OverridesDefaultStyle="True">
-                <Button.Style>
-                    <Style TargetType="Button">
+            <!-- Quay lại -->
+            <RadioButton GroupName =  "ButtonMenu" Grid.Row="3" x:Name="btnQuayLai" Content="Quay lại"
+           Foreground="LightGray"
+           Cursor="Hand"
+           Background="Transparent"
+           FontSize="18"
+           BorderBrush="Transparent"
+           Click="btnQuayLai_Click"
+           Command="{Binding GoBackCommand}"
+           Visibility="{Binding BackButtonVisibility}" 
+           Margin="78,15,98,14"
+           OverridesDefaultStyle="True">
+                <RadioButton.Style>
+                    <Style TargetType="RadioButton">
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="BorderBrush" Value="Transparent"/>
                         <Setter Property="Template">
                             <Setter.Value>
-                                <ControlTemplate TargetType="Button">
+                                <ControlTemplate TargetType="RadioButton">
                                     <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}">
+                                  BorderBrush="{TemplateBinding BorderBrush}">
                                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
                     </Style>
-                </Button.Style>
-            </Button>
-
-
+                </RadioButton.Style>
+            </RadioButton>
 
 
         </Grid>
