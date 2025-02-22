@@ -57,7 +57,7 @@ namespace BLL
         }
         public NhanVienDTO GetNhanVienByMa(string maNhanVien)
         {
-            return nhanVienDAL.GetNhanVienByMa(maNhanVien);
+            return nhanVienDAL.LayNhanVienBangMa(maNhanVien);
         }
 
 

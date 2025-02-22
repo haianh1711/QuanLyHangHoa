@@ -90,7 +90,7 @@ namespace DAL
     };
             return dbHelper.ExecuteNonQuery(query, parameters) > 0;
         }
-        public NhanVienDTO GetNhanVienByMa(string maNhanVien)
+        public NhanVienDTO LayNhanVienBangMa(string maNhanVien)
         {
             string query = "SELECT * FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
 
