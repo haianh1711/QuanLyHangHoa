@@ -16,6 +16,28 @@ namespace BLL
         private HangHoaDAL HangHoaDAL = new();
         private ChiTietPhieuNhapBLL ChiTietPhieuNhapBLL = new();
 
+        public string LuuHinhAnh(string filePathGoc, string thuMucLuu, string maSP)
+        {
+            try
+            {
+                if (!Directory.Exists(thuMucLuu))
+                {
+                    Directory.CreateDirectory(thuMucLuu);
+                }
+
+                string tenFile = maSP + ".jpg";
+                string duongDanMoi = Path.Combine(thuMucLuu, tenFile);
+
+                File.Copy(filePathGoc, duongDanMoi, true);
+
+                return duongDanMoi;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lưu ảnh: {ex.Message}");
+            }
+        }
+
         public List<HangHoaDTO> LayMaVaTenSP()
         {
             return HangHoaDAL.LayMaVaTenSP();

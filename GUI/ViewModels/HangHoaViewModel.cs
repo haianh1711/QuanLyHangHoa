@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using DAL;
 using DTO;
 using GUI.ViewModels.UserControls;
+using GUI.Views.UserControls;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
 
-        private HangHoaBLL hangHoaBLL = new();
+        private HangHoaBLL HangHoaBLL = new();
 
         // dataGrid
         [ObservableProperty]
@@ -31,32 +32,92 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private HangHoaDTO? selectedHangHoa;
 
+        // Thuộc tính của phieu nhạp
+        [ObservableProperty]
+        private HangHoaDTO? tempHangHoa;
+
+
         // Tìm kiếm
         [ObservableProperty]
-        private string? maTimKiem;
-        [ObservableProperty]
-        private bool dangsua = true;
-        private string? maHangGoc;
-        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
-        {
-            if (value != null)
-            {
-                maHangGoc = value.MaHang;
-            }
-        }
+        private string? tuKhoaTimKiem;
 
-        [ObservableProperty]
-        private string? hinhAnhPath;
+        string hinhAnhDefault = @"pack://application:,,,/Images/ImageDefault.png";
+        string thuMucLuuAnh = Path.Combine(Directory.GetCurrentDirectory(), "Images", "HangHoa");
 
         public HangHoaViewModel()
         {
             LoadDanhSachHangHoa();
             SelectedHangHoa = new();
+
+            tempHangHoa = new();
+            tempHangHoa.HinhAnh = hinhAnhDefault; // hình mặc định khi chưa chọn sản phẩm
+        }
+
+        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
+        {
+            if (value != null)
+            {
+                TempHangHoa = new HangHoaDTO()
+                {
+                    MaHang = value.MaHang,
+                    GiaNhap = value.GiaNhap,
+                    TenHang = value.TenHang,
+                    SoLuong = value.SoLuong,
+                    MoTa = value.MoTa,
+                };
+
+                if (string.IsNullOrEmpty(value.HinhAnh))
+                {
+                    TempHangHoa.HinhAnh = hinhAnhDefault;
+                }
+                else
+                {
+                    TempHangHoa.HinhAnh = value.HinhAnh;
+                }
+                OnPropertyChanged(nameof(TempHangHoa));
+            }
+        }
+
+
+        [RelayCommand]
+        private void MaHangThayDoi()
+        {
+            if (TempHangHoa != null && TempHangHoa.MaHang != null)
+            {
+                if (TempHangHoa.MaHang.Length == 5)
+                {
+                    HangHoaDTO? hangHoaTim = HangHoaDTOs.FirstOrDefault(hh => hh.MaHang == TempHangHoa.MaHang);
+                    if (hangHoaTim != null)
+                    {
+                        SelectedHangHoa = hangHoaTim;
+                    }
+                    else
+                    {
+                        TempHangHoa = new()
+                        {
+                            MaHang = TempHangHoa.MaHang,
+                            SoLuong = 0,
+                            HinhAnh = hinhAnhDefault
+                        };
+                    }
+                }
+                else
+                {
+                    TempHangHoa.SoLuong = 0;
+                }
+                OnPropertyChanged(nameof(TempHangHoa));
+            }
         }
 
         [RelayCommand]
-        private void SelectImage()
+        private async Task ThayDoiHinhAnh()
         {
+            if (TempHangHoa !=null && TempHangHoa.MaHang == null)
+            {
+                await ThongBaoVM.MessageOK("Vui lòng nhập mã hàng hóa");
+                return;
+            }
+
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Title = "Chọn ảnh",
@@ -65,55 +126,48 @@ namespace GUI.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string thuMucLuuAnh = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+                //Gửi đường dẫn file gốc và thư mục lưu ảnh xuống BLL
+                string newFilePath = HangHoaBLL.LuuHinhAnh(openFileDialog.FileName, thuMucLuuAnh, TempHangHoa.MaHang);
 
-                // Gửi đường dẫn file gốc và thư mục lưu ảnh xuống BLL
-                //string newFilePath = hangHoaBLL.LuuHinhAnh(openFileDialog.FileName, thuMucLuuAnh);
-
-                //if (!string.IsNullOrEmpty(newFilePath))
-                //{
-                //    // Cập nhật đường dẫn ảnh vào CSDL
-                //    hangHoaBLL.CapNhatDuongDanAnh(SelectedHangHoa.MaHang, newFilePath);
-
-                //    // Hiển thị ảnh lên giao diện
-                //    HinhAnhPath = newFilePath;
-                //}
+                if (!string.IsNullOrEmpty(newFilePath))
+                {
+                    // Hiển thị ảnh lên giao diện
+                    TempHangHoa.HinhAnh = newFilePath;
+                    OnPropertyChanged(nameof(TempHangHoa));
+                }
             }
         }
 
         private void LoadDanhSachHangHoa()
         {
             HangHoaDTOs.Clear();
-            HangHoaDTOs = new ObservableCollection<HangHoaDTO>(hangHoaBLL.HienThiDanhSachHH());
+            HangHoaDTOs = new ObservableCollection<HangHoaDTO>(HangHoaBLL.HienThiDanhSachHH());
         }
-        // xong thêm
+
         [RelayCommand]
         private async Task ThemHangHoa()
         {
             try
             {
-                        if (string.IsNullOrEmpty(selectedHangHoa.MaHang) || string.IsNullOrEmpty(selectedHangHoa.TenHang))
+                if (string.IsNullOrEmpty(TempHangHoa.MaHang) || string.IsNullOrEmpty(TempHangHoa.TenHang))
                 {
                     await ThongBaoVM.MessageOK("Vui lòng nhập đầy đủ thông tin hàng hoá");
-                    SelectedHangHoa = new HangHoaDTO();
                     return;
                 }
+
+
                 else
                 {
-                    var danhsach = hangHoaBLL.HienThiDanhSachHH();
-                    bool result = danhsach.Any(hh => hh.MaHang.Equals(SelectedHangHoa.MaHang, StringComparison.OrdinalIgnoreCase));
+                    bool result = HangHoaDTOs.Any(hh => hh.MaHang.Equals(TempHangHoa.MaHang, StringComparison.OrdinalIgnoreCase));
                     if (result)
                     {
-                        await ThongBaoVM.MessageOK($"hàng hóa tên {selectedHangHoa.TenHang} đã tồn tại.");
-                        SelectedHangHoa = new HangHoaDTO();
-                        LoadDanhSachHangHoa();
+                        await ThongBaoVM.MessageOK($"hàng hóa mã {TempHangHoa.MaHang} đã tồn tại.");
                         return;
                     }
-                    bool result1 = hangHoaBLL.ThemHangHoa(SelectedHangHoa);
+                    bool result1 = HangHoaBLL.ThemHangHoa(TempHangHoa);
                     if (result1)
                     {
                         await ThongBaoVM.MessageOK("Thêm hàng hoá thành công");
-                        SelectedHangHoa = new();
                         LoadDanhSachHangHoa();
                     }
                     else
@@ -134,120 +188,64 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (SelectedHangHoa == null || string.IsNullOrEmpty(SelectedHangHoa.MaHang))
+                if (SelectedHangHoa != null)
                 {
-                    await ThongBaoVM.MessageOK("Vui lòng chọn hàng hóa cần sửa");
-                    return;
-                }
-                if (!SelectedHangHoa.MaHang.Equals(maHangGoc, StringComparison.OrdinalIgnoreCase))
-                {
-                    await ThongBaoVM.MessageOK("Không được phép sửa mã hàng hóa.");
-                    SelectedHangHoa.MaHang = maHangGoc;
-                    LoadDanhSachHangHoa();
-                    return;
-                }
+                    bool result = HangHoaBLL.CapnhatHangHoa(TempHangHoa);
+                    if (result)
+                    {
+                        await ThongBaoVM.MessageOK("Sửa hàng hóa thành công");
+                        LoadDanhSachHangHoa();
+                    }
 
-                var danhSach = hangHoaBLL.HienThiDanhSachHH();
-                bool tonTai = danhSach.Any(hh =>
-                    hh.MaHang.Equals(SelectedHangHoa.MaHang, StringComparison.OrdinalIgnoreCase)
-                    && !hh.MaHang.Equals(maHangGoc, StringComparison.OrdinalIgnoreCase));
-
-                if (tonTai)
-                {
-                    await ThongBaoVM.MessageOK($"Hàng hóa mã {SelectedHangHoa.MaHang} đã tồn tại.");
-                    SelectedHangHoa = new HangHoaDTO();
-                    LoadDanhSachHangHoa();
-                    return;
-                }
-
-                bool result = hangHoaBLL.CapnhatHangHoa(SelectedHangHoa);
-                if (result)
-                {
-                    await ThongBaoVM.MessageOK("Sửa hàng hóa thành công");
-                    LoadDanhSachHangHoa();
-                }
-                else
-                {
-                    await ThongBaoVM.MessageOK("Sửa hàng hóa thất bại");
                 }
             }
             catch (Exception ex)
             {
                 await ThongBaoVM.MessageOK(ex.ToString());
             }
-            finally
-            {
-                SelectedHangHoa = new HangHoaDTO();
-            }
         }
-
 
         [RelayCommand]
         private async Task XoaHangHoa()
         {
             try
             {
-                if (string.IsNullOrEmpty(selectedHangHoa.MaHang))
-                {
-                    await thongBaoVM.MessageOK("Vui lòng chọn hàng hóa cần xóa");
-                    return;
-                }
                 if (SelectedHangHoa != null)
                 {
                     bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa hàng hoá này? Dữ liệu sẽ bị mất vĩnh viễn.");
                     if (isXoaPhieuNhap)
                     {
-                        bool result = hangHoaBLL.XoaHangHoa(SelectedHangHoa.MaHang);
+                        bool result = HangHoaBLL.XoaHangHoa(TempHangHoa.MaHang);
                         if (result)
                         {
                             await ThongBaoVM.MessageOK("Xóa hàng hoá thành công");
                             LoadDanhSachHangHoa();
                         }
                     }
+
                 }
             }
             catch (Exception ex)
             {
                 await ThongBaoVM.MessageOK(ex.ToString());
             }
-            finally
-            {
-                SelectedHangHoa = new HangHoaDTO();
-            }
         }
 
+        
 
         [RelayCommand]
         private async Task TimKiem()
         {
+            string maCanTim = TuKhoaTimKiem != null ? TuKhoaTimKiem.ToUpper() : "";
 
+            HangHoaDTOs.Clear();
+            HangHoaDTOs = new ObservableCollection<HangHoaDTO>(HangHoaBLL.TimHangHoa(maCanTim));
 
-            string maCanTim = maTimKiem.ToUpper();
-
-            var danhSach = hangHoaBLL
-                .TimHangHoa(maCanTim)
-                .Where(hh => hh.MaHang.Equals(maCanTim, StringComparison.OrdinalIgnoreCase)
-                             || hh.TenHang.IndexOf(maCanTim, StringComparison.OrdinalIgnoreCase) >= 0)
-                .ToList();
-
-            if (danhSach == null || !danhSach.Any())
+            if (HangHoaDTOs == null || !HangHoaDTOs.Any())
             {
                 await ThongBaoVM.MessageOK($"Không tìm thấy {maCanTim}");
                 return;
             }
-
-            HangHoaDTOs.Clear();
-            foreach (var item in danhSach)
-            {
-                HangHoaDTOs.Add(item);
-            }
-
-            if (HangHoaDTOs.Count == 1)
-            {
-                // SelectedHangHoa = HangHoaDTOs.First();
-                // LoadDanhSachHangHoa();
-            }
         }
-
     }
 }
