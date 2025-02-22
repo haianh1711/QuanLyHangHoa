@@ -14,6 +14,7 @@ using BLL;
 using DAL;
 using GUI.Views.UserControls;
 using GUI.ViewModels.UserControls;
+using GUI.Views;
 
 
 namespace GUI.ViewModels
@@ -50,8 +51,16 @@ namespace GUI.ViewModels
                 if (taikhoanHopLe != null)
                 {
                     MessageBox.Show("Đăng nhập thành công!");
+                    MainForm mainForm = new MainForm();
+                    mainForm.Show();
+
+                    Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)?.Hide();
                 }
 
+            }
+            else
+            {
+                await thongBaoVM.MessageOK("Đăng nhập thất bại");
             }
         }
 

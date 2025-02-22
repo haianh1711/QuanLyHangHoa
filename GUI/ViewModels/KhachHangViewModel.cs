@@ -45,15 +45,22 @@ namespace GUI.ViewModels
 
 
         [RelayCommand]
-        public void SuaKhachHang()
+        public async Task SuaKhachHang()
         {
-            if(SelectedKhachHang != null)
+            // Kiểm tra xem có khách hàng nào được chọn không
+            if (SelectedKhachHang == null)
+            {
+                await ThongBaoVM.MessageOK("Vui lòng chọn một khách hàng trước khi sửa.");
+                return; // Dừng phương thức nếu không có khách hàng nào được chọn
+            }
+
+            if (SelectedKhachHang != null)
             {
                 bool daSua = khachHangBLL.SuaKhachHang(SelectedKhachHang);
 
                 if (daSua)
                 {
-                    MessageBox.Show("Đã sửa thành công!");
+                    await ThongBaoVM.MessageOK("Sửa khách hàng thành công");
                     Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
 
                 }
@@ -65,9 +72,17 @@ namespace GUI.ViewModels
         {
             try
             {
+
+                // Kiểm tra xem có khách hàng nào được chọn không
+                if (SelectedKhachHang == null)
+                {
+                    await ThongBaoVM.MessageOK("Vui lòng chọn một khách hàng trước khi xóa.");
+                    return; // Dừng phương thức nếu không có khách hàng nào được chọn
+                }
+
+                bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa khách hàng này? Dữ liệu sẽ bị mất vĩnh viễn.");
                 if (SelectedKhachHang != null)
                 {
-                    bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa khách hàng này? Dữ liệu sẽ bị mất vĩnh viễn.");
                     if (isXoaPhieuNhap)
                     {
                         bool result = khachHangBLL.DeleteKhachHang(SelectedKhachHang.MaKhachHang);
@@ -88,15 +103,26 @@ namespace GUI.ViewModels
         }
 
         [RelayCommand]
-        public void SearchKhachHang()
+        public async Task SearchKhachHang()
         {
-            if (selectedKhachHang != null)
+
+            TuKhoaTimKiem = TuKhoaTimKiem ?? "";
+            var ketQua = khachHangBLL.TimKiem(TuKhoaTimKiem);
+            Data = new ObservableCollection<KhachHangDTO>(ketQua);
+
+            if (Data.Count == 0)
             {
-                TuKhoaTimKiem = TuKhoaTimKiem ?? "";
-                Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.TimKiem(TuKhoaTimKiem));
+                bool isOK = await ThongBaoVM.MessageOK("Không tìm thấy khách hàng với từ khóa: " + TuKhoaTimKiem);
 
-
+                if (isOK)  // Khi nhấn OK, tải lại toàn bộ danh sách khách hàng
+                {
+                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
+                }
             }
+
+
+
+
         }
 
     }

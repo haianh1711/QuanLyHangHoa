@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views"
+              xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
              d:Height="655.25">
 
@@ -12,7 +13,7 @@
         <viewModels:KhachHangViewModel/>
     </UserControl.DataContext>
 
-
+    <Grid>
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -26,7 +27,7 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Tag="Nhập mã hoặc tên khách hàng..." Style="{StaticResource SearchTextBox}" />
+            <TextBox Grid.Column="0" Text="{Binding TuKhoaTimKiem, UpdateSourceTrigger=PropertyChanged}" Tag="Nhập mã hoặc tên khách hàng..." Style="{StaticResource SearchTextBox}" />
             <Button Grid.Column="1"  Command="{Binding SearchKhachHangCommand}" Style="{StaticResource SearchButton}"/>
         </Grid>
 
@@ -105,11 +106,17 @@
                             Command="{Binding SuaKhachHangCommand}" 
                             Style="{StaticResource SimpleRoundedButton}"/>
                     <Button Content="Xóa"
-                            Command="{Binding XoaKhach`HangCommand}" 
+                            Command="{Binding XoaKhachHangCommand}" 
                             Style="{StaticResource SimpleRoundedButton}"/>
                 </StackPanel>
             </Grid>
         </Border>
     </Grid>
+
+        <!--Thông báo-->
+        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
+
+    </Grid>
+    
 </UserControl>
 

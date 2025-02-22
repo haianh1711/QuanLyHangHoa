@@ -6,7 +6,7 @@
             xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
               xmlns:viewModels="clr-namespace:GUI.ViewModels"
                 xmlns:viewModelsUC="clr-namespace:GUI.ViewModels.UserControls"
-             StartupUri="Views\MainForm.xaml">
+             StartupUri="Views\DangNhapForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,6 +23,7 @@
             <DataTemplate DataType="{x:Type viewModelsUC:TrangChuMenuViewModel}">
                 <viewsUC:TrangChuMenu/>
             </DataTemplate>
+
 
             <DataTemplate DataType="{x:Type viewModels:TrangChuViewModel}">
                 <views:TrangChuForm/>

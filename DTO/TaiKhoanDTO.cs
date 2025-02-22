@@ -8,9 +8,10 @@ namespace DTO
 {
     public class TaiKhoanDTO
     {
-        public string? TaiKhoanID { get; set; }
+        public string? MaTaiKhoan { get; set; }
         public string? MatKhau { get; set; }
         public string? MaNhanVien { get; set; }
         public string? Gmail { get; set; }
+        public string? Quyen { get; set; }
     }
 }

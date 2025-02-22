@@ -122,7 +122,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi: " + ex.Message);
+                Console.WriteLine("Lỗi khi tìm kiếm hàng hóa: " + ex.Message);
             }
             return HangHoaDTOs;
         }
@@ -156,8 +156,8 @@ namespace DAL
                 string query = $"DELETE FROM HangHoa where Mahang = @MaHang";
                 SqlParameter[] parameters =
                 {
-                new SqlParameter("@MaHang", MaHangHoa)
-            };
+                    new SqlParameter("@MaHang", MaHangHoa)
+                };
                 try
                 {
                     int rowsAffected = dbHelper.ExecuteNonQuery(query, parameters);
@@ -165,7 +165,7 @@ namespace DAL
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Lỗi khi xóa sản phẩm: " + ex.Message);
+                    throw new Exception("Lỗi khi xóa hàng hóa: " + ex.Message);
                 }
         }
         public int LaySoLuongHangHoa(string MaHangHoa)

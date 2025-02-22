@@ -28,6 +28,10 @@ namespace BLL
 
             return nhanVienDAL.SuaNhanVien(nv);
         }
+        public List<NhanVienDTO> TimKiemNhanVien(string tuKhoa)
+        {
+            return nhanVienDAL.TimKiemNhanVien(tuKhoa);
+        }
 
         public bool XoaNhanVien(string maNhanVien)
         {

@@ -36,10 +36,13 @@ namespace GUI.ViewModels
         private string? maTimKiem;
         [ObservableProperty]
         private bool dangsua = true;
-
-        partial void OnSelectedHangHoaChanging(HangHoaDTO? value)
+        private string? maHangGoc;
+        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
         {
-
+            if (value != null)
+            {
+                maHangGoc = value.MaHang;
+            }
         }
 
         [ObservableProperty]
@@ -89,9 +92,10 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (string.IsNullOrEmpty(selectedHangHoa.MaHang) || string.IsNullOrEmpty(selectedHangHoa.TenHang))
+                        if (string.IsNullOrEmpty(selectedHangHoa.MaHang) || string.IsNullOrEmpty(selectedHangHoa.TenHang))
                 {
                     await ThongBaoVM.MessageOK("Vui lòng nhập đầy đủ thông tin hàng hoá");
+                    SelectedHangHoa = new HangHoaDTO();
                     return;
                 }
                 else
@@ -101,12 +105,15 @@ namespace GUI.ViewModels
                     if (result)
                     {
                         await ThongBaoVM.MessageOK($"hàng hóa tên {selectedHangHoa.TenHang} đã tồn tại.");
+                        SelectedHangHoa = new HangHoaDTO();
+                        LoadDanhSachHangHoa();
                         return;
                     }
                     bool result1 = hangHoaBLL.ThemHangHoa(SelectedHangHoa);
                     if (result1)
                     {
                         await ThongBaoVM.MessageOK("Thêm hàng hoá thành công");
+                        SelectedHangHoa = new();
                         LoadDanhSachHangHoa();
                     }
                     else
@@ -127,28 +134,64 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (SelectedHangHoa != null)
+                if (SelectedHangHoa == null || string.IsNullOrEmpty(SelectedHangHoa.MaHang))
                 {
-                    bool result = hangHoaBLL.CapnhatHangHoa(SelectedHangHoa);
-                    if (result)
-                    {
-                        await ThongBaoVM.MessageOK("Sửa hàng hóa thành công");
-                        LoadDanhSachHangHoa();
-                    }
+                    await ThongBaoVM.MessageOK("Vui lòng chọn hàng hóa cần sửa");
+                    return;
+                }
+                if (!SelectedHangHoa.MaHang.Equals(maHangGoc, StringComparison.OrdinalIgnoreCase))
+                {
+                    await ThongBaoVM.MessageOK("Không được phép sửa mã hàng hóa.");
+                    SelectedHangHoa.MaHang = maHangGoc;
+                    LoadDanhSachHangHoa();
+                    return;
+                }
 
+                var danhSach = hangHoaBLL.HienThiDanhSachHH();
+                bool tonTai = danhSach.Any(hh =>
+                    hh.MaHang.Equals(SelectedHangHoa.MaHang, StringComparison.OrdinalIgnoreCase)
+                    && !hh.MaHang.Equals(maHangGoc, StringComparison.OrdinalIgnoreCase));
+
+                if (tonTai)
+                {
+                    await ThongBaoVM.MessageOK($"Hàng hóa mã {SelectedHangHoa.MaHang} đã tồn tại.");
+                    SelectedHangHoa = new HangHoaDTO();
+                    LoadDanhSachHangHoa();
+                    return;
+                }
+
+                bool result = hangHoaBLL.CapnhatHangHoa(SelectedHangHoa);
+                if (result)
+                {
+                    await ThongBaoVM.MessageOK("Sửa hàng hóa thành công");
+                    LoadDanhSachHangHoa();
+                }
+                else
+                {
+                    await ThongBaoVM.MessageOK("Sửa hàng hóa thất bại");
                 }
             }
             catch (Exception ex)
             {
                 await ThongBaoVM.MessageOK(ex.ToString());
             }
+            finally
+            {
+                SelectedHangHoa = new HangHoaDTO();
+            }
         }
+
 
         [RelayCommand]
         private async Task XoaHangHoa()
         {
             try
             {
+                if (string.IsNullOrEmpty(selectedHangHoa.MaHang))
+                {
+                    await thongBaoVM.MessageOK("Vui lòng chọn hàng hóa cần xóa");
+                    return;
+                }
                 if (SelectedHangHoa != null)
                 {
                     bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa hàng hoá này? Dữ liệu sẽ bị mất vĩnh viễn.");
@@ -161,19 +204,16 @@ namespace GUI.ViewModels
                             LoadDanhSachHangHoa();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
             {
                 await ThongBaoVM.MessageOK(ex.ToString());
             }
-
-        }
-        [RelayCommand]
-        private void ClearSelection()
-        {
-            SelectedHangHoa = null;
+            finally
+            {
+                SelectedHangHoa = new HangHoaDTO();
+            }
         }
 
 
@@ -208,11 +248,6 @@ namespace GUI.ViewModels
                 // LoadDanhSachHangHoa();
             }
         }
-        partial void OnSelectedHangHoaChanged(HangHoaDTO? value)
-        {
-            dangsua = value == null;
-        }
-        [RelayCommand]
-    }
 
+    }
 }

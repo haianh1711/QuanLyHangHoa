@@ -11,8 +11,7 @@ using BLL;
 using CommunityToolkit.Mvvm.Input;
 using GUI.ViewModels.UserControls;
 using GUI.Views.UserControls;
-using Microsoft.Win32;
-using System.Windows.Input;
+using DAL;
 
 namespace GUI.ViewModels
 {
@@ -27,37 +26,36 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private ObservableCollection<NhanVienDTO> nhanVienDTOs = [];
 
-        // Thuộc tính của phiếu nhập
+        // Thuộc tính của phieu nhạp
         [ObservableProperty]
         private NhanVienDTO? selectedNhanVien;
 
         // Tìm kiếm
         [ObservableProperty]
         private string? tuKhoaTimKiem;
-        [ObservableProperty]
-        private ObservableCollection<NhanVienDTO> nhanVien = new();
-        [ObservableProperty]
-        private ObservableCollection<string> danhSachChucVu = new();
-
-        // Tìm kiếm nhân viên theo mã
-        [ObservableProperty]
-        private string? maNhanVienTimKiem;
 
         public NhanvienViewModel()
         {
             LoadDanhSachNhanVien();
             SelectedNhanVien = new();
         }
-
+        [ObservableProperty]
+        private ObservableCollection<string> danhSachChucVu = [];
         private void LoadDanhSachNhanVien()
         {
             NhanVienDTOs.Clear();
             NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.HienThiDanhSachNV());
+            var danhSachNhanVien = nhanVienBLL.HienThiDanhSachNV();
+            NhanVienDTOs.Clear();
+            foreach (var nv in danhSachNhanVien)
+            {
+                NhanVienDTOs.Add(nv);
+            }
 
             danhSachChucVu = new ObservableCollection<string>(
-                NhanVienDTOs.Select(nv => nv.ChucVu).Distinct().ToList()
-            );
+                danhSachNhanVien.Select(nv => nv.ChucVu).Distinct().ToList());
         }
+
 
         [RelayCommand]
         private async Task SuaNhanVien()
@@ -66,6 +64,7 @@ namespace GUI.ViewModels
             {
                 if (SelectedNhanVien != null)
                 {
+                    // Chỉ truyền dữ liệu có trong bảng NhanVien
                     var nhanVienCapNhat = new NhanVienDTO
                     {
                         MaNhanVien = SelectedNhanVien.MaNhanVien,
@@ -89,6 +88,8 @@ namespace GUI.ViewModels
             }
         }
 
+
+
         [RelayCommand]
         private async Task XoaNhanVien()
         {
@@ -106,45 +107,47 @@ namespace GUI.ViewModels
                             LoadDanhSachNhanVien();
                         }
                     }
+
                 }
             }
             catch (Exception ex)
             {
                 await ThongBaoVM.MessageOK(ex.ToString());
             }
-        }
 
-        [RelayCommand]
-        private void SearchNhanVien()
-        {
-            if (!string.IsNullOrWhiteSpace(TuKhoaTimKiem))
-            {
-                NhanVienDTOs = new ObservableCollection<NhanVienDTO>(nhanVienBLL.TimKiemNhanVien(TuKhoaTimKiem));
-            }
-            else
-            {
-                LoadDanhSachNhanVien();
-            }
         }
-
         [RelayCommand]
-        private async Task ChonHinhAnh()
+        private async Task TimKiem()
         {
-            var openFileDialog = new OpenFileDialog { Filter = "Image Files|*.jpg;*.jpeg;*.png" };
-            if (openFileDialog.ShowDialog() == true)
+            if (string.IsNullOrWhiteSpace(tuKhoaTimKiem))
             {
-                SelectedNhanVien.HinhAnh = nhanVienBLL.SaveImage(openFileDialog.FileName);
+                await ThongBaoVM.MessageOK("Vui lòng nhập từ khóa tìm kiếm.");
+                return;
             }
-        }
 
-        [RelayCommand]
-        private void TimKiemNhanVien()
-        {
-            if (!string.IsNullOrEmpty(maNhanVienTimKiem))
+            string TuKhoa = tuKhoaTimKiem.Trim().ToUpper();
+
+            var danhSach = nhanVienBLL
+                .TimKiemNhanVien(TuKhoa)
+                .Where(hh => (hh.MaNhanVien != null && hh.MaNhanVien.Contains(TuKhoa, StringComparison.OrdinalIgnoreCase))
+                          || (hh.TenNhanVien != null && hh.TenNhanVien.Contains(TuKhoa, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            if (!danhSach.Any())
             {
-                SelectedNhanVien = nhanVienBLL.GetNhanVienByMa(maNhanVienTimKiem);
+                await ThongBaoVM.MessageOK($"Không tìm thấy {TuKhoa}");
+                return;
+            }
+
+            nhanVienDTOs.Clear();
+            foreach (var item in danhSach)
+            {
+                nhanVienDTOs.Add(item);
             }
         }
 
     }
 }
+
+
+
