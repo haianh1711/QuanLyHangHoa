@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DTO;
+using GUI.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,13 @@ namespace GUI.ViewModels
             if (GmailHopLe != null)
             {
                 MessageBox.Show("Đăng nhập thành công");
-            }else
+                MessageBox.Show("Đăng nhập thành công!");
+                MainForm mainForm = new MainForm();
+                mainForm.Show();
+
+                Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)?.Hide();
+            }
+            else
             {
                 MessageBox.Show("Đăng nhập thất bại");
                 return;
