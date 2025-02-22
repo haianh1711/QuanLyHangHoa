@@ -11,7 +11,8 @@
           WindowStyle="None"
           ResizeMode="NoResize"
           WindowStartupLocation="CenterScreen"
-          AllowsTransparency="True">
+          AllowsTransparency="True"
+         xmlns:userControls="clr-namespace:GUI.Views.UserControls">
     <Window.DataContext>
         <viewModels:DangNhapViewModel/>
     </Window.DataContext>
@@ -21,7 +22,8 @@
      BorderBrush="Transparent"
      BorderThickness="1">
         <Grid>
-            <Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
@@ -198,6 +200,8 @@ Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1">
 
                 </Image.Effect>
             </Image>
+            </Grid>
+            <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
         </Grid>
     </Border>
 </Window>

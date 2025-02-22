@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DTO;
+using GUI.ViewModels.UserControls;
 using GUI.Views;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace GUI.ViewModels
     partial class DangNhapViewModel : ObservableObject
     {
         [ObservableProperty]
+        private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
+        [ObservableProperty]
         private DangNhapBLL dangNhapBLL = new DangNhapBLL();
 
         [RelayCommand]
@@ -23,11 +26,14 @@ namespace GUI.ViewModels
             TaiKhoanDTO GmailHopLe = await dangNhapBLL.DangNhapGmail();
             if (GmailHopLe != null)
             {
-                MessageBox.Show("Đăng nhập thành công!");
-                MainForm mainForm = new MainForm();
-                mainForm.Show();
+                await thongBaoVM.MessageOK("Đăng nhập thành công!");
+                Application.Current.Windows
+                    .OfType<Window>()
+                    .FirstOrDefault(w => w.IsActive)?.Hide();
 
-                Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)?.Hide();
+                MainForm mainForm = new MainForm();
+                Application.Current.MainWindow = mainForm;
+                mainForm.Show();
             }
             else
             {

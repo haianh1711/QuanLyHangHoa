@@ -40,7 +40,7 @@ namespace BLL
 
             return nhanVienDAL.XoaNhanVien(maNhanVien);
         }
-        public List<NhanVienDTO> TimKiemNhanVien(string tuKhoa)
+        public List<NhanVienDTO> TimKiemNhanvien(string tuKhoa)
         {
             if (string.IsNullOrWhiteSpace(tuKhoa))
             {

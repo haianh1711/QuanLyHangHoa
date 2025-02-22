@@ -51,10 +51,6 @@ namespace GUI.ViewModels
                 if (taikhoanHopLe != null)
                 {
                     MessageBox.Show("Đăng nhập thành công!");
-                    MainForm mainForm = new MainForm();
-                    mainForm.Show();
-
-                    Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)?.Hide();
                 }
 
             }
