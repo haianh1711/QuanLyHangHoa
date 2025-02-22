@@ -23,7 +23,6 @@ namespace GUI.ViewModels
             TaiKhoanDTO GmailHopLe = await dangNhapBLL.DangNhapGmail();
             if (GmailHopLe != null)
             {
-                MessageBox.Show("Đăng nhập thành công");
                 MessageBox.Show("Đăng nhập thành công!");
                 MainForm mainForm = new MainForm();
                 mainForm.Show();
