@@ -61,7 +61,7 @@
             <!--Menu chuc nang-->
             <StackPanel x:Name="menuContainer"  Grid.Row="2" Background="Transparent">
                 <!-- Quản lý hàng hóa -->
-                 <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý hàng hóa" 
+                <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý hàng hóa" 
                         Command="{Binding QlHangHoaCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand" />
 

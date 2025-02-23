@@ -14,6 +14,7 @@ using BLL;
 using DAL;
 using GUI.Views.UserControls;
 using GUI.ViewModels.UserControls;
+using System.Text.RegularExpressions;
 
 
 namespace GUI.ViewModels
@@ -47,24 +48,43 @@ namespace GUI.ViewModels
         [RelayCommand]
         public async Task SuaKhachHang()
         {
-            // Kiểm tra xem có khách hàng nào được chọn không
             if (SelectedKhachHang == null)
             {
                 await ThongBaoVM.MessageOK("Vui lòng chọn một khách hàng trước khi sửa.");
-                return; // Dừng phương thức nếu không có khách hàng nào được chọn
+                return;
             }
 
-            if (SelectedKhachHang != null)
+
+            if (!Regex.IsMatch(SelectedKhachHang.SoDienThoai, @"^\d{10}$"))
             {
+                await ThongBaoVM.MessageOK("Số điện thoại không hợp lệ! Vui lòng nhập 10 số.");
+
+                // ✅ Khi nhấn OK, reset lại dữ liệu từ database
+                Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
+                return;
+            }
+
+            try
+            {
+
                 bool daSua = khachHangBLL.SuaKhachHang(SelectedKhachHang);
 
                 if (daSua)
                 {
-                    await ThongBaoVM.MessageOK("Sửa khách hàng thành công");
-                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
 
+                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
+                    await ThongBaoVM.MessageOK("Sửa khách hàng thành công");
+                }
+                else
+                {
+                    await ThongBaoVM.MessageOK("Sửa khách hàng thất bại.");
                 }
             }
+            catch (Exception ex)
+            {
+                await ThongBaoVM.MessageOK("Đã xảy ra lỗi khi sửa khách hàng. Vui lòng thử lại.");
+            }
+
         }
 
         [RelayCommand]
