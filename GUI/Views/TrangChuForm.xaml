@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
-              xmlns:viewModels="clr-namespace:GUI.ViewModels"
+             xmlns:viewModels="clr-namespace:GUI.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="655.25" Width="698">
-        <UserControl.Resources>
+    <UserControl.Resources>
         <Style x:Key="CustomButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#6279B1"/>
             <Setter Property="Cursor" Value="Hand"/>

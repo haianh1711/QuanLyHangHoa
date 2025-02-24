@@ -12,10 +12,13 @@ namespace DAL
     public class NhanVienDAL
     {
         private DatabaseHelper dbHelper = new DatabaseHelper();
-        public NhanVienDTO? TimNhanVienTheoEmail(string email)
+        public NhanVienDTO? TimNhanVienTheoEmail(string gmail)
         {
-            string query = "SELECT * FROM NhanVien WHERE Email = @Email";
-            SqlParameter[] parameters = { new SqlParameter("@Email", email) };
+            string query = @"SELECT NhanVien.*
+                            FROM NhanVien INNER JOIN
+                                 TaiKhoan ON NhanVien.MaNhanVien = TaiKhoan.MaNhanVien
+                            WHERE (TaiKhoan.Gmail = @Gmail)";
+            SqlParameter[] parameters = { new SqlParameter("@Gmail", gmail) };
 
             DataTable dt = dbHelper.ExecuteQuery(query, parameters);
             if (dt.Rows.Count > 0)

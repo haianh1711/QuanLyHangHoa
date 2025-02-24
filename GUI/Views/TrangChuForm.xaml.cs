@@ -23,13 +23,9 @@ namespace GUI.Views
     /// </summary>
     public partial class TrangChuForm : UserControl
     {
-        public TrangChuForm(NhanVienDTO? nhanVien)
-        {
-            InitializeComponent();
-        }
-
         public TrangChuForm()
         {
+            InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

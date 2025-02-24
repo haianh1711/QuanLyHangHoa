@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,18 +20,11 @@ namespace GUI.Views
     /// </summary>
     public partial class MainForm : Window
     {
-        public MainForm()
+        public MainForm(TaiKhoanDTO taiKhoanDTO, NhanVienDTO nhanVienDTO)
         {
             InitializeComponent();
-
+            DataContext = new ViewModels.MainViewModel(taiKhoanDTO, nhanVienDTO);
         }
-
-        public object View
-        {
-            get { return view.Content; }
-            set { view.Content = value; }
-        }
-
        
 
     }

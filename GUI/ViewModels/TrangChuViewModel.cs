@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace GUI.ViewModels
 {
-    partial class TrangChuViewModel(MainViewModel mainViewModel) : ObservableObject
+    partial class TrangChuViewModel : ObservableObject
     {
-        private MainViewModel _mainViewModel = mainViewModel;
+        private MainViewModel _mainViewModel;
 
 
-        //[ObservableProperty]
-        //private NhanVienDTO? nhanVien;
+        public TrangChuViewModel(MainViewModel mainViewModel)
+        {
+            _mainViewModel = mainViewModel;
+        }
 
-        //public void LoadNhanVien(NhanVienDTO nhanVienDTO)
-        //{
-        //    NhanVien = nhanVienDTO;
-        //}
     }
 }

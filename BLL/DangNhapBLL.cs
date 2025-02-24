@@ -23,7 +23,7 @@ namespace BLL
 
         private NhanVienDAL nhanVienDAL = new NhanVienDAL(); // Thêm DAL để lấy dữ liệu nhân viên
 
-        public async Task<NhanVienDTO?> LayNhanVienTheoEmail(string email)
+        public async Task<NhanVienDTO?> TimNhanVienTheoEmail(string email)
         {
             return await Task.Run(() => nhanVienDAL.TimNhanVienTheoEmail(email));
         }

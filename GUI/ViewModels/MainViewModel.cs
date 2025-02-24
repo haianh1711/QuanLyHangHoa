@@ -26,7 +26,7 @@ namespace GUI.ViewModels
         public TrangChuMenuViewModel trangChuMenuVM { get; set; }
         public TrangChuViewModel trangChuVM { get; set; }
 
-        public MainViewModel()
+        public MainViewModel(TaiKhoanDTO taiKhoanDTO, NhanVienDTO nhanVienDTO)
         {
             // khởi tạo menu
             ThongBaoVM = new ThongBaoViewModel();

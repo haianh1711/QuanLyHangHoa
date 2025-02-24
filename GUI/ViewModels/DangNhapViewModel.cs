@@ -17,23 +17,27 @@ namespace GUI.ViewModels
     {
         [ObservableProperty]
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
-        [ObservableProperty]
+
         private DangNhapBLL dangNhapBLL = new DangNhapBLL();
 
         [RelayCommand]
         public async Task DangNhapGmail()
         {
-            TaiKhoanDTO GmailHopLe = await dangNhapBLL.DangNhapGmail();
-            if (GmailHopLe != null)
+            TaiKhoanDTO taiKhoanDTO = await dangNhapBLL.DangNhapGmail();
+            if (taiKhoanDTO != null)
             {
                 await thongBaoVM.MessageOK("Đăng nhập thành công!");
                 Application.Current.Windows
                     .OfType<Window>()
                     .FirstOrDefault(w => w.IsActive)?.Hide();
 
-                MainForm mainForm = new MainForm();
-                Application.Current.MainWindow = mainForm;
-                mainForm.Show();
+                NhanVienDTO? nhanVienDTO = await dangNhapBLL.TimNhanVienTheoEmail(taiKhoanDTO.Gmail);
+                if (nhanVienDTO != null)
+                {
+                    MainForm mainForm = new MainForm(taiKhoanDTO, nhanVienDTO);
+                    Application.Current.MainWindow = mainForm;
+                    mainForm.Show();
+                }
             }
             else
             {
