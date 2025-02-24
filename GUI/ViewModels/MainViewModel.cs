@@ -52,28 +52,6 @@ namespace GUI.ViewModels
         }
 
        
-
-        
-        //public void CapNhatTaiKhoanNhanVien(TaiKhoanDTO taiKhoanMoi, NhanVienDTO nhanVienMoi)
-        //{
-        //    TaiKhoan = taiKhoanMoi;
-        //    NhanVien = nhanVienMoi;
-        //    OnPropertyChanged(nameof(AvatarImage));
-        //}
-
-       
-
-        //public ImageSource AvatarImage
-        //{
-        //    get
-        //    {
-        //        if (string.IsNullOrEmpty(NhanVien?.HinhAnh))
-        //            return new BitmapImage(new Uri("pack://application:,,,/Images/AnhVN/default.jpg"));
-
-        //        return new BitmapImage(new Uri(NhanVien.HinhAnh, UriKind.RelativeOrAbsolute));
-        //    }
-        //}
-
         [ObservableProperty]
         private object menu;
 
