@@ -30,5 +30,9 @@ namespace GUI.Views
 
         }
 
+        private void ThongBao_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

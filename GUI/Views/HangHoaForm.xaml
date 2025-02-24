@@ -155,6 +155,6 @@
             </Grid>
         </Border>
     </Grid>
-        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
+        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" Loaded="ThongBao_Loaded" />
     </Grid>
 </UserControl>

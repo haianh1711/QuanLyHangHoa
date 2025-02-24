@@ -19,12 +19,12 @@
         <Border  Background="#DFEBF8" Padding="30,20" CornerRadius="15" BorderBrush="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="270"/>
+                    <ColumnDefinition  />
                 </Grid.ColumnDefinitions>
                 <ContentControl x:Name="menu" Content="{Binding Menu}"/>
                 <ContentControl x:Name="view" Content="{Binding View}" Grid.Column="1"
-                           HorizontalAlignment="Stretch" Margin="30, 0, 0, 0" d:DesignHeight="655.25"/>
+           HorizontalAlignment="Stretch" Margin="30, 0, 0, 0" d:DesignHeight="655.25"/>
 
             </Grid>
         </Border>

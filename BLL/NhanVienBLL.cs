@@ -53,12 +53,53 @@ namespace BLL
                 nv.ChucVu.Contains(tuKhoa, StringComparison.OrdinalIgnoreCase)
             ).ToList();
         }
-        public string SaveImage(string imagePath)
+        //public string SaveImage(string imagePath, string maNhanVien)
+        //{
+        //    string destinationPath = Path.Combine("Images", Path.GetFileName(imagePath));
+        //    File.Copy(imagePath, destinationPath, true);
+        //    return destinationPath;
+        //}
+
+        public string SaveImage(string imagePath, string maNhanVien)
         {
-            string destinationPath = Path.Combine("Images", Path.GetFileName(imagePath));
-            File.Copy(imagePath, destinationPath, true);
-            return destinationPath;
+            try
+            {
+                // Đường dẫn lưu ảnh
+                string imagesFolder = "C:\\Images\\NhanVien\\AnhVN"; // Thư mục chứa ảnh
+                if (!Directory.Exists(imagesFolder))
+                {
+                    Directory.CreateDirectory(imagesFolder);
+                }
+
+                // Tạo tên file mới để tránh trùng
+                string fileName = $"{maNhanVien}_{Path.GetFileName(imagePath)}";
+                string destinationPath = Path.Combine(imagesFolder, fileName);
+
+                // Copy ảnh vào thư mục (ghi đè nếu đã có)
+                File.Copy(imagePath, destinationPath, true);
+
+                // Cập nhật đường dẫn vào database
+                bool isUpdated = nhanVienDAL.CapNhatHinhAnh(maNhanVien, fileName);
+
+                if (isUpdated)
+                {
+                    return fileName; // Trả về tên file mới để binding hiển thị
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi lưu ảnh: {ex.Message}");
+                return string.Empty;
+            }
         }
+
+
+
+
         public NhanVienDTO GetNhanVienByMa(string maNhanVien)
         {
             return nhanVienDAL.LayNhanVienBangMa(maNhanVien);
