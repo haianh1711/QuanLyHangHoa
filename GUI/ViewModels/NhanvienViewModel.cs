@@ -12,6 +12,8 @@ using CommunityToolkit.Mvvm.Input;
 using GUI.ViewModels.UserControls;
 using GUI.Views.UserControls;
 using DAL;
+using Microsoft.Win32;
+using System.IO;
 
 namespace GUI.ViewModels
 {
@@ -29,6 +31,8 @@ namespace GUI.ViewModels
         // Thuộc tính của phieu nhạp
         [ObservableProperty]
         private NhanVienDTO? selectedNhanVien;
+        [ObservableProperty]
+        private NhanVienDTO? tempNhanVien;
 
         // Tìm kiếm
         [ObservableProperty]
@@ -62,6 +66,11 @@ namespace GUI.ViewModels
         {
             try
             {
+                if (string.IsNullOrEmpty(selectedNhanVien.MaNhanVien) || string.IsNullOrEmpty(selectedNhanVien.TenNhanVien))
+                {
+                    await ThongBaoVM.MessageOK("Vui lòng chọn nhân viên cần sửa");
+                    return;
+                }
                 if (SelectedNhanVien != null)
                 {
                     // Chỉ truyền dữ liệu có trong bảng NhanVien
@@ -81,11 +90,16 @@ namespace GUI.ViewModels
                         LoadDanhSachNhanVien();
                     }
                 }
+                else
+                {
+                    await ThongBaoVM.MessageOK("Vui lòng chọn nhân viên cần sửa");
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                await ThongBaoVM.MessageOK(ex.ToString());
+                await thongBaoVM.MessageOK(ex.ToString());
             }
+
         }
 
 
@@ -95,6 +109,11 @@ namespace GUI.ViewModels
         {
             try
             {
+                if (string.IsNullOrEmpty(selectedNhanVien.MaNhanVien) || string.IsNullOrEmpty(selectedNhanVien.TenNhanVien))
+                {
+                    await ThongBaoVM.MessageOK("Vui lòng chọn nhân viên cần sửa");
+                    return;
+                }
                 if (SelectedNhanVien != null)
                 {
                     bool isXoaPhieuNhap = await ThongBaoVM.MessageYesNo("Bạn có chắc chắn muốn xóa nhân viên này? Dữ liệu sẽ bị mất vĩnh viễn.");
@@ -109,6 +128,7 @@ namespace GUI.ViewModels
                     }
 
                 }
+        
             }
             catch (Exception ex)
             {
@@ -145,6 +165,7 @@ namespace GUI.ViewModels
                 nhanVienDTOs.Add(item);
             }
         }
+
 
     }
 }

@@ -6,6 +6,7 @@
              xmlns:FormNhap="clr-namespace:GUI.Views.UserControls"
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:local="clr-namespace:GUI.Views"
+               xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                 xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
              d:Height="655.25">
@@ -121,16 +122,25 @@
           IsEditable="True"/>
                                 </Grid>
                             </Grid>
-
                             <Grid Grid.Column="2" HorizontalAlignment="Right">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Image  Style="{StaticResource ImageDefault}"/>
+                                <Viewbox Grid.Row="0">
+                                <Image Style="{StaticResource ImageDefault}" Cursor="Hand"
+                                   Stretch="UniformToFill" 
+                                   Source ="{Binding TempNhanVien.HinhAnh}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <i:InvokeCommandAction Command="{Binding ThayDoiHinhAnhCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
+                            </Viewbox>
 
 
-                                <!--Nút-->
+                            <!--Nút-->
                                 <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" >
                                     <Button Content="Sửa" Style="{StaticResource SimpleRoundedButton}" Command="{Binding SuaNhanVienCommand}"/>
                                     <Button Content="Xóa" Style="{StaticResource SimpleRoundedButton}" Command="{Binding XoaNhanVienCommand}"/>
