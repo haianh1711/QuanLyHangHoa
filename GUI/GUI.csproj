@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\AnhVN\NV001.jpg" />
     <None Remove="Images\BTran.jpg" />
     <None Remove="Images\bubble.png" />
     <None Remove="Images\ggdmm.png" />
@@ -39,6 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\AnhVN\NV001.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\BTran.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

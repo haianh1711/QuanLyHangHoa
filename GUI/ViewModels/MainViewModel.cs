@@ -9,19 +9,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 
 namespace GUI.ViewModels
 {
     internal partial class MainViewModel : ObservableObject
     {
+        public MainViewModel() { }
+
         [ObservableProperty]
         public ThongBaoViewModel thongBaoVM;
 
         [ObservableProperty]
         public TrangChuViewModel menuVM;
 
-        public NhanVienDTO nhanVienDTO = new();
+        [ObservableProperty]
+        private NhanVienDTO nhanVien;
+
+        [ObservableProperty]
+        private TaiKhoanDTO taiKhoan;
+
 
         public TrangChuMenuViewModel trangChuMenuVM { get; set; }
         public TrangChuViewModel trangChuVM { get; set; }
@@ -36,12 +45,38 @@ namespace GUI.ViewModels
             // khởi tạo trang chủ 
             trangChuVM = new TrangChuViewModel(this);
             View = trangChuVM;
+
+
+        }
+
+       
+
+        
+        public void CapNhatTaiKhoanNhanVien(TaiKhoanDTO taiKhoanMoi, NhanVienDTO nhanVienMoi)
+        {
+            TaiKhoan = taiKhoanMoi;
+            NhanVien = nhanVienMoi;
+            OnPropertyChanged(nameof(AvatarImage));
+        }
+
+       
+
+        public ImageSource AvatarImage
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(NhanVien?.HinhAnh))
+                    return new BitmapImage(new Uri("pack://application:,,,/Images/AnhVN/default.jpg"));
+
+                return new BitmapImage(new Uri(NhanVien.HinhAnh, UriKind.RelativeOrAbsolute));
+            }
         }
 
         [ObservableProperty]
-        public object view;
+        private object menu;
 
         [ObservableProperty]
-        public object menu;
+        private object view;
+
     }
 }

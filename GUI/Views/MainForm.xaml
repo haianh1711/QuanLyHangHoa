@@ -15,11 +15,12 @@
      AllowsTransparency="True"
      WindowStartupLocation="CenterScreen">
     <Grid>
+        
         <Border  Background="#DFEBF8" Padding="30,20" CornerRadius="15" BorderBrush="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="270"/>
-                    <ColumnDefinition   />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <ContentControl x:Name="menu" Content="{Binding Menu}"/>
                 <ContentControl x:Name="view" Content="{Binding View}" Grid.Column="1"

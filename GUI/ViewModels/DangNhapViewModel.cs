@@ -20,30 +20,35 @@ namespace GUI.ViewModels
 
         private DangNhapBLL dangNhapBLL = new DangNhapBLL();
 
+        [ObservableProperty]
+        private TaiKhoanDTO? taiKhoan;
+
+        [ObservableProperty]
+        private NhanVienDTO? nhanVien;
+
         [RelayCommand]
         public async Task DangNhapGmail()
         {
-            TaiKhoanDTO taiKhoanDTO = await dangNhapBLL.DangNhapGmail();
-            if (taiKhoanDTO != null)
+            if ((TaiKhoan = await dangNhapBLL.DangNhapGmail()) != null)
             {
                 await thongBaoVM.MessageOK("Đăng nhập thành công!");
-                Application.Current.Windows
-                    .OfType<Window>()
-                    .FirstOrDefault(w => w.IsActive)?.Hide();
+                Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)?.Hide();
 
-                NhanVienDTO? nhanVienDTO = await dangNhapBLL.TimNhanVienTheoEmail(taiKhoanDTO.Gmail);
-                if (nhanVienDTO != null)
+                if ((NhanVien = await dangNhapBLL.TimNhanVienTheoEmail(TaiKhoan.Gmail)) != null)
                 {
-                    MainForm mainForm = new MainForm(taiKhoanDTO, nhanVienDTO);
-                    Application.Current.MainWindow = mainForm;
-                    mainForm.Show();
+                    
+                    var mainWindow = new MainForm(); 
+                    var trangChuForm = new TrangChuForm { DataContext = this };
+
+                    // Đặt UserControl vào MainForm
+                    mainWindow.Content = trangChuForm;
+                    Application.Current.MainWindow = mainWindow;
+                    mainWindow.Show();
                 }
+                else await thongBaoVM.MessageOK("Không tìm thấy thông tin nhân viên.");
             }
-            else
-            {
-                await thongBaoVM.MessageOK("Đăng nhập thất bại");
-                return;
-            }
+            else await thongBaoVM.MessageOK("Đăng nhập thất bại");
         }
+
     }
 }
