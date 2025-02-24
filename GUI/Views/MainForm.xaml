@@ -31,6 +31,6 @@
             </Grid>
         </Border>
         <userControl:ThongBao DataContext="{Binding ThongBaoVM}"/>
-
+        
     </Grid>
 </Window>

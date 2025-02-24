@@ -12,7 +12,25 @@ namespace DAL
     public class NhanVienDAL
     {
         private DatabaseHelper dbHelper = new DatabaseHelper();
+        public NhanVienDTO? TimNhanVienTheoEmail(string email)
+        {
+            string query = "SELECT * FROM NhanVien WHERE Email = @Email";
+            SqlParameter[] parameters = { new SqlParameter("@Email", email) };
 
+            DataTable dt = dbHelper.ExecuteQuery(query, parameters);
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                return new NhanVienDTO
+                {
+                    MaNhanVien = row["MaNhanVien"].ToString(),
+                    TenNhanVien = row["TenNhanVien"].ToString(),
+                    ChucVu = row["ChucVu"].ToString(),
+                    HinhAnh = row["HinhAnh"].ToString()
+                };
+            }
+            return null;
+        }
         public List<NhanVienDTO> HienThiDanhSachNV()
         {
             List<NhanVienDTO> danhSachNhanVien = new List<NhanVienDTO>();

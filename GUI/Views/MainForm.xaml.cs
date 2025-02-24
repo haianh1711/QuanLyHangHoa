@@ -22,6 +22,16 @@ namespace GUI.Views
         public MainForm()
         {
             InitializeComponent();
+
         }
+
+        public object View
+        {
+            get { return view.Content; }
+            set { view.Content = value; }
+        }
+
+       
+
     }
 }

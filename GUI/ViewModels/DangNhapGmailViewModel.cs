@@ -44,22 +44,31 @@ namespace GUI.ViewModels
         [RelayCommand]
         public async Task loginGmail()
         {
-            if (SelectTaiKhoan != null)
+            TaiKhoanDTO? taikhoanHopLe = await dangNhapBLL.DangNhapGmail();
+            if (taikhoanHopLe == null)
             {
-                TaiKhoanDTO? taikhoanHopLe = await dangNhapBLL.DangNhapGmail();
-
-                if (taikhoanHopLe != null)
-                {
-                    MessageBox.Show("Đăng nhập thành công!");
-                }
-
+                await thongBaoVM.MessageOK("Đăng nhập thất bại.");
+                return;
             }
-            else
+
+            NhanVienDTO? nhanVien = await dangNhapBLL.LayNhanVienTheoEmail(taikhoanHopLe.Gmail);
+            if (nhanVien == null)
             {
-                await thongBaoVM.MessageOK("Đăng nhập thất bại");
+                await thongBaoVM.MessageOK("Không tìm thấy thông tin nhân viên.");
+                return;
             }
+
+            MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            Application.Current.MainWindow.Hide();
+            MainForm mainForm = new MainForm();
             mainForm.View = new TrangChuForm(nhanVien); // Gán UserControl vào View
+            mainForm.Show();
+
+            Application.Current.MainWindow = mainForm;
+
         }
+
 
     }
 }

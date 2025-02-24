@@ -34,6 +34,7 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string? tuKhoaTimKiem;
 
+
         public NhanvienViewModel()
         {
             LoadDanhSachNhanVien();

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using DTO;
+using GUI.ViewModels;
 
 namespace GUI.Views
 {
@@ -20,9 +23,13 @@ namespace GUI.Views
     /// </summary>
     public partial class TrangChuForm : UserControl
     {
-        public TrangChuForm()
+        public TrangChuForm(NhanVienDTO? nhanVien)
         {
             InitializeComponent();
+        }
+
+        public TrangChuForm()
+        {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -42,5 +49,7 @@ namespace GUI.Views
                 parentWindow.Close();
             }
         }
+
+
     }
 }
