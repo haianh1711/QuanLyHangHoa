@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
+             xmlns:viewModels="clr-namespace:GUI.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="655.25" Width="698">
     <UserControl.Resources>
@@ -42,11 +43,11 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock 
-                Grid.Column="0"
-                 Text="Xin chào!" 
-                 Margin="40,158,170,378" 
-                 FontSize="35"
-                 FontFamily="Lato Black" Height="48" Width="173">
+                    Grid.Column="0"
+                     Text="Xin chào!" 
+                     Margin="40,158,170,378" 
+                     FontSize="35"
+                     FontFamily="Lato Black" Height="48" Width="173">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
                                 <GradientStop Color="#FF1849C0"/>
@@ -56,12 +57,12 @@
                     </TextBlock>
 
                     <Label 
-                Grid.Column="0"
-                 Content="Trần Ngọc Bảo Trân" 
-                 VerticalContentAlignment="Center" 
-                 Margin="38,199,12,327" 
-                 FontSize="35"
-                 FontFamily="Lato Black" Height="58">
+                        Grid.Column="0"
+                         Content="{Binding NhanVien.TenNhanVien}" 
+                         VerticalContentAlignment="Center" 
+                         Margin="38,199,12,327" 
+                         FontSize="35"
+                         FontFamily="Lato Black" Height="58">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
                                 <GradientStop Color="#FF1849C0"/>
@@ -72,21 +73,24 @@
 
                     <!--line-->
                     <Border Grid.Column="0"
-                         Background="Black"
-                      Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
+                     Background="Black"
+                  Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
 
-                    <Label Grid.Column="0" Content="Mã Nhân viên: TD00537" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="38,283,22,267"/>
-                    <Label Grid.Column="0" Content="Chức vụ: Trưởng phòng " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,327,22,217"/>
-                    <Label Grid.Column="0" Content="Gmail: trantnbtd00537@gmail.com " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,364,20,169"/>
+                    <Label Grid.Column="0" Content="{Binding NhanVien.MaNhanVien}" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="38,283,22,267"/>
+                    <Label Grid.Column="0" Content="{Binding NhanVien.ChucVu}" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,327,22,217"/>
+                    <Label  Grid.Column="0" Content="{Binding NhanVien.Gmail}" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,364,20,169"/>
 
                     <!--ảnh-->
-                    <Rectangle Width="250" 
-                           Height="350" 
-                           Cursor="Hand"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Top" 
-                           Margin="0,80,0,0" 
-                           Grid.Column="1">
+                    <Rectangle
+                       
+                        
+                       Width="250" 
+                       Height="350" 
+                       Cursor="Hand"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Top" 
+                       Margin="0,80,0,0" 
+                       Grid.Column="1">     
                         <Rectangle.Clip>
                             <PathGeometry>
                                 <PathGeometry.Figures>
@@ -108,7 +112,7 @@
                             </PathGeometry>
                         </Rectangle.Clip>
                         <Rectangle.Fill>
-                            <ImageBrush ImageSource="pack://application:,,,/Images/BTran.jpg" Stretch="UniformToFill"/>
+                            <ImageBrush ImageSource="{Binding NhanVien.HinhAnh}" Stretch="UniformToFill"/>
                         </Rectangle.Fill>
                     </Rectangle>
 

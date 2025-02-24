@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using DTO;
+using GUI.ViewModels;
 
 namespace GUI.Views
 {
@@ -42,5 +45,7 @@ namespace GUI.Views
                 parentWindow.Close();
             }
         }
+
+
     }
 }

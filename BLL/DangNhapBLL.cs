@@ -21,6 +21,13 @@ namespace BLL
     {
         private DangNhapDAL dangNhapDAL = new DangNhapDAL();
 
+        private NhanVienDAL nhanVienDAL = new NhanVienDAL(); // Thêm DAL để lấy dữ liệu nhân viên
+
+        public async Task<NhanVienDTO?> TimNhanVienTheoEmail(string email)
+        {
+            return await Task.Run(() => nhanVienDAL.TimNhanVienTheoEmail(email));
+        }
+
         // Hàm đăng nhập Gmail bất đồng bộ
         public async Task<TaiKhoanDTO?> DangNhapGmail()
         {

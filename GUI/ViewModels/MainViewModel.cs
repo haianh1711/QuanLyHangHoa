@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using DTO;
 using GUI.ViewModels.UserControls;
 using GUI.Views;
 using GUI.Views.UserControls;
@@ -20,10 +21,12 @@ namespace GUI.ViewModels
         [ObservableProperty]
         public TrangChuViewModel menuVM;
 
+        public NhanVienDTO nhanVienDTO = new();
+
         public TrangChuMenuViewModel trangChuMenuVM { get; set; }
         public TrangChuViewModel trangChuVM { get; set; }
 
-        public MainViewModel()
+        public MainViewModel(TaiKhoanDTO taiKhoanDTO, NhanVienDTO nhanVienDTO)
         {
             // khởi tạo menu
             ThongBaoVM = new ThongBaoViewModel();
@@ -31,9 +34,8 @@ namespace GUI.ViewModels
             Menu = trangChuMenuVM;
 
             // khởi tạo trang chủ 
-            trangChuVM = new TrangChuViewModel();
+            trangChuVM = new TrangChuViewModel(this);
             View = trangChuVM;
-
         }
 
         [ObservableProperty]

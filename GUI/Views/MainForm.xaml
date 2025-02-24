@@ -14,9 +14,6 @@
      Background="Transparent"
      AllowsTransparency="True"
      WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
-        <viewModels:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Border  Background="#DFEBF8" Padding="30,20" CornerRadius="15" BorderBrush="Transparent">
             <Grid>
@@ -31,6 +28,6 @@
             </Grid>
         </Border>
         <userControl:ThongBao DataContext="{Binding ThongBaoVM}"/>
-
+        
     </Grid>
 </Window>

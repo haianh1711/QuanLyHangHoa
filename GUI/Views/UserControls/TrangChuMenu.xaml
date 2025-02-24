@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
+             
              mc:Ignorable="d" 
               d:DesignHeight="655.25" d:DesignWidth="270"
              PreviewMouseDown="Window_PreviewMouseDown">
@@ -61,7 +62,7 @@
             <!--Menu chuc nang-->
             <StackPanel x:Name="menuContainer"  Grid.Row="2" Background="Transparent">
                 <!-- Quản lý hàng hóa -->
-                 <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý hàng hóa" 
+                <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Quản lý hàng hóa" 
                         Command="{Binding QlHangHoaCommand}" Style="{StaticResource MenuButtonTheme}"
                         Cursor="Hand" />
 
