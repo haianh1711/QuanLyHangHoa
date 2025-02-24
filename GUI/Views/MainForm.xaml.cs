@@ -27,7 +27,7 @@ namespace GUI.Views
         public MainForm(TaiKhoanDTO taiKhoan, NhanVienDTO nhanVien)
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel(taiKhoan, nhanVien);
+            this.DataContext = new MainViewModel(taiKhoan,nhanVien);
         }
 
        
