@@ -46,8 +46,8 @@
                     Grid.Column="0"
                      Text="Xin chào!" 
                      Margin="40,158,170,378" 
-                     FontSize="35"
-                     FontFamily="Lato Black" Height="48" Width="173">
+                     FontSize="30" FontWeight="Bold"
+                     FontFamily="Tahoma" Height="48" Width="173">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
                                 <GradientStop Color="#FF1849C0"/>
@@ -56,13 +56,14 @@
                         </TextBlock.Foreground>
                     </TextBlock>
 
-                    <Label 
+                    <Label DataContext="{Binding}"
                         Grid.Column="0"
                          Content="{Binding NhanVien.TenNhanVien}" 
                          VerticalContentAlignment="Center" 
                          Margin="38,199,12,327" 
-                         FontSize="35"
-                         FontFamily="Lato Black" Height="58">
+                         FontSize="30"
+                          FontWeight="Bold"
+                         FontFamily="Tahoma" Height="58">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
                                 <GradientStop Color="#FF1849C0"/>
@@ -77,7 +78,7 @@
                         Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
 
                   
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Height="276" Width="259" Margin="51,270,0,0">
+                    <StackPanel DataContext="{Binding}" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Height="276" Width="259" Margin="51,270,0,0">
 
                         <TextBlock Margin="0,5" FontSize="22" Foreground="Black">
                             <Run Text="Mã nhân viên: " />
