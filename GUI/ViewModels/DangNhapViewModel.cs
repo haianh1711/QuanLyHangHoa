@@ -37,7 +37,7 @@ namespace GUI.ViewModels
             }
             else
             {
-                MessageBox.Show("Đăng nhập thất bại");
+                await thongBaoVM.MessageOK("Đăng nhập thất bại");
                 return;
             }
         }

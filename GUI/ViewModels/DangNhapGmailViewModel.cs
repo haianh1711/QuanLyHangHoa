@@ -58,6 +58,7 @@ namespace GUI.ViewModels
             {
                 await thongBaoVM.MessageOK("Đăng nhập thất bại");
             }
+            mainForm.View = new TrangChuForm(nhanVien); // Gán UserControl vào View
         }
 
     }
