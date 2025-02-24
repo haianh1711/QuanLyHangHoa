@@ -29,7 +29,7 @@
 
     </UserControl.Resources>
     <Grid>
-        <Border Background="#DFEBF8" Margin="18,0,0,0">
+        <Border Background="#DFEBF8" Margin="22,0,0,0">
 
             <Grid >
                 <Grid.RowDefinitions>
@@ -74,12 +74,28 @@
                     <!--line-->
                     <Border Grid.Column="0"
                      Background="Black"
-                  Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
+                        Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
 
-                    <Label Grid.Column="0" Content="{Binding NhanVien.MaNhanVien}" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="38,283,22,267"/>
-                    <Label Grid.Column="0" Content="{Binding NhanVien.ChucVu}" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,327,22,217"/>
-                    <Label  Grid.Column="0" Content="{Binding NhanVien.Gmail}" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,364,20,169"/>
+                  
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Height="276" Width="259" Margin="51,270,0,0">
 
+                        <TextBlock Margin="0,5" FontSize="22" Foreground="Black">
+                            <Run Text="Mã nhân viên: " />
+                            <Run Text="{Binding NhanVien.MaNhanVien}" />
+                        </TextBlock>
+
+                        <TextBlock Margin="0,5" FontSize="22" Foreground="Black">
+                             <Run Text="Chức vụ: " />
+                             <Run Text="{Binding NhanVien.ChucVu}" />
+                        </TextBlock>
+
+                        <TextBlock Margin="0,5" FontSize="22" Foreground="Black">
+                             <Run Text="Gmail: " />
+                             <Run Text="{Binding NhanVien.Gmail}" />
+                        </TextBlock>
+
+
+                    </StackPanel>
                     <!--ảnh-->
                     <Rectangle
                        
@@ -90,7 +106,7 @@
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Top" 
                        Margin="0,80,0,0" 
-                       Grid.Column="1">     
+                       Grid.Column="1">
                         <Rectangle.Clip>
                             <PathGeometry>
                                 <PathGeometry.Figures>
@@ -118,7 +134,7 @@
 
 
                     <!--Btn-->
-                    
+
                     <Button Grid.Column="1" 
                         Style="{StaticResource CustomButtonStyle}" 
                         Content="Đổi ảnh" 

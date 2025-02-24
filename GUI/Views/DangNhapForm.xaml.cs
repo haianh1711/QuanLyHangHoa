@@ -34,5 +34,10 @@ namespace GUI.Views
                 Application.Current.Shutdown();
             }
         }
+
+        private void ThongBao_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

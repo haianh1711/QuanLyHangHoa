@@ -19,42 +19,30 @@
 
     <Border 
      Background="#161F36"
-     BorderBrush="Transparent"
-     BorderThickness="1">
-        <Grid>
+     BorderBrush="Transparent">
+        <Grid Margin="0,10,0,0">
+            <Image  Height="465" Margin="0,-11,0,0" VerticalAlignment="Top" Source="/Views/bong.png" Stretch="Fill"/>
             <Grid>
                 <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <!-- Thoát -->
-            <Image
-              Width="187"
-              Height="187"
-Margin="306,0,85,160" 
-Source="/Images/bubble.png" 
-Stretch="Fill"
-Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1">
-                <Image.Effect>
-                    <BlurEffect Radius="10"/>
-
-                </Image.Effect>
-            </Image>
-            <!-- Thoát -->
-            <Grid Grid.Row="1"
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!-- Thoát -->
+                <!-- Thoát -->
+                <Grid Grid.Row="1"
                   Grid.Column="1"
                   />
 
-            <Grid Grid.Row="1"
+                <Grid Grid.Row="1"
                   Grid.Column="1"
                   VerticalAlignment="Center" >
-                <Button 
+                    <Button 
                     Command="{Binding ExitCommand}"
                     BorderBrush="Transparent"
                                         Width="30"
@@ -66,38 +54,36 @@ Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1">
                     Background="Transparent"
                     HorizontalAlignment="Right" 
                     VerticalAlignment="Top" 
-                    Margin="19,19,20,0" 
+                    Margin="0,16,21,0" 
                     Panel.ZIndex="1" Click="Button_Click">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <!-- Tắt mọi trạng thái mặc định -->
-                            <Setter Property="OverridesDefaultStyle" Value="True" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}"
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <!-- Tắt mọi trạng thái mặc định -->
+                                <Setter Property="OverridesDefaultStyle" Value="True" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Border CornerRadius="20"
-                        BorderThickness="2"
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Border 
                         Width="477"
-                        Height="241"
-                        BorderBrush="White">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="241" >
-                        <!-- Avatar -->
-                        <Grid>
-                            <Image Source="/Images/ustock-removebg-preview.png" Width="120" Height="124"/>
-                        </Grid>
-                        <!-- Nút đăng nhập -->
-                        <Button  
+                        Height="241">
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Height="241" Margin="0,18,0,0" >
+                            <!-- Avatar -->
+                            <Grid>
+                                <Image Source="/Images/ustock-removebg-preview.png" Width="120" Height="124"/>
+                            </Grid>
+                            <!-- Nút đăng nhập -->
+                            <Button  
                    Command="{Binding DangNhapGmailCommand}"
                    Width="351"
                   Height="43"
@@ -105,103 +91,41 @@ Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1">
                   FontWeight="Light"
                   Margin="0,20,0,0" 
                   Foreground="White">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" >
-                                    <Setter  Property="Background" Value="#5B71A8"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#FF6C96FF"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Border    Width="269"
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" >
+                                        <Setter  Property="Background" Value="#5B71A8"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#FF6C96FF"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border    Width="269"
                                 Height="42"
                                 CornerRadius="10"
                                 Background="{TemplateBinding Background}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto"/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Image Source="/Images/ggdmm.png" Width="30" Height="30" Margin="10,0,0,0" Grid.Column="0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Đăng nhập bằng Gmail" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,3"/>
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="/Images/ggdmm.png" Width="30" Height="30" Margin="10,0,0,0" Grid.Column="0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Đăng nhập bằng Gmail" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,3"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
 
-                    </StackPanel>
-                </Border>
-                <!-- Nhãn sử dụng email -->
+                        </StackPanel>
+                    </Border>
+                    <!-- Nhãn sử dụng email -->
+                </Grid>
             </Grid>
-            <Image Grid.ColumnSpan="2" 
-                   Width="297"
-                   Height="297"
-       Margin="-54,146,335,-96" 
-       Grid.Row="1" 
-       Source="/Images/bubble.png" 
-       Stretch="Fill" 
-       Grid.RowSpan="2"
-       Opacity="0.7">
-                <Image.Effect>
-                    <BlurEffect Radius="10"/>
-
-                </Image.Effect>
-            </Image>
-            <Image
-                     Width="187"
-                     Height="187"
-       Margin="-70,-53,462,212" 
-       Source="/Images/bubble.png" 
-       Stretch="Fill"
-       Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                <Image.Effect>
-                    <BlurEffect Radius="10"/>
-
-                </Image.Effect>
-            </Image>
-            <Image
-              Width="187"
-              Height="187"
-    Margin="457,120,-65,39" 
-    Source="/Images/bubble.png" 
-    Stretch="Fill"
-    Opacity="0.7" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1">
-                <Image.Effect>
-                    <BlurEffect Radius="10"/>
-
-                </Image.Effect>
-            </Image>
-            <Image
-                Width="114"
-                Height="114"
-                Margin="306,28,57,-37" 
-                Source="/Images/bubble.png" 
-                Stretch="Fill"
-                Opacity="0.7" Grid.Column="1" Grid.Row="2">
-                <Image.Effect>
-                    <BlurEffect Radius="10"/>
-
-                </Image.Effect>
-            </Image>
-            <Image
-              Width="50"
-              Height="50"
-              Margin="42,10,10,46" 
-              Source="/Images/bubble.png" 
-              Stretch="Fill"
-              Opacity="0.7" Grid.Column="2">
-                <Image.Effect>
-                    <BlurEffect Radius="10"/>
-
-                </Image.Effect>
-            </Image>
-            </Grid>
-            <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
+            <userControls:ThongBao DataContext="{Binding ThongBaoVM }" Loaded="ThongBao_Loaded" Margin="-2,-5,2,5" />
         </Grid>
     </Border>
 </Window>

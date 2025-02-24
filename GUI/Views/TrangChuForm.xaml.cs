@@ -26,6 +26,7 @@ namespace GUI.Views
         public TrangChuForm()
         {
             InitializeComponent();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
