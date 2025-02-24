@@ -36,6 +36,8 @@ namespace GUI.ViewModels
 
         public MainViewModel(TaiKhoanDTO taiKhoanDTO, NhanVienDTO nhanVienDTO)
         {
+            taiKhoan = taiKhoanDTO;
+            nhanVien = nhanVienDTO;
             // khởi tạo menu
             ThongBaoVM = new ThongBaoViewModel();
             trangChuMenuVM = new TrangChuMenuViewModel(this);
@@ -46,30 +48,31 @@ namespace GUI.ViewModels
             View = trangChuVM;
 
 
+            
         }
 
        
 
         
-        public void CapNhatTaiKhoanNhanVien(TaiKhoanDTO taiKhoanMoi, NhanVienDTO nhanVienMoi)
-        {
-            TaiKhoan = taiKhoanMoi;
-            NhanVien = nhanVienMoi;
-            OnPropertyChanged(nameof(AvatarImage));
-        }
+        //public void CapNhatTaiKhoanNhanVien(TaiKhoanDTO taiKhoanMoi, NhanVienDTO nhanVienMoi)
+        //{
+        //    TaiKhoan = taiKhoanMoi;
+        //    NhanVien = nhanVienMoi;
+        //    OnPropertyChanged(nameof(AvatarImage));
+        //}
 
        
 
-        public ImageSource AvatarImage
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(NhanVien?.HinhAnh))
-                    return new BitmapImage(new Uri("pack://application:,,,/Images/AnhVN/default.jpg"));
+        //public ImageSource AvatarImage
+        //{
+        //    get
+        //    {
+        //        if (string.IsNullOrEmpty(NhanVien?.HinhAnh))
+        //            return new BitmapImage(new Uri("pack://application:,,,/Images/AnhVN/default.jpg"));
 
-                return new BitmapImage(new Uri(NhanVien.HinhAnh, UriKind.RelativeOrAbsolute));
-            }
-        }
+        //        return new BitmapImage(new Uri(NhanVien.HinhAnh, UriKind.RelativeOrAbsolute));
+        //    }
+        //}
 
         [ObservableProperty]
         private object menu;
