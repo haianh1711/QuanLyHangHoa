@@ -17,7 +17,6 @@ namespace GUI.ViewModels
 {
     internal partial class MainViewModel : ObservableObject
     {
-        public MainViewModel() { }
 
         [ObservableProperty]
         public ThongBaoViewModel thongBaoVM;

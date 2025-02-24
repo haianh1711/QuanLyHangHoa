@@ -37,11 +37,8 @@ namespace GUI.ViewModels
                 if ((NhanVien = await dangNhapBLL.TimNhanVienTheoEmail(TaiKhoan.Gmail)) != null)
                 {
                     
-                    var mainWindow = new MainForm(); 
-                    var trangChuForm = new TrangChuForm { DataContext = this };
+                    var mainWindow = new MainForm(taiKhoan, nhanVien); 
 
-                    // Đặt UserControl vào MainForm
-                    mainWindow.Content = trangChuForm;
                     Application.Current.MainWindow = mainWindow;
                     mainWindow.Show();
                 }

@@ -23,14 +23,11 @@ namespace GUI.Views
     {
         private MainViewModel _viewModel;
 
-        public MainForm()
-        {
-        }
-
+        
         public MainForm(TaiKhoanDTO taiKhoan, NhanVienDTO nhanVien)
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
+            this.DataContext = new MainViewModel(taiKhoan, nhanVien);
         }
 
        
