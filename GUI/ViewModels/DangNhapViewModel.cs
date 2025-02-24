@@ -36,8 +36,8 @@ namespace GUI.ViewModels
 
                 if ((NhanVien = await dangNhapBLL.TimNhanVienTheoEmail(TaiKhoan.Gmail)) != null)
                 {
-                    
-                    var mainWindow = new MainForm(taiKhoan, nhanVien); 
+
+                    var mainWindow = new MainForm(taiKhoan, nhanVien);
 
                     Application.Current.MainWindow = mainWindow;
                     mainWindow.Show();
@@ -47,5 +47,14 @@ namespace GUI.ViewModels
             else await thongBaoVM.MessageOK("Đăng nhập thất bại");
         }
 
+        [RelayCommand]
+        public async Task Exit()
+        {
+             bool result =  await thongBaoVM.MessageYesNo("Bạn có chắc chắn muốn thoát?");
+            if (result)
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 }

@@ -28,11 +28,11 @@ namespace GUI.Views
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult thoat = MessageBox.Show("Bạn có chắc muốn thoát", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (thoat ==MessageBoxResult.Yes)
-            {
-                Application.Current.Shutdown();
-            }
+           // MessageBoxResult thoat = MessageBox.Show("Bạn có chắc muốn thoát", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //if (thoat ==MessageBoxResult.Yes)
+            //{
+               // Application.Current.Shutdown();
+            //}
         }
 
         private void ThongBao_Loaded(object sender, RoutedEventArgs e)
