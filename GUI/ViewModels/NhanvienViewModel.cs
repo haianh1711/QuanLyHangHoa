@@ -48,7 +48,8 @@ namespace GUI.ViewModels
         {
             LoadDanhSachNhanVien();
             SelectedNhanVien = new();
-
+            TempNhanVien = new();
+            TempNhanVien.HinhAnh = hinhAnhDefault; // Hình mặc định khi chưa chọn
         }
         [ObservableProperty]
         private ObservableCollection<string> danhSachChucVu = [];
@@ -67,6 +68,7 @@ namespace GUI.ViewModels
                 danhSachNhanVien.Select(nv => nv.ChucVu).Distinct().ToList());
 
         }
+
 
 
         [RelayCommand]
@@ -196,12 +198,11 @@ namespace GUI.ViewModels
                     string thuMucLuuAnh = Path.Combine(Directory.GetCurrentDirectory(), "Images", "NhanVien");
                     string originalFilePath = openFileDialog.FileName;
 
-                    // Copy file tạm thời để tránh khóa file gốc
-                    string tempFilePath = Path.GetTempFileName();
-                    File.Copy(originalFilePath, tempFilePath, true);
+                    TempNhanVien.HinhAnh = hinhAnhDefault;
+                    OnPropertyChanged(nameof(TempNhanVien));
 
                     // Gửi file tạm xuống BLL
-                    string newFilePath = nhanVienBLL.LuuHinhAnh(tempFilePath, thuMucLuuAnh, TempNhanVien.MaNhanVien);
+                    string newFilePath = await nhanVienBLL.LuuHinhAnh(originalFilePath, thuMucLuuAnh, TempNhanVien.MaNhanVien);
 
                     if (!string.IsNullOrEmpty(newFilePath))
                     {
@@ -216,11 +217,6 @@ namespace GUI.ViewModels
                         OnPropertyChanged(nameof(TempNhanVien));
                     }
 
-                    // Xóa file tạm
-                    if (File.Exists(tempFilePath))
-                    {
-                        File.Delete(tempFilePath);
-                    }
                 }
                 catch (IOException ex)
                 {
@@ -231,7 +227,6 @@ namespace GUI.ViewModels
                     await ThongBaoVM.MessageOK($"Có lỗi xảy ra: {ex.Message}");
                 }
             }
-
         }
     }
 }

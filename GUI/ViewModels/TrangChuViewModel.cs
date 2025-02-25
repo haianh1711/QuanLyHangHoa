@@ -19,6 +19,9 @@ namespace GUI.ViewModels
     {
         private MainViewModel _mainViewModel;
 
+        private NhanVienBLL _nhanVienBLL = new();
+
+
         [ObservableProperty]
         private NhanVienDTO nhanVien;
 
@@ -31,76 +34,37 @@ namespace GUI.ViewModels
             NhanVien = _mainViewModel.NhanVien;
             TaiKhoan = _mainViewModel.TaiKhoan;
 
-            _mainViewModel.PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName == nameof(MainViewModel.NhanVien))
-                {
-                    NhanVien = _mainViewModel.NhanVien;
-                    OnPropertyChanged(nameof(HinhAnh)); // Cập nhật ảnh
-                }
-            };
+          
 
         }
 
 
-
-        public BitmapImage HinhAnh
-        {
-            get
-            {
-                try
-                {
-                    // Kiểm tra nếu NhanVien có ảnh không
-                    if (!string.IsNullOrEmpty(NhanVien?.HinhAnh))
-                    {
-                        // Ghép đường dẫn đầy đủ của ảnh
-                        string fullPath = Path.Combine("C:\\GUI\\Images\\AnhVN", NhanVien.HinhAnh);
-
-                        // Kiểm tra xem file ảnh có tồn tại không
-                        if (File.Exists(fullPath))
-                        {
-                            return new BitmapImage(new Uri(fullPath, UriKind.Absolute));
-                        }
-                    }
-                }
-                catch
-                {
-                    // Nếu có lỗi, bỏ qua để không làm crash app
-                }
-
-                // Nếu không có ảnh thì dùng ảnh mặc định
-                return new BitmapImage(new Uri("pack://application:,,,/Images/ImageDefault.png", UriKind.Absolute));
-            }
-        }
 
 
 
 
         [RelayCommand]
-        private void ThayDoiHinhAnh()
+        private async void ThayDoiHinhAnh()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Title = "Chọn ảnh nhân viên",
+                Title = "Chọn ảnh",
                 Filter = "Ảnh (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
             };
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string selectedFilePath = openFileDialog.FileName;
-                string fileName = Path.GetFileName(selectedFilePath);
-                string imagesFolder = "C:\\Images\\NhanVien\\AnhVN";
+                string thuMucLuuAnh = Path.Combine(Directory.GetCurrentDirectory(), "Images", "NhanVien");
 
-                if (!Directory.Exists(imagesFolder))
+                //Gửi đường dẫn file gốc và thư mục lưu ảnh xuống BLL
+                NhanVien.HinhAnh = await new NhanVienBLL().LuuHinhAnh(openFileDialog.FileName, thuMucLuuAnh, NhanVien.MaNhanVien);
+                _nhanVienBLL.CapNhatHinhAnh(NhanVien.MaNhanVien, NhanVien.HinhAnh);
+
+                if (!string.IsNullOrEmpty(NhanVien.HinhAnh))
                 {
-                    Directory.CreateDirectory(imagesFolder);
+                    // Hiển thị ảnh lên giao diện
+                    OnPropertyChanged(nameof(NhanVien));
                 }
-
-                string destinationFilePath = Path.Combine(imagesFolder, fileName);
-                File.Copy(selectedFilePath, destinationFilePath, true);
-
-                NhanVien.HinhAnh = fileName;
-                OnPropertyChanged(nameof(HinhAnh)); 
             }
         }
 
