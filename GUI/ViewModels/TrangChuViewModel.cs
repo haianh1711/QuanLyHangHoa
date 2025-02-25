@@ -54,7 +54,7 @@ namespace GUI.ViewModels
                     if (!string.IsNullOrEmpty(NhanVien?.HinhAnh))
                     {
                         // Ghép đường dẫn đầy đủ của ảnh
-                        string fullPath = Path.Combine("C:\\Images\\NhanVien\\AnhVN", NhanVien.HinhAnh);
+                        string fullPath = Path.Combine("C:\\GUI\\Images\\AnhVN", NhanVien.HinhAnh);
 
                         // Kiểm tra xem file ảnh có tồn tại không
                         if (File.Exists(fullPath))

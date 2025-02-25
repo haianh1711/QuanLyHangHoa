@@ -9,9 +9,10 @@
              mc:Ignorable="d" 
              d:Height="655.25">
 
-    <UserControl.DataContext>
-        <viewModels:KhachHangViewModel/>
-    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -107,11 +108,13 @@
                     </Grid>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Height="90" Width="144" Grid.Column="1" Margin="2,0,0,0">
                         <Button Content="Sửa"
-                            Command="{Binding SuaKhachHangCommand}" 
-                            Style="{StaticResource SimpleRoundedButton}"/>
+                                Visibility="{Binding Quyen, Converter={StaticResource BoolToVisConverter}}"
+                                 Command="{Binding SuaKhachHangCommand}" 
+                                 Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Xóa"
-                            Command="{Binding XoaKhachHangCommand}" 
-                            Style="{StaticResource SimpleRoundedButton}"/>
+                                 Command="{Binding XoaKhachHangCommand}" 
+                                 Visibility="{Binding Quyen, Converter={StaticResource BoolToVisConverter}}"
+                                 Style="{StaticResource SimpleRoundedButton}"/>
                     </StackPanel>
                 </Grid>
             </Border>

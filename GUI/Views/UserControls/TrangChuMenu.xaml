@@ -9,6 +9,11 @@
               d:DesignHeight="655.25" d:DesignWidth="270"
              PreviewMouseDown="Window_PreviewMouseDown">
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+       
+
+    </UserControl.Resources>
 
     <Border Background="#0F1524" BorderBrush="Transparent" CornerRadius="40">
 
@@ -84,7 +89,8 @@
                  <RadioButton GroupName =  "ButtonMenu" Style="{StaticResource ResourceKey=MenuBtnThongKe}" >
 
                 <!-- Thống kê -->
-                    <Expander x:Name="expanderThongKe" IsExpanded="{Binding IsThongKeExpanded, Mode=TwoWay}" Cursor="Hand" Header=" Thống kê" Foreground="White"  FontSize="18" Width="240" Margin="9,0,0,0">
+                    <Expander x:Name="expanderThongKe"  Visibility="{Binding Quyen, Converter={StaticResource BoolToVisConverter}}"
+                              IsExpanded="{Binding IsThongKeExpanded, Mode=TwoWay}" Cursor="Hand" Header=" Thống kê" Foreground="White"  FontSize="18" Width="240" Margin="9,0,0,0">
                         <Border BorderThickness="0,1,0,0" BorderBrush="White" Margin="0,10,0,0">
                             <StackPanel  Background="Transparent" Margin="0,5,0,0" >
                              <RadioButton GroupName =  "ButtonMenu" Click="Btn_Click" Content="Thống kê nhập" Padding="40,10" FontSize="16" Foreground="White" Cursor="Hand"  HorizontalAlignment="Center" Width="252" Background="{x:Null}"

@@ -60,40 +60,60 @@ namespace BLL
         //    return destinationPath;
         //}
 
-        public string SaveImage(string imagePath, string maNhanVien)
+        public string LuuHinhAnh(string filePathGoc, string thuMucLuu, string maNV)
         {
             try
             {
-                // Đường dẫn lưu ảnh
-                string imagesFolder = "C:\\Images\\NhanVien\\AnhVN"; // Thư mục chứa ảnh
-                if (!Directory.Exists(imagesFolder))
+                if (!Directory.Exists(thuMucLuu))
                 {
-                    Directory.CreateDirectory(imagesFolder);
+                    Directory.CreateDirectory(thuMucLuu);
                 }
 
-                // Tạo tên file mới để tránh trùng
-                string fileName = $"{maNhanVien}_{Path.GetFileName(imagePath)}";
-                string destinationPath = Path.Combine(imagesFolder, fileName);
+                string tenFile = maNV + ".jpg";
+                string duongDanMoi = Path.Combine(thuMucLuu, tenFile);
 
-                // Copy ảnh vào thư mục (ghi đè nếu đã có)
-                File.Copy(imagePath, destinationPath, true);
-
-                // Cập nhật đường dẫn vào database
-                bool isUpdated = nhanVienDAL.CapNhatHinhAnh(maNhanVien, fileName);
-
-                if (isUpdated)
+                // Nếu file đích đã tồn tại, giải phóng trước khi ghi đè
+                if (File.Exists(duongDanMoi))
                 {
-                    return fileName; // Trả về tên file mới để binding hiển thị
+                    // Giải phóng file bằng cách thử xóa hoặc chờ
+                    try
+                    {
+                        File.Delete(duongDanMoi);
+                    }
+                    catch (IOException)
+                    {
+                        // Nếu file bị khóa, đợi một chút rồi thử lại
+                        System.Threading.Thread.Sleep(100); // Đợi 100ms
+                        File.Delete(duongDanMoi);
+                    }
+                }
+
+                // Sao chép file bằng stream để tránh khóa
+                using (var sourceStream = new FileStream(filePathGoc, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var destStream = new FileStream(duongDanMoi, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    sourceStream.CopyTo(destStream);
+                }
+
+                // Cập nhật đường dẫn ảnh vào DAL
+                bool result = nhanVienDAL.CapNhatHinhAnh(maNV, duongDanMoi);
+                if (result)
+                {
+                    return duongDanMoi;
                 }
                 else
                 {
+                    // Nếu DAL cập nhật thất bại, xóa file vừa tạo để tránh rác
+                    if (File.Exists(duongDanMoi))
+                    {
+                        File.Delete(duongDanMoi);
+                    }
                     return string.Empty;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi lưu ảnh: {ex.Message}");
-                return string.Empty;
+                throw new Exception($"Lỗi khi lưu ảnh: {ex.Message}");
             }
         }
 

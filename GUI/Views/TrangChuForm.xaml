@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="655.25" Width="698">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
         <Style x:Key="CustomButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#6279B1"/>
             <Setter Property="Cursor" Value="Hand"/>

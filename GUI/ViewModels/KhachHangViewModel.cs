@@ -37,12 +37,21 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string? tuKhoaTimKiem;
 
+        [ObservableProperty]
+        private bool quyen;
 
-        public KhachHangViewModel() 
+        public KhachHangViewModel(bool Quyen)
         {
-           
+            this.quyen = Quyen;
             Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
         }
+
+
+       
+
+
+
+       
 
 
         [RelayCommand]

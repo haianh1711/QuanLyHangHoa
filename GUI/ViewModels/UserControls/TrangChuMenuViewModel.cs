@@ -16,6 +16,11 @@ namespace GUI.ViewModels.UserControls
         private MainViewModel mainViewModel = mainViewModel;
 
         [ObservableProperty]
+        private bool quyen = mainViewModel.TaiKhoan.Quyen.ToLower() == "admin";
+
+        
+
+        [ObservableProperty]
         private Visibility backButtonVisibility = Visibility.Collapsed;
         [RelayCommand]
         private void GoBack()
@@ -34,7 +39,8 @@ namespace GUI.ViewModels.UserControls
         [RelayCommand]
         private void QlKhachHang()
         {
-            MainViewModel.View = new KhachHangViewModel();
+            MainViewModel.View = new KhachHangViewModel(quyen);
+
         }
 
 

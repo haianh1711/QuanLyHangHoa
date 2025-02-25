@@ -39,10 +39,16 @@ namespace GUI.ViewModels
         private string? tuKhoaTimKiem;
 
 
+        [ObservableProperty]
+        private bool quyen;
+
+        private string hinhAnhDefault = @"pack://application:,,,/Images/ImageDefault.png";
+
         public NhanvienViewModel()
         {
             LoadDanhSachNhanVien();
             SelectedNhanVien = new();
+
         }
         [ObservableProperty]
         private ObservableCollection<string> danhSachChucVu = [];
@@ -59,6 +65,7 @@ namespace GUI.ViewModels
 
             danhSachChucVu = new ObservableCollection<string>(
                 danhSachNhanVien.Select(nv => nv.ChucVu).Distinct().ToList());
+
         }
 
 
@@ -96,7 +103,7 @@ namespace GUI.ViewModels
                     await ThongBaoVM.MessageOK("Vui lòng chọn nhân viên cần sửa");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await thongBaoVM.MessageOK(ex.ToString());
             }
@@ -129,7 +136,7 @@ namespace GUI.ViewModels
                     }
 
                 }
-        
+
             }
             catch (Exception ex)
             {
@@ -167,7 +174,65 @@ namespace GUI.ViewModels
             }
         }
 
+        [RelayCommand]
+        private async Task ThayDoiHinhAnh()
+        {
+            if (TempNhanVien == null || string.IsNullOrEmpty(TempNhanVien.MaNhanVien))
+            {
+                await ThongBaoVM.MessageOK("Vui lòng chọn hoặc nhập mã nhân viên");
+                return;
+            }
 
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "Chọn ảnh",
+                Filter = "Ảnh (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    string thuMucLuuAnh = Path.Combine(Directory.GetCurrentDirectory(), "Images", "NhanVien");
+                    string originalFilePath = openFileDialog.FileName;
+
+                    // Copy file tạm thời để tránh khóa file gốc
+                    string tempFilePath = Path.GetTempFileName();
+                    File.Copy(originalFilePath, tempFilePath, true);
+
+                    // Gửi file tạm xuống BLL
+                    string newFilePath = nhanVienBLL.LuuHinhAnh(tempFilePath, thuMucLuuAnh, TempNhanVien.MaNhanVien);
+
+                    if (!string.IsNullOrEmpty(newFilePath))
+                    {
+                        // Giải phóng ảnh cũ nếu cần
+                        if (!string.IsNullOrEmpty(TempNhanVien.HinhAnh) && TempNhanVien.HinhAnh != hinhAnhDefault)
+                        {
+                            GC.Collect();
+                            GC.WaitForPendingFinalizers();
+                        }
+
+                        TempNhanVien.HinhAnh = newFilePath;
+                        OnPropertyChanged(nameof(TempNhanVien));
+                    }
+
+                    // Xóa file tạm
+                    if (File.Exists(tempFilePath))
+                    {
+                        File.Delete(tempFilePath);
+                    }
+                }
+                catch (IOException ex)
+                {
+                    await ThongBaoVM.MessageOK($"Lỗi khi thay đổi ảnh: File bị khóa hoặc không thể truy cập. {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    await ThongBaoVM.MessageOK($"Có lỗi xảy ra: {ex.Message}");
+                }
+            }
+
+        }
     }
 }
 
