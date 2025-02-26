@@ -110,9 +110,9 @@ namespace BLL
             return ChiTietPhieuNhapDAL.XoaTatCaChiTietCuaPhieuNhap(maPhieuNhap);
         }
 
-        public decimal TinhThanhTien(ChiTietPhieuNhapDTO chiTietPhieuNhapDTO)
+        public double TinhThanhTien(ChiTietPhieuNhapDTO chiTietPhieuNhapDTO)
         {
-            return Convert.ToDecimal(chiTietPhieuNhapDTO.SoLuongNhap * chiTietPhieuNhapDTO.GiaNhap);
+            return Convert.ToDouble(chiTietPhieuNhapDTO.SoLuongNhap * chiTietPhieuNhapDTO.GiaNhap);
         }
 
         public string? TaoMaCTPNMoi()

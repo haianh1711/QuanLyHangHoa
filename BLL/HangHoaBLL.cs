@@ -16,7 +16,7 @@ namespace BLL
         private HangHoaDAL HangHoaDAL = new();
         private ChiTietPhieuNhapBLL ChiTietPhieuNhapBLL = new();
 
-        public string LuuHinhAnh(string filePathGoc, string thuMucLuu, string maSP)
+        public async Task<string> LuuHinhAnh(string filePathGoc, string thuMucLuu, string maHH)
         {
             try
             {
@@ -25,11 +25,19 @@ namespace BLL
                     Directory.CreateDirectory(thuMucLuu);
                 }
 
-                string tenFile = maSP + ".jpg";
+                // Tạo tên file mới với timestamp để tránh ghi đè
+                string fileExtension = Path.GetExtension(filePathGoc);
+                string tenFile = $"{maHH}_{DateTime.Now.Ticks}{fileExtension}";
                 string duongDanMoi = Path.Combine(thuMucLuu, tenFile);
 
-                File.Copy(filePathGoc, duongDanMoi, true);
+                // Sao chép file bằng stream bất đồng bộ
+                using (var sourceStream = new FileStream(filePathGoc, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var destStream = new FileStream(duongDanMoi, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await sourceStream.CopyToAsync(destStream);
+                }
 
+                // Cập nhật đường dẫn ảnh vào DAL
                 return duongDanMoi;
             }
             catch (Exception ex)

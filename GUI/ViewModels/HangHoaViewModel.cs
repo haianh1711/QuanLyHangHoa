@@ -126,12 +126,10 @@ namespace GUI.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                //Gửi đường dẫn file gốc và thư mục lưu ảnh xuống BLL
-                string newFilePath = HangHoaBLL.LuuHinhAnh(openFileDialog.FileName, thuMucLuuAnh, TempHangHoa.MaHang);
+                string newFilePath = await HangHoaBLL.LuuHinhAnh(openFileDialog.FileName, thuMucLuuAnh, TempHangHoa.MaHang);
 
                 if (!string.IsNullOrEmpty(newFilePath))
                 {
-                    // Hiển thị ảnh lên giao diện
                     TempHangHoa.HinhAnh = newFilePath;
                     OnPropertyChanged(nameof(TempHangHoa));
                 }

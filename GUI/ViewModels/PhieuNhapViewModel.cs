@@ -31,7 +31,7 @@ namespace GUI.ViewModels
 
         // Tìm kiếm
         [ObservableProperty]
-        private string? maTimKiem;
+        private string? tuKhoaTimKiem;
 
         [ObservableProperty]
         private MainViewModel mainVM;
@@ -59,7 +59,7 @@ namespace GUI.ViewModels
                 PhieuNhapDTO phieuNhapDTO = new()
                 {
                     MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
-                    MaNhanVien = "NV001",
+                    MaNhanVien = MainVM.NhanVien.MaNhanVien,
                     NgayNhap = DateTime.Now.ToString(),
                     TongTien = '0',
                 };
@@ -78,11 +78,15 @@ namespace GUI.ViewModels
         }
 
         [RelayCommand]
-        private void XemChiTiet()
+        private async Task XemChiTiet()
         {
-            if (!string.IsNullOrEmpty(SelectedPhieuNhap.MaPhieuNhap))
+            if (SelectedPhieuNhap != null && !string.IsNullOrEmpty(SelectedPhieuNhap.MaPhieuNhap))
             {
                 MainVM.View = new ChiTietPhieuNhapViewModel(SelectedPhieuNhap, MainVM, this);
+            }
+            else
+            {
+                await ThongBaoVM.MessageOK("Vui lòng chọn phiếu nhập!");
             }
         }
 
@@ -102,7 +106,8 @@ namespace GUI.ViewModels
                             await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
                             LoadDanhSachPhieuNhap();
                         }
-                    }else
+                    }
+                    else
                     {
                         await ThongBaoVM.MessageOK("Vui lòng chọn phiếu nhập muốn xóa");
                     }
@@ -119,7 +124,7 @@ namespace GUI.ViewModels
         [RelayCommand]
         private async Task TimKiem()
         {
-            if (string.IsNullOrWhiteSpace(MaTimKiem))
+            if (string.IsNullOrWhiteSpace(TuKhoaTimKiem))
             {
                 await ThongBaoVM.MessageOK("Vui lòng nhập mã phiếu nhập để tìm kiếm.");
                 return;
@@ -127,10 +132,10 @@ namespace GUI.ViewModels
 
             if (phieuNhapBLL != null)
             {
-                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == MaTimKiem.ToUpper());
+                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == TuKhoaTimKiem.ToUpper());
                 if (SelectedPhieuNhap == null)
                 {
-                    await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
+                    await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + TuKhoaTimKiem.ToUpper());
                 }
 
             }

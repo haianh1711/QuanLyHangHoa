@@ -177,6 +177,6 @@
         </Grid>
 
         <!--Thông báo-->
-        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" Margin="0,13,0,-13" />
+        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
     </Grid>
 </UserControl>

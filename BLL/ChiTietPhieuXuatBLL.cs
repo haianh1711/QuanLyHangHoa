@@ -117,9 +117,9 @@ namespace BLL
             return ChiTietPhieuXuatDAL.XoaTatCaChiTietCuaPhieuXuat(maPhieuNhap);
         }
 
-        public decimal TinhThanhTien(ChiTietPhieuXuatDTO ChiTietPhieuXuatDTO)
+        public double TinhThanhTien(ChiTietPhieuXuatDTO ChiTietPhieuXuatDTO)
         {
-            return Convert.ToDecimal(ChiTietPhieuXuatDTO.SoLuongXuat * ChiTietPhieuXuatDTO.GiaXuat);
+            return Convert.ToDouble(ChiTietPhieuXuatDTO.SoLuongXuat * ChiTietPhieuXuatDTO.GiaXuat);
         }
 
         public string? TaoMaCTPXMoi()

@@ -114,8 +114,8 @@ namespace DAL
                         MaHang = row["MaHang"].ToString(),
                         TenHang = row["TenHang"].ToString(),
                         SoLuongXuat = (int)row["SoLuongXuat"],
-                        GiaXuat = Convert.ToDecimal(row["GiaXuat"]),
-                        ThanhTien = Convert.ToDecimal(row["ThanhTien"])
+                        GiaXuat = Convert.ToDouble(row["GiaXuat"]),
+                        ThanhTien = Convert.ToDouble(row["ThanhTien"])
                     };
                     list.Add(thongke);
                 }
@@ -180,9 +180,9 @@ namespace DAL
                         MaPhieuXuat = row["MaPhieuXuat"].ToString(),
                         MaHang = row["MaHang"].ToString(),
                         TenHang = row["TenHang"].ToString(),
-                        GiaXuat = (decimal)row["GiaXuat"],
+                        GiaXuat = (double)row["GiaXuat"],
                         SoLuongXuat = (int)row["SoLuongXuat"],
-                        ThanhTien = (decimal)row["ThanhTien"]
+                        ThanhTien = (double)row["ThanhTien"]
                     };
                     list.Add(thongke);
                 }

@@ -68,7 +68,7 @@ namespace GUI.ViewModels
                     PhieuXuatDTO phieuXuatDTO = new()
                     {
                         MaPhieuXuat = phieuXuatBLL.TaoMaPXMoi(),
-                        MaNhanVien = "NV001",
+                        MaNhanVien = MainVM.NhanVien.MaNhanVien,
                         NgayXuat = DateTime.Now.ToString(),
                         MaKhachHang = SelectedPhieuXuat.MaKhachHang,
                         TongTien = '0',
