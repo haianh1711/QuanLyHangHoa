@@ -7,11 +7,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DTO;
-using CommunityToolkit.Mvvm.Input;
-using System.Windows;
-using System.Windows.Input;
 using BLL;
 using DAL;
+using GUI.Views;
+using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
+using System.Windows;
 using GUI.Views.UserControls;
 using GUI.ViewModels.UserControls;
 using System.Text.RegularExpressions;
@@ -21,7 +22,7 @@ namespace GUI.ViewModels
 {
     partial class KhachHangViewModel : ObservableObject
     {
-       private KhachHangBLL khachHangBLL = new KhachHangBLL();
+        private KhachHangBLL khachHangBLL = new KhachHangBLL();
 
         [ObservableProperty]
         private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
@@ -32,13 +33,31 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private KhachHangDTO selectedKhachHang;
 
+        [ObservableProperty]
+        private bool quyen;
+
+        [ObservableProperty]
+        private KhachHangDTO? tempKhachHang;
 
         // Tìm kiếm
         [ObservableProperty]
         private string? tuKhoaTimKiem;
 
-        [ObservableProperty]
-        private bool quyen;
+        partial void OnSelectedKhachHangChanged(KhachHangDTO? value)
+        {
+            if (value != null)
+            {
+                TempKhachHang = new KhachHangDTO()
+                {
+                    MaKhachHang = value.MaKhachHang,
+                    TenKhachHang = value.TenKhachHang,
+                    SoDienThoai = value.SoDienThoai,
+                    DiaChi = value.DiaChi,
+                    Gmail = value.Gmail
+
+                };
+            }
+        }
 
         public KhachHangViewModel(bool Quyen)
         {
@@ -46,43 +65,40 @@ namespace GUI.ViewModels
             Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
         }
 
-
-       
-
-
-
-       
-
+        private void LoadDanhSachKhachHang()
+        {
+            Data.Clear();
+            Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
+        }
 
         [RelayCommand]
         public async Task SuaKhachHang()
         {
-            if (SelectedKhachHang == null)
-            {
-                await ThongBaoVM.MessageOK("Vui lòng chọn một khách hàng trước khi sửa.");
-                return;
-            }
-
-
-            if (!Regex.IsMatch(SelectedKhachHang.SoDienThoai, @"^\d{10}$"))
-            {
-                await ThongBaoVM.MessageOK("Số điện thoại không hợp lệ! Vui lòng nhập 10 số.");
-
-                // ✅ Khi nhấn OK, reset lại dữ liệu từ database
-                Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
-                return;
-            }
-
             try
             {
+                if (SelectedKhachHang == null || tempKhachHang == null)
+                {
+                    await ThongBaoVM.MessageOK("Vui lòng chọn một khách hàng trước khi sửa.");
+                    return;
+                }
 
-                bool daSua = khachHangBLL.SuaKhachHang(SelectedKhachHang);
+                if (string.IsNullOrEmpty(tempKhachHang.MaKhachHang) || string.IsNullOrEmpty(tempKhachHang.TenKhachHang))
+                {
+                    await ThongBaoVM.MessageOK("Vui lòng nhập đầy đủ thông tin khách hàng");
+                    return;
+                }
 
+                if (!Regex.IsMatch(tempKhachHang.SoDienThoai ?? "", @"^\d{10}$"))
+                {
+                    await ThongBaoVM.MessageOK("Số điện thoại không hợp lệ! Vui lòng nhập 10 số.");
+                    return;
+                }
+
+                bool daSua = khachHangBLL.SuaKhachHang(tempKhachHang);
                 if (daSua)
                 {
-
-                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
                     await ThongBaoVM.MessageOK("Sửa khách hàng thành công");
+                    LoadDanhSachKhachHang();
                 }
                 else
                 {
@@ -91,9 +107,8 @@ namespace GUI.ViewModels
             }
             catch (Exception ex)
             {
-                await ThongBaoVM.MessageOK("Đã xảy ra lỗi khi sửa khách hàng. Vui lòng thử lại.");
+                await ThongBaoVM.MessageOK(ex.ToString());
             }
-
         }
 
         [RelayCommand]
@@ -118,7 +133,7 @@ namespace GUI.ViewModels
                         if (result)
                         {
                             await ThongBaoVM.MessageOK("Xóa khách hàng thành công");
-                            Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
+                            LoadDanhSachKhachHang();
                         }
                     }
 
@@ -143,9 +158,9 @@ namespace GUI.ViewModels
             {
                 bool isOK = await ThongBaoVM.MessageOK("Không tìm thấy khách hàng với từ khóa: " + TuKhoaTimKiem);
 
-                if (isOK)  // Khi nhấn OK, tải lại toàn bộ danh sách khách hàng
+                if (isOK)
                 {
-                    Data = new ObservableCollection<KhachHangDTO>(khachHangBLL.HienThiDanhSachKH());
+                    LoadDanhSachKhachHang();
                 }
             }
 
@@ -155,5 +170,7 @@ namespace GUI.ViewModels
         }
 
     }
-    }
 
+
+
+}
