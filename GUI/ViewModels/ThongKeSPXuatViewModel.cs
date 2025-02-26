@@ -1,45 +1,66 @@
-﻿
-using BLL;
-using CommunityToolkit.Mvvm.ComponentModel;
-using DTO;
-using GUI.ViewModels.UserControls;
-using GUI.Views.UserControls;
-using LiveChartsCore;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.Kernel;
-using LiveChartsCore.Kernel.Sketches;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+
+using SkiaSharp;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.Kernel.Sketches;
+
+using DTO;
+using LiveChartsCore.Defaults;
+using BLL;
+using GUI.ViewModels.UserControls;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
 using System.Windows;
+using CommunityToolkit.Mvvm.Input;
+using DAL;
+using GUI.Views.UserControls;
 
 namespace GUI.ViewModels
 {
+    public class DataPoint
+    {
+        public double Value { get; set; }
+        public string? Label { get; set; }
+        public int? Tuan { get; set; }
+        public int? Thang { get; set; }
+        public int? Nam { get; set; }
+    }
 
     partial class ThongKeSPXuatViewModel : ObservableObject
     {
-
         [ObservableProperty]
         ThongBaoViewModel thongBaoVM = new();
 
         [ObservableProperty]
-        public ObservableCollection<string> danhSachLoc = [ "Tuần", "Tháng", "Năm" ];
+        public ObservableCollection<string> danhSachLoc = ["Tuần","Tháng", "Năm"];
 
         [ObservableProperty]
         private string luaChonLoc;
 
         [ObservableProperty]
         private string hienThiLuaChonLoc;
+
         [ObservableProperty]
-        private static ThongKeNhapBLL thongKeBLL = new();
+        private string thoiGianHienThi;
+
+        [ObservableProperty]
+        private string tuKhoaTimKiem;
+
+        private ThongKeXuatBLL thongKeBLL = new();
 
         private const int barHeight = 40;
         private const int barSpacing = 5;
 
-        
+
         // biểu đồ cột
         [ObservableProperty]
         private ISeries[] barChartSeries;
@@ -64,33 +85,56 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string thongTinNV;
 
+        [ObservableProperty]
+        private NhanVienDTO nhanVienDTO;
+
         public ThongKeSPXuatViewModel()
         {
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
             luaChonLoc = "Tuần";
-            LoadLineChartSeries(thongKeBLL.GetThongKePhieuXuatHangTuanData());
 
-            LoadBarChartSeries();
+            LoadLineChartSeries(LayDanhSachThangNam(thongKeBLL.GetThongKePhieuXuatHangTuanData()));
         }
 
-        private void LoadBarChartSeries()
+        [RelayCommand]
+        private async Task TimKiem()
         {
-            List<PhieuXuatDTO> phieuXuatDTOs = new();
-            string[] dsTenSanPham = phieuXuatDTOs.Select(phieunhap => phieunhap.MaHang ?? string.Empty).ToArray();
-            double[]  dsSoLuongXuat = phieuXuatDTOs.Select(phieunhap => (double?)phieunhap.SoLuongXuat ?? 0).ToArray();
-            if (dsSoLuongXuat.Length == 0)
+            TuKhoaTimKiem = string.IsNullOrEmpty(TuKhoaTimKiem) ? "" : TuKhoaTimKiem;
+
+            var danhSach = thongKeBLL
+                .SearchHangHoa(TuKhoaTimKiem);
+
+            if (danhSach == null || !danhSach.Any())
             {
+                await ThongBaoVM.MessageOK($"Không tìm thấy {TuKhoaTimKiem}");
+                Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
                 return;
             }
-            double maxSoLuongXuat = dsSoLuongXuat.Max();
-            double[] dsSoLuongXuatMax = dsSoLuongXuat.Select(phieunhap => maxSoLuongXuat).ToArray();
+            Data.Clear();
+            Data = new ObservableCollection<HangHoaDTO>(danhSach);
+
+
+        }
+
+        private void LoadBarChartSeries(List<PhieuXuatDTO> PhieuXuatDTOs)
+        {
+            string[] dsTenSanPham = PhieuXuatDTOs.Select(PhieuXuat => PhieuXuat.MaHang ?? string.Empty).ToArray();
+            double[] dsSoLuongNhap = PhieuXuatDTOs.Select(PhieuXuat => (double?)PhieuXuat.SoLuongXuat ?? 0).ToArray();
+
+            if (dsSoLuongNhap.Length == 0)
+            {
+                ChartHeight = 0;
+                return;
+            }
+            double maxSoLuongNhap = dsSoLuongNhap.Max();
+            double[] dsSoLuongNhapMax = dsSoLuongNhap.Select(PhieuXuat => maxSoLuongNhap).ToArray();
 
             // biểu đồ cột ngang
             BarChartSeries = [
                 new RowSeries<double>
                 {
                     IsHoverable = false, // disables the series from the tooltips 
-                    Values = dsSoLuongXuatMax,
+                    Values = dsSoLuongNhapMax,
                     Stroke = null,
                     Fill = new SolidColorPaint(new SKColor(30, 30, 30, 30)),
                     IgnoresBarPosition = true
@@ -98,7 +142,7 @@ namespace GUI.ViewModels
                 new RowSeries<double>
                 {
                     IsHoverable = true,
-                    Values = dsSoLuongXuat,
+                    Values = dsSoLuongNhap,
                     Stroke = null,
                     Fill = new SolidColorPaint(SKColors.CornflowerBlue),
                     IgnoresBarPosition = true,
@@ -121,14 +165,102 @@ namespace GUI.ViewModels
             UpdateChartHeight();
         }
 
+        private List<ThongKePhieuXuatDTO> LayDanhSachNam(List<ThongKePhieuXuatDTO> danhSach)
+        {
+            int minNam = danhSach.Min(tk => tk.Nam ?? 0);
+            int maxNam = danhSach.Max(tk => tk.Nam ?? 0);
+
+            List<ThongKePhieuXuatDTO> danhSachNam = Enumerable.Range(minNam, maxNam - minNam + 1)
+                                                    .Select(nam => new ThongKePhieuXuatDTO()
+                                                    {
+                                                        Nam = nam,
+                                                        Thang = 0,
+                                                        TongSoLuongXuat = danhSach.FirstOrDefault(tk => tk.Nam == nam)?.TongSoLuongXuat ?? 0,
+                                                        HienThi = $"{nam}"
+                                                    })
+                                                    .ToList();
+
+            return danhSachNam;
+        }
+
+        private List<ThongKePhieuXuatDTO> LayDanhSachThangNam(List<ThongKePhieuXuatDTO> danhSach)
+        {
+            if (danhSach == null || danhSach.Count == 0)
+                return new List<ThongKePhieuXuatDTO>();
+
+            int minNam = danhSach.Min(tk => tk.Nam ?? int.MaxValue);
+            int maxNam = danhSach.Max(tk => tk.Nam ?? int.MinValue);
+
+            if (minNam == int.MaxValue || maxNam == int.MinValue)
+                return new List<ThongKePhieuXuatDTO>();
+
+            var danhSachThangNam = new List<ThongKePhieuXuatDTO>();
+
+            // Lặp qua từng năm
+            for (int nam = minNam; nam <= maxNam; nam++)
+            {
+                for (int thang = 1; thang <= 12; thang++)
+                {
+                    var data = danhSach.FirstOrDefault(tk => tk.Nam == nam && tk.Thang == thang);
+
+                    danhSachThangNam.Add(new ThongKePhieuXuatDTO
+                    {
+                        Nam = nam,
+                        Thang = thang,
+                        TongSoLuongXuat = data?.TongSoLuongXuat ?? 0, // Nếu không có, đặt bằng 0
+                        HienThi = $"{thang:D2}/{nam}"
+                    });
+                }
+            }
+
+            return danhSachThangNam;
+        }
+
+        private List<ThongKePhieuXuatDTO> LayDanhSachTuanNam(List<ThongKePhieuXuatDTO> danhSach)
+        {
+            if (danhSach == null || danhSach.Count == 0)
+                return new List<ThongKePhieuXuatDTO>();
+
+            int minNam = danhSach.Min(tk => tk.Nam ?? int.MaxValue);
+            int maxNam = danhSach.Max(tk => tk.Nam ?? int.MinValue);
+
+            if (minNam == int.MaxValue || maxNam == int.MinValue)
+                return new List<ThongKePhieuXuatDTO>();
+
+            var danhSachTuanNam = new List<ThongKePhieuXuatDTO>();
+
+            // Lặp qua từng năm
+            for (int nam = minNam; nam <= maxNam; nam++)
+            {
+                for (int tuan = 1; tuan <= 52; tuan++) // 52 tuần/năm
+                {
+                    var data = danhSach.FirstOrDefault(tk => tk.Nam == nam && tk.Tuan == tuan);
+
+                    danhSachTuanNam.Add(new ThongKePhieuXuatDTO
+                    {
+                        Nam = nam,
+                        Tuan = tuan,
+                        Thang = data?.Thang ?? 1, // Gán tháng mặc định nếu không có (có thể bỏ nếu không cần)
+                        TongSoLuongXuat = data?.TongSoLuongXuat ?? 0, // Nếu không có, đặt bằng 0
+                        HienThi = $"Tuần {tuan}/{nam}"
+                    });
+                }
+            }
+
+            return danhSachTuanNam;
+        }
+
 
         private void LoadLineChartSeries(List<ThongKePhieuXuatDTO> thongKePhieus)
         {
-            DataPoint[] dataPoints = thongKePhieus.Select(tk => new DataPoint() {
+            DataPoint[] dataPoints = thongKePhieus.Select(tk => new DataPoint()
+            {
                 Value = tk.TongSoLuongXuat ?? 0,
-                Label = tk.ThangNam ?? ""
-            } ).ToArray();
-            string[] dsThoiGian = thongKePhieus.Select(tk => tk.ThangNam ?? "").ToArray();
+                Label = tk.HienThi ?? "",
+                Nam = tk.Nam,
+                Thang = tk.Thang,
+            }).ToArray();
+            string[] dsThoiGian = thongKePhieus.Select(tk => tk.HienThi ?? "").ToArray();
 
             // biểu đồ đường
             var lineSeries = new LineSeries<DataPoint>
@@ -160,7 +292,33 @@ namespace GUI.ViewModels
             string label = point.Model.Label;  // Lấy Label đúng cách
             double value = point.Model.Value;  // Lấy giá trị Y
 
-            MessageBox.Show($"Label: {label}\nValue: {value}");
+            List<PhieuXuatDTO> PhieuXuatDTOs;
+
+            switch (LuaChonLoc)
+            {
+                case "Tuần":
+                    PhieuXuatDTOs = thongKeBLL.GetThongKePhieuXuatHangHoaTheoTuanData(point.Model.Tuan.ToString(), point.Model.Thang.ToString(), point.Model.Nam.ToString());
+                    ThoiGianHienThi = $"Sản phẩm xuất trong tuần {point.Model.Tuan.ToString()}/{point.Model.Nam.ToString()}";
+                    LoadBarChartSeries(PhieuXuatDTOs);
+
+                    break;
+
+                case "Tháng":
+                    PhieuXuatDTOs = thongKeBLL.GetThongKePhieuXuatHangHoaTheoThangData(point.Model.Thang.ToString(), point.Model.Nam.ToString());
+                    ThoiGianHienThi = $"Sản phẩm xuất trong tháng {point.Model.Thang.ToString()}/{point.Model.Nam.ToString()}";
+                    LoadBarChartSeries(PhieuXuatDTOs);
+
+                    break;
+                case "Năm":
+                    PhieuXuatDTOs = thongKeBLL.GetThongKePhieuXuatHangHoaTheoNamData(point.Model.Nam.ToString());
+                    ThoiGianHienThi = $"Sản phẩm xuất trong năm {point.Model.Thang.ToString()}/{point.Model.Nam.ToString()}";
+                    LoadBarChartSeries(PhieuXuatDTOs);
+                    break;
+                default:
+                    LuaChonLoc = "Tháng";
+                    break;
+            }
+
         }
 
         partial void OnLuaChonLocChanged(string value)
@@ -168,20 +326,20 @@ namespace GUI.ViewModels
             List<ThongKePhieuXuatDTO> thongKePhieus = new();
             switch (value)
             {
-                case "Tuần":
-                    thongKePhieus = thongKeBLL.GetThongKePhieuXuatHangTuanData();
-
+                case "Tuần  ":
+                    thongKePhieus = thongKeBLL.GetThongKePhieuXuatHangThangData();
+                    thongKePhieus = LayDanhSachTuanNam(thongKePhieus);
                     break;
                 case "Tháng":
                     thongKePhieus = thongKeBLL.GetThongKePhieuXuatHangThangData();
-
+                    thongKePhieus = LayDanhSachThangNam(thongKePhieus);
                     break;
                 case "Năm":
                     thongKePhieus = thongKeBLL.GetThongKePhieuXuatHangNamData();
-
+                    thongKePhieus = LayDanhSachNam(thongKePhieus);
                     break;
                 default:
-                    LuaChonLoc = "Tuần";
+                    LuaChonLoc = "Tháng";
                     break;
             }
             HienThiLuaChonLoc = "Lọc theo " + LuaChonLoc;
@@ -193,6 +351,7 @@ namespace GUI.ViewModels
             if (BarChartSeries != null && BarChartSeries[0].Values != null)
             {
                 ChartHeight = (barHeight + barSpacing) * BarChartSeries[0].Values.Cast<double>().Count();
+                ChartHeight = ChartHeight > 166 ? ChartHeight : 166;
             }
         }
 

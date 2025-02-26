@@ -10,7 +10,7 @@ using DTO;
 
 namespace BLL
 {
-    class ThongKeXuatBLL
+    public class ThongKeXuatBLL
     {
         private ThongKeXuatDAL thongKeXuatDAL = new ThongKeXuatDAL();
         public List<HangHoaDTO> GetHangHoaThongKe()

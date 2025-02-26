@@ -203,7 +203,7 @@ namespace DAL
                             SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat
                             from PhieuXuat px left join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
-                            Group By DATEPART(YEAR, px.NgayNhap), (MONTH,px.NgayNhap) AS Thang,, DATEPART(WEEK, px.NgayNhap)
+                            Group By DATEPART(YEAR, px.NgayNhap), (MONTH,px.NgayNhap) AS Thang, DATEPART(WEEK, px.NgayNhap)
                             Order By Nam ASC , Thang ASC ,Tuan ASC";
             try
             {
