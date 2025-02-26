@@ -200,7 +200,7 @@ namespace DAL
             string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
                             (MONTH,px.NgayNhap) AS Thang,
                             DATEPART(WEEK,px.NgayNhap) AS Tuan, 
-                            SUM(ct.SoLuongXuat) AS TongSoLuongXuat
+                            SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat
                             from PhieuXuat px left join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
                             Group By DATEPART(YEAR, px.NgayNhap), (MONTH,px.NgayNhap) AS Thang,, DATEPART(WEEK, px.NgayNhap)

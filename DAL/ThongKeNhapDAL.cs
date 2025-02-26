@@ -204,8 +204,8 @@ namespace DAL
             List<ThongKePhieuNhapDTO> data = new List<ThongKePhieuNhapDTO>();
             string query = @"Select DATEPART(YEAR,pn.NgayNhap) AS Nam,
                             DATEPART(MONTH,pn.NgayNhap) AS Thang,
-                            DATEPART(WEEK,pn.NgayNhap) AS Tuan, 
-                            SUM(ct.SoLuongNhap) AS TongSoLuongNhap
+                            DATEPART(WEEK,pn.NgayNhap) AS Tuan,
+                            SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap
                             from PhieuNhap pn left join ChiTietPhieuNhap ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
                             Group By DATEPART(YEAR, pn.NgayNhap),DATEPART(MONTH, pn.NgayNhap) , DATEPART(WEEK, pn.NgayNhap)
