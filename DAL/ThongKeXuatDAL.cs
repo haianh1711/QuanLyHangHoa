@@ -107,7 +107,7 @@ namespace DAL
             List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat from PhieuXuat px inner join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
-                             Where @Tuan = DATEPART(WEEK,px.NgayNhap) and DATEPART(MONTH, px.NgayNhap) and @Nam = DATEPART(YEAR, px.NgayNhap)                         
+                             Where @Tuan = DATEPART(WEEK,px.NgayXuat) and DATEPART(MONTH, px.NgayXuat) and @Nam = DATEPART(YEAR, px.NgayXuat)                         
                              Group By MaHang";
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -138,7 +138,7 @@ namespace DAL
             List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat from PhieuXuat px inner join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
-                             Where @Thang = DATEPART(MONTH,px.NgayNhap) and @Nam = DATEPART(YEAR, px.NgayNhap)
+                             Where @Thang = DATEPART(MONTH,px.NgayXuat) and @Nam = DATEPART(YEAR, px.NgayXuat)
                              Group By MaHang";
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -168,7 +168,7 @@ namespace DAL
             List<PhieuXuatDTO> data = new List<PhieuXuatDTO>();
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat from PhieuXuat px inner join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
-                            Where @Nam = DATEPART(YEAR,px.NgayNhap)
+                            Where @Nam = DATEPART(YEAR,px.NgayXuat)
                             Group By MaHang";
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -197,13 +197,13 @@ namespace DAL
         public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangTuanData()
         {
             List<ThongKePhieuXuatDTO> data = new List<ThongKePhieuXuatDTO>();
-            string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
-                            DATEPART(MONTH,px.NgayNhap) AS Thang,
-                            DATEPART(WEEK,px.NgayNhap) AS Tuan, 
+            string query = @"Select DATEPART(YEAR,px.NgayXuat) AS Nam,
+                            DATEPART(MONTH,px.NgayXuat) AS Thang,
+                            DATEPART(WEEK,px.NgayXuat) AS Tuan, 
                             SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat
                             from PhieuXuat px left join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
-                            Group By DATEPART(YEAR, px.NgayNhap), DATEPART(MONTH,px.NgayNhap) AS Thang, DATEPART(WEEK, px.NgayNhap)
+                            Group By DATEPART(YEAR, px.NgayXuat), DATEPART(MONTH,px.NgayXuat) AS Thang, DATEPART(WEEK, px.NgayXuat)
                             Order By Nam ASC , Thang ASC ,Tuan ASC";
             try
             {
@@ -233,12 +233,12 @@ namespace DAL
         public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangThangData()
         {
             List<ThongKePhieuXuatDTO> data = new List<ThongKePhieuXuatDTO>();
-            string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
-                            DATEPART(MONTH,px.NgayNhap) AS Thang, 
+            string query = @"Select DATEPART(YEAR,px.NgayXuat) AS Nam,
+                            DATEPART(MONTH,px.NgayXuat) AS Thang, 
                             SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat
                             from PhieuXuat px left join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
-                            Group By DATEPART(YEAR, px.NgayNhap), DATEPART(MONTH, px.NgayNhap)
+                            Group By DATEPART(YEAR, px.NgayXuat), DATEPART(MONTH, px.NgayXuat)
                             Order By Nam ASC , Thang ASC";
             try
             {
@@ -266,11 +266,11 @@ namespace DAL
         public List<ThongKePhieuXuatDTO> GetThongKePhieuXuatHangNamData()
         {
             List<ThongKePhieuXuatDTO> data = new List<ThongKePhieuXuatDTO>();
-            string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
+            string query = @"Select DATEPART(YEAR,px.NgayXuat) AS Nam,
                             SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat
                             from PhieuXuat px left join ChiTietPhieuXuat ct
                             On px.MaPhieuXuat = ct.MaPhieuXuat
-                            Group By DATEPART(YEAR, px.NgayNhap)
+                            Group By DATEPART(YEAR, px.NgayXuat)
                             Order By Nam ASC";
             try
             {
