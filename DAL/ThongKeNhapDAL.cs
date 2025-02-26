@@ -60,7 +60,7 @@ namespace DAL
                              Where MaHang = @Info";
             try
             {
-                var dataTable = dbHelper.ExecuteQuery(query);
+                var dataTable = dbHelper.ExecuteQuery(query, Parameters);
                 foreach (DataRow row in dataTable.Rows)
                 {
                     HangHoaDTO thongKeNhap = new HangHoaDTO
@@ -87,7 +87,7 @@ namespace DAL
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap from PhieuNhap pn inner join ChiTietPhieuXuat ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
-                            Group By MaHang";
+                            Group By ct.MaHang";
             try
             {
                 var reader = dbHelper.ExecuteReader(query);
@@ -112,7 +112,7 @@ namespace DAL
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap from PhieuNhap pn inner join ChiTietPhieuNhap ct
                              On pn.MaPhieuNhap = ct.MaPhieuNhap
                              Where @Tuan = DATEPART(WEEK,pn.NgayNhap) and @Thang = DATEPART(MONTH, pn.NgayNhap) and @nam = DATEPART(YEAR, pn.NgayNhap)
-                             Group By MaHang";
+                             Group By ct.MaHang";
             SqlParameter[] parameter = new SqlParameter[]
             {
                 new SqlParameter ("@Tuan", tuan),
@@ -144,7 +144,7 @@ namespace DAL
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn inner join ChiTietPhieuNhap ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
                             Where @Thang = DATEPART(MONTH, pn.NgayNhap) and @Nam = DATEPART(YEAR, pn.NgayNhap)
-                            Group By MaHang";
+                            Group By ct.MaHang";
             SqlParameter[] Parameter = new SqlParameter[]
             {
                 new SqlParameter("@Thang", thang),
@@ -174,7 +174,7 @@ namespace DAL
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn inner join ChiTietPhieuNhap ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
                             Where @Nam = DATEPART(YEAR, pn.NgayNhap)
-                            Group By MaHang";
+                            Group By ct.MaHang";
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@Nam", nam)
