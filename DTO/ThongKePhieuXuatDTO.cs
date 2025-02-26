@@ -9,7 +9,10 @@ namespace DTO
 {
     public class ThongKePhieuXuatDTO
     {
-       public string ? ThangNam {  get; set; }
-       public int ? TongSoLuongXuat {  get; set; }
+        public string? HienThi { get; set; } // tháng 3/202
+        public int? Tuan { get; set; }
+        public int? Thang { get; set; }
+        public int? Nam { get; set; }
+        public int ? TongSoLuongXuat {  get; set; }
     }
 }

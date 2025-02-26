@@ -34,7 +34,7 @@ namespace GUI.ViewModels
         [ObservableProperty]
         private string hienThiLuaChonLoc;
         [ObservableProperty]
-        private static ThongKeBLL thongKeBLL = new();
+        private static ThongKeNhapBLL thongKeBLL = new();
 
         private const int barHeight = 40;
         private const int barSpacing = 5;
