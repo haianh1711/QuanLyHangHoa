@@ -54,9 +54,8 @@ namespace DAL
             {
                 new SqlParameter("@Info", Info)
             };
-            string query = @"Select top 1 sp.MaHang, sp.TenHang, pn.SoLuong, sp.MoTa 
-                             From PhieuNhap pn inner join HangHoa sp 
-                             On pn.MaHang = sp.MaHang
+            string query = @"Select top 1 sp.MaHang, sp.TenHang, SoLuong, sp.MoTa 
+                             From HangHoa
                              Where MaHang = @Info";
             try
             {
