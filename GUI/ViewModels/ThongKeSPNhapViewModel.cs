@@ -82,7 +82,8 @@ namespace GUI.ViewModels
         public ThongKeSPNhapViewModel()
         {
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
-            luaChonLoc = "Tuần";
+            LuaChonLoc = "Tuần";
+            OnPropertyChanged(nameof(LuaChonLoc));
 
             LoadLineChartSeries(LayDanhSachThangNam(thongKeBLL.GetThongKePhieuNhapHangTuanData()));
         }

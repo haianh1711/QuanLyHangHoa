@@ -91,9 +91,8 @@ namespace GUI.ViewModels
         public ThongKeSPXuatViewModel()
         {
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
-            luaChonLoc = "Tuần";
+            luaChonLoc = "Lọc the";
 
-            LoadLineChartSeries(LayDanhSachThangNam(thongKeBLL.GetThongKePhieuXuatHangTuanData()));
         }
 
         [RelayCommand]
@@ -299,9 +298,6 @@ namespace GUI.ViewModels
 
         private void OnPointerDown(IChartView chart, ChartPoint<DataPoint, CircleGeometry, LabelGeometry> point)
         {
-            string label = point.Model.Label;  // Lấy Label đúng cách
-            double value = point.Model.Value;  // Lấy giá trị Y
-
             List<PhieuXuatDTO> PhieuXuatDTOs;
 
             switch (LuaChonLoc)
@@ -325,7 +321,6 @@ namespace GUI.ViewModels
                     LoadBarChartSeries(PhieuXuatDTOs);
                     break;
                 default:
-                    LuaChonLoc = "Tháng";
                     break;
             }
 
@@ -336,8 +331,8 @@ namespace GUI.ViewModels
             List<ThongKePhieuXuatDTO> thongKePhieus = new();
             switch (value)
             {
-                case "Tuần  ":
-                    thongKePhieus = thongKeBLL.GetThongKePhieuXuatHangThangData();
+                case "Tuần":
+                    thongKePhieus = thongKeBLL.GetThongKePhieuXuatHangTuanData();
                     thongKePhieus = LayDanhSachTuanNam(thongKePhieus);
                     break;
                 case "Tháng":
@@ -349,7 +344,6 @@ namespace GUI.ViewModels
                     thongKePhieus = LayDanhSachNam(thongKePhieus);
                     break;
                 default:
-                    LuaChonLoc = "Tháng";
                     break;
             }
             HienThiLuaChonLoc = "Lọc theo " + LuaChonLoc;
