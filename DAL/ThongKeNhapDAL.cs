@@ -54,7 +54,7 @@ namespace DAL
             {
                 new SqlParameter("@Info", Info)
             };
-            string query = @"Select top 1 sp.MaHang, sp.TenHang, SoLuong, sp.MoTa 
+            string query = @"Select top 1 MaHang, TenHang, SoLuong, MoTa 
                              From HangHoa
                              Where MaHang = @Info";
             try
@@ -110,7 +110,9 @@ namespace DAL
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap from PhieuNhap pn inner join ChiTietPhieuNhap ct
                              On pn.MaPhieuNhap = ct.MaPhieuNhap
-                             Where @Tuan = DATEPART(WEEK,pn.NgayNhap) and @Thang = DATEPART(MONTH, pn.NgayNhap) and @nam = DATEPART(YEAR, pn.NgayNhap)
+                            WHERE DATEPART(WEEK, pn.NgayNhap) = @Tuan 
+                            AND DATEPART(MONTH, pn.NgayNhap) = @Thang 
+                            AND DATEPART(YEAR, pn.NgayNhap) = @Nam
                              Group By ct.MaHang";
             SqlParameter[] parameter = new SqlParameter[]
             {
@@ -142,7 +144,8 @@ namespace DAL
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn inner join ChiTietPhieuNhap ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
-                            Where @Thang = DATEPART(MONTH, pn.NgayNhap) and @Nam = DATEPART(YEAR, pn.NgayNhap)
+                            Where DATEPART(MONTH, pn.NgayNhap) = @Thang 
+                            AND DATEPART(YEAR, pn.NgayNhap) = @Nam
                             Group By ct.MaHang";
             SqlParameter[] Parameter = new SqlParameter[]
             {
@@ -172,7 +175,7 @@ namespace DAL
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
             string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn inner join ChiTietPhieuNhap ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
-                            Where @Nam = DATEPART(YEAR, pn.NgayNhap)
+                            Where DATEPART(YEAR, pn.NgayNhap) = @Nam
                             Group By ct.MaHang";
             SqlParameter[] parameters = new SqlParameter[]
             {
