@@ -74,18 +74,63 @@ namespace DAL
             }
         }
 
+        public PhieuXuatDTO TimKiemPX(string maPX)
+        {
+            try
+            {
+                string query = @"SELECT MaPhieuXuat, MaNhanVien, NgayXuat, MaKhachHang
+                         FROM PhieuXuat
+                         WHERE MaPhieuXuat = @MaPhieuXuat;";
+
+                SqlParameter[] parameters =
+                [
+                    new SqlParameter("@MaPhieuXuat", maPX) 
+                ];
+
+                DataTable dataTable = dbHelper.ExecuteQuery(query, parameters);
+
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    return new PhieuXuatDTO
+                    {
+                        MaPhieuXuat = row["MaPhieuXuat"].ToString(),
+                        MaNhanVien = row["MaNhanVien"].ToString(),
+                        NgayXuat = Convert.ToString(row["NgayXuat"]),
+                        MaKhachHang = row["MaKhachHang"].ToString()
+                    };
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi tìm kiếm phiếu xuat: {ex.Message}", ex);
+            }
+        }
+
         public bool XoaPhieuXuat(string maPhieuXuat)
         {
             try
             {
-                string query = @"DELETE FROM PhieuXuat WHERE MaPhieuXuat = @MaPhieuXuat";
+                string query1 = @"DELETE FROM ChiTietPhieuXuat WHERE MaPhieuXuat = @MaPhieuXuat";
 
-                SqlParameter[] parameters =
+                SqlParameter[] parameters1 = new SqlParameter[]
+                {
+                    new SqlParameter("@MaPhieuXuat", maPhieuXuat)
+                };
+
+                dbHelper.ExecuteNonQuery(query1, parameters1);
+
+                string query2 = @"DELETE FROM PhieuXuat WHERE MaPhieuXuat = @MaPhieuXuat";
+
+                SqlParameter[] parameters2 =
                 [
                     new SqlParameter("@MaPhieuXuat", maPhieuXuat),
                 ];
 
-                var result = dbHelper.ExecuteNonQuery(query, parameters);
+                var result = dbHelper.ExecuteNonQuery(query2, parameters2);
                 return result > 0;
             }
             catch (Exception ex)

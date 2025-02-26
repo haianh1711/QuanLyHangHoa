@@ -48,6 +48,41 @@ namespace DAL
             }
         }
 
+        public PhieuNhapDTO TimKiemPN(string maPN)
+        {
+            try
+            {
+                string query = @"SELECT MaPhieuNhap, MaNhanVien, NgayNhap
+                         FROM PhieuNhap
+                         WHERE MaPhieuNhap = @MaPhieuNhap;";
+
+                SqlParameter[] parameters =
+                [
+                    new SqlParameter("@MaPhieuNhap", maPN)
+                ];
+
+                DataTable dataTable = dbHelper.ExecuteQuery(query, parameters);
+
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    return new PhieuNhapDTO
+                    {
+                        MaPhieuNhap = row["MaPhieuNhap"].ToString(),
+                        MaNhanVien = row["MaNhanVien"].ToString(),
+                        NgayNhap = Convert.ToString(row["NgayNhap"]),
+                    };
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi tìm kiếm phiếu nhap: {ex.Message}", ex);
+            }
+        }
+
         public bool ThemPhieuNhap(PhieuNhapDTO phieuNhapDTO)
         {
             try
@@ -75,14 +110,23 @@ namespace DAL
         {
             try
             {
-                string query = @"DELETE FROM PhieuNhap WHERE MaPhieuNhap = @MaPhieuNhap";
+                string query1 = @"DELETE FROM ChiTietPhieuNhap WHERE MaPhieuNhap = @MaPhieuNhap";
 
-                SqlParameter[] parameters =
+                SqlParameter[] parameters1 = new SqlParameter[]
+                {
+                    new SqlParameter("@MaPhieuNhap", maPhieuNhap)
+                };
+
+                dbHelper.ExecuteNonQuery(query1, parameters1);
+
+                string query2 = @"DELETE FROM PhieuNhap WHERE MaPhieuNhap = @MaPhieuNhap";
+
+                SqlParameter[] parameters2 =
                 [
                     new SqlParameter("@MaPhieuNhap", maPhieuNhap),
                 ];
 
-                var result = dbHelper.ExecuteNonQuery(query, parameters);
+                var result = dbHelper.ExecuteNonQuery(query2, parameters2);
                 return result > 0;
             }
             catch (Exception ex)

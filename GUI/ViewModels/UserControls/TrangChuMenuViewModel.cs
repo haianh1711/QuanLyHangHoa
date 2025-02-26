@@ -16,8 +16,12 @@ namespace GUI.ViewModels.UserControls
         private MainViewModel mainViewModel = mainViewModel;
 
         [ObservableProperty]
-        private Visibility backButtonVisibility = Visibility.Collapsed;
+        private bool quyen = mainViewModel.TaiKhoan.Quyen.ToLower() == "admin";
 
+        
+
+        [ObservableProperty]
+        private Visibility backButtonVisibility = Visibility.Collapsed;
         [RelayCommand]
         private void GoBack()
         {
@@ -29,13 +33,14 @@ namespace GUI.ViewModels.UserControls
         [RelayCommand]
         private void QlNhanVien()
         {
-            MainViewModel.View = new NhanvienViewModel();
+            MainViewModel.View = new NhanvienViewModel(mainViewModel);
         }
 
         [RelayCommand]
         private void QlKhachHang()
         {
-            MainViewModel.View = new KhachHangViewModel();
+            MainViewModel.View = new KhachHangViewModel(quyen);
+
         }
 
 
@@ -81,5 +86,17 @@ namespace GUI.ViewModels.UserControls
 
             }
         }
+
+        private bool _isThongKeSelected;
+        public bool IsThongKeSelected
+        {
+            get => _isThongKeSelected;
+            set
+            {
+                _isThongKeSelected = value;
+                OnPropertyChanged(nameof(IsThongKeSelected));
+            }
+        }
+
     }
 }

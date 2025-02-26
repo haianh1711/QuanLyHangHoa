@@ -171,7 +171,7 @@
             <!--Trở về phiếu nhập-->
             <TextBlock Grid.Row="3" HorizontalAlignment="Right" FontSize="18">
                 <Hyperlink Command="{Binding TroVeCommand}" Foreground="Black">
-                    Trở về phiếu nhập
+                    Trở về phiếu
                 </Hyperlink>
             </TextBlock>
         </Grid>

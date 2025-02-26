@@ -59,7 +59,7 @@ namespace GUI.ViewModels
                 PhieuNhapDTO phieuNhapDTO = new()
                 {
                     MaPhieuNhap = phieuNhapBLL.TaoMaPNMoi(),
-                    MaNhanVien = "NV001",
+                    MaNhanVien = MainVM.NhanVien.MaNhanVien,
                     NgayNhap = DateTime.Now.ToString(),
                     TongTien = '0',
                 };
@@ -78,11 +78,15 @@ namespace GUI.ViewModels
         }
 
         [RelayCommand]
-        private void XemChiTiet()
+        private async Task XemChiTiet()
         {
-            if (!string.IsNullOrEmpty(SelectedPhieuNhap.MaPhieuNhap))
+            if (SelectedPhieuNhap != null && !string.IsNullOrEmpty(SelectedPhieuNhap.MaPhieuNhap))
             {
                 MainVM.View = new ChiTietPhieuNhapViewModel(SelectedPhieuNhap, MainVM, this);
+            }
+            else
+            {
+                await ThongBaoVM.MessageOK("Vui lòng chọn phiếu nhập!");
             }
         }
 
@@ -102,7 +106,8 @@ namespace GUI.ViewModels
                             await ThongBaoVM.MessageOK("Xóa phiếu nhập thành công");
                             LoadDanhSachPhieuNhap();
                         }
-                    }else
+                    }
+                    else
                     {
                         await ThongBaoVM.MessageOK("Vui lòng chọn phiếu nhập muốn xóa");
                     }
@@ -124,15 +129,14 @@ namespace GUI.ViewModels
                 await ThongBaoVM.MessageOK("Vui lòng nhập mã phiếu nhập để tìm kiếm.");
                 return;
             }
-
-            if (phieuNhapBLL != null)
+            var phieu = phieuNhapBLL.TimKiemPN(MaTimKiem);
+            if (phieu != null)
             {
-                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == MaTimKiem.ToUpper());
-                if (SelectedPhieuNhap == null)
-                {
-                    await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
-                }
+                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == phieu.MaPhieuNhap.ToUpper());
 
+            }else
+            {
+                await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
             }
         }
     }

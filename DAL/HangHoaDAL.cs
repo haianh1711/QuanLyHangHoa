@@ -127,7 +127,7 @@ namespace DAL
             return HangHoaDTOs;
         }
 
-        public bool CapNhatHangHoa(HangHoaDTO HangHoa)
+        public bool SuaHangHoa(HangHoaDTO HangHoa)
         {
             string query = @"UPDATE HangHoa 
                             SET MaHang = @MaHang, TenHang = @TenHang, SoLuong = @SoLuong, HinhAnh = @HinhAnh, MoTa = @MoTa 
@@ -153,7 +153,28 @@ namespace DAL
 
         public bool XoaHangHoa(string MaHangHoa)
         {
-                string query = $"DELETE FROM HangHoa where Mahang = @MaHang";
+            // xóa phiếu nhập
+            string query1 = @"DELETE FROM ChiTietPhieuNhap WHERE MaHang = @maHH";
+
+            SqlParameter[] parameters1 = new SqlParameter[]
+            {
+                    new SqlParameter("@maHH", MaHangHoa)
+            };
+
+            dbHelper.ExecuteNonQuery(query1, parameters1);
+
+            // phiếu xuất
+            string query2 = @"DELETE FROM ChiTietPhieuXuat WHERE MaHang = @maHH";
+
+            SqlParameter[] parameters2 = new SqlParameter[]
+            {
+                    new SqlParameter("@maHH", MaHangHoa)
+            };
+
+            dbHelper.ExecuteNonQuery(query2, parameters2);
+
+            // xóa hàng hóa
+            string query = $"DELETE FROM HangHoa where Mahang = @MaHang";
                 SqlParameter[] parameters =
                 {
                     new SqlParameter("@MaHang", MaHangHoa)

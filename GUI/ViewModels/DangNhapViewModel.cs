@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DTO;
+using GUI.ViewModels.UserControls;
+using GUI.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,19 +16,44 @@ namespace GUI.ViewModels
     partial class DangNhapViewModel : ObservableObject
     {
         [ObservableProperty]
+        private ThongBaoViewModel thongBaoVM = new ThongBaoViewModel();
+
         private DangNhapBLL dangNhapBLL = new DangNhapBLL();
+
+        [ObservableProperty]
+        private TaiKhoanDTO? taiKhoan;
+
+        [ObservableProperty]
+        private NhanVienDTO? nhanVien;
 
         [RelayCommand]
         public async Task DangNhapGmail()
         {
-            TaiKhoanDTO GmailHopLe = await dangNhapBLL.DangNhapGmail();
-            if (GmailHopLe != null)
+            if ((TaiKhoan = await dangNhapBLL.DangNhapGmail()) != null)
             {
-                MessageBox.Show("Đăng nhập thành công");
-            }else
+                await thongBaoVM.MessageOK("Đăng nhập thành công!");
+                Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)?.Hide();
+
+                if ((NhanVien = await dangNhapBLL.TimNhanVienTheoGmail(TaiKhoan.Gmail)) != null)
+                {
+
+                    var mainWindow = new MainForm(taiKhoan, nhanVien);
+
+                    Application.Current.MainWindow = mainWindow;
+                    mainWindow.Show();
+                }
+                else await thongBaoVM.MessageOK("Không tìm thấy thông tin nhân viên.");
+            }
+            else await thongBaoVM.MessageOK("Đăng nhập thất bại");
+        }
+
+        [RelayCommand]
+        public async Task Exit()
+        {
+             bool result =  await thongBaoVM.MessageYesNo("Bạn có chắc chắn muốn thoát?");
+            if (result)
             {
-                MessageBox.Show("Đăng nhập thất bại");
-                return;
+                Application.Current.Shutdown();
             }
         }
     }

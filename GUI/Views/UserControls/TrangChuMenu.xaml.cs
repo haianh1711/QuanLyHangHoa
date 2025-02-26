@@ -36,50 +36,73 @@ namespace GUI.Views.UserControls
 
         private void btnQuayLai_Click(object sender, RoutedEventArgs e)
         {
-             btnQuayLai.Visibility = Visibility.Collapsed;
+            btnQuayLai.Visibility = Visibility.Collapsed;
+
+            // Kiểm tra menuContainer có phải là Panel không
+            if (menuContainer is Panel panel)
+            {
+                foreach (var child in panel.Children)
+                {
+                    if (child is RadioButton radioButton)
+                    {
+                        radioButton.IsChecked = false; // Bỏ chọn tất cả RadioButton
+                    }
+                    else if (child is Expander expander)
+                    {
+                        // Kiểm tra nếu nội dung của Expander là StackPanel
+                        if (expander.Content is Panel expPanel)
+                        {
+                            foreach (var expChild in expPanel.Children)
+                            {
+                                if (expChild is RadioButton expRadioButton)
+                                {
+                                    expRadioButton.IsChecked = false; // Bỏ chọn các RadioButton trong Expander
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Kiểm tra expanderThongKe có null không trước khi sử dụng
+            if (expanderThongKe != null)
+            {
+                expanderThongKe.IsExpanded = false;
+            }
         }
 
         private Button currentSelectedButton = null;
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             btnQuayLai.Visibility = Visibility.Visible;
-            if (sender is Button clickedButton)
+
+            if (sender is RadioButton clickedButton)
             {
-                // Reset màu của nút trước đó
-                if (currentSelectedButton != null)
+                // Duyệt qua tất cả các RadioButton trong menuContainer để bỏ chọn
+                foreach (var child in menuContainer.Children)
                 {
-                    currentSelectedButton.Background = new SolidColorBrush(Colors.Transparent);
-                }
-
-                // Đổi màu nút vừa click
-                clickedButton.Background = new SolidColorBrush(Color.FromRgb(112, 144, 221)); // Màu khi click
-
-                // Cập nhật nút đang được chọn
-                currentSelectedButton = clickedButton;
-            }
-        }
-
-        private void ClickMouseEnter(object sender, MouseEventArgs e)
-        {
-            if (sender is Button hoveredButton)
-            {
-                // Nếu nút này không phải nút đang được chọn, đổi màu khi hover
-                if (hoveredButton != currentSelectedButton)
-                {
-                    hoveredButton.Background = new SolidColorBrush(Color.FromRgb(112, 144, 221)); // Màu hover
+                    if (child is RadioButton radioButton)
+                    {
+                        radioButton.IsChecked = (radioButton == clickedButton);
+                    }
+                    else if (child is Expander expander) // Nếu là Expander (Thống kê)
+                    {
+                        if (expander.Content is StackPanel expanderPanel)
+                        {
+                            foreach (var expChild in expanderPanel.Children)
+                            {
+                                if (expChild is RadioButton expRadioButton)
+                                {
+                                    expRadioButton.IsChecked = (expRadioButton == clickedButton);
+                                }
+                            }
+                        }
+                    }
                 }
             }
-
         }
 
-        private void ClickMouseLeave(object sender, MouseEventArgs e)
-        {
-            if (sender is Button hoveredButton && hoveredButton != currentSelectedButton) // Không đổi màu nếu nút đang được chọn
-            {
-                hoveredButton.Background = new SolidColorBrush(Colors.Transparent); // Trở về màu cũ
-            }
 
-        }
 
         // Bắt sự kiện khi click vào cửa sổ
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)

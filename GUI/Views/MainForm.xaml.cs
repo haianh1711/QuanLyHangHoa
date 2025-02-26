@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DTO;
+using GUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,17 @@ namespace GUI.Views
     /// </summary>
     public partial class MainForm : Window
     {
-        public MainForm()
+        private MainViewModel _viewModel;
+
+        
+        public MainForm(TaiKhoanDTO taiKhoan, NhanVienDTO nhanVien)
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel(taiKhoan,nhanVien);
         }
+
+       
     }
+
+
 }

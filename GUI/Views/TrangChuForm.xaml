@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.UserControls"
+             xmlns:viewModels="clr-namespace:GUI.ViewModels"
              mc:Ignorable="d" 
-                     d:DesignHeight="655.25" Width="698">
+             d:DesignHeight="655.25" Width="698">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
         <Style x:Key="CustomButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#6279B1"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -28,7 +30,7 @@
 
     </UserControl.Resources>
     <Grid>
-        <Border Background="#DFEBF8" Margin="18,0,0,0">
+        <Border Background="#DFEBF8" Margin="22,0,0,0">
 
             <Grid >
                 <Grid.RowDefinitions>
@@ -42,11 +44,11 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock 
-                Grid.Column="0"
-                 Text="Xin chào!" 
-                 Margin="40,158,170,378" 
-                 FontSize="35"
-                 FontFamily="Lato Black" Height="48" Width="173">
+                    Grid.Column="0"
+                     Text="Xin chào!" 
+                     Margin="0,158,209,378" 
+                     FontSize="30" FontWeight="Bold"
+                     FontFamily="Tahoma" Height="48" Width="173">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
                                 <GradientStop Color="#FF1849C0"/>
@@ -55,13 +57,14 @@
                         </TextBlock.Foreground>
                     </TextBlock>
 
-                    <Label 
-                Grid.Column="0"
-                 Content="Trần Ngọc Bảo Trân" 
-                 VerticalContentAlignment="Center" 
-                 Margin="38,199,12,327" 
-                 FontSize="35"
-                 FontFamily="Lato Black" Height="58">
+                    <Label DataContext="{Binding}"
+                        Grid.Column="0"
+                         Content="{Binding NhanVien.TenNhanVien}" 
+                         VerticalContentAlignment="Center" 
+                         Margin="0,199,46,327" 
+                         FontSize="30"
+                          FontWeight="Bold"
+                         FontFamily="Tahoma" Height="58">
                         <TextBlock.Foreground>
                             <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
                                 <GradientStop Color="#FF1849C0"/>
@@ -72,22 +75,39 @@
 
                     <!--line-->
                     <Border Grid.Column="0"
-                         Background="Black"
-                      Margin="44,260,291,323" Height="1" Grid.ColumnSpan="2"/>
+                     Background="Black"
+                        Margin="0,260,9,323" Height="1"/>
 
-                    <Label Grid.Column="0" Content="Mã Nhân viên: TD00537" FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="38,283,22,267"/>
-                    <Label Grid.Column="0" Content="Chức vụ: Trưởng phòng " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,323,22,221"/>
-                    <Label Grid.Column="0" Content="Năm sinh: 01/12/2007 " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="37,363,22,181"/>
-                    <Label Grid.Column="0" Content="Gmail: trantnbtd00537@gmail.com " FontSize="20" Foreground="Black" VerticalContentAlignment="Center" Margin="36,403,21,130"/>
 
+                    <StackPanel DataContext="{Binding}" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Height="276" Width="383" Margin="0,270,0,0">
+
+                        <TextBlock Margin="0,5" FontSize="20" Foreground="Black">
+                            <Run Text="Mã nhân viên: " />
+                            <Run Text="{Binding NhanVien.MaNhanVien}" />
+                        </TextBlock>
+
+                        <TextBlock Margin="0,5" FontSize="20" Foreground="Black">
+                             <Run Text="Chức vụ: " />
+                             <Run Text="{Binding NhanVien.ChucVu}" />
+                        </TextBlock>
+                        <TextBlock Text="Gmail: "  FontSize="20" Foreground="Black" Width="384">
+                            <Run  Text="{Binding TaiKhoan.Gmail}" />
+                        </TextBlock>
+
+
+                    </StackPanel>
+
+                   
                     <!--ảnh-->
-                    <Rectangle Width="250" 
-                           Height="350" 
-                           Cursor="Hand"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Top" 
-                           Margin="0,80,0,0" 
-                           Grid.Column="1">
+                    <Rectangle
+                       
+                       Width="250" 
+                       Height="350" 
+                       Cursor="Hand"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Top" 
+                       Margin="0,80,0,0" 
+                       Grid.Column="1" OpacityMask="Black">
                         <Rectangle.Clip>
                             <PathGeometry>
                                 <PathGeometry.Figures>
@@ -109,26 +129,22 @@
                             </PathGeometry>
                         </Rectangle.Clip>
                         <Rectangle.Fill>
-                            <ImageBrush ImageSource="pack://application:,,,/Images/BTran.jpg" Stretch="UniformToFill"/>
+                            <ImageBrush ImageSource="{Binding NhanVien.HinhAnh}" Stretch="Fill"/>
                         </Rectangle.Fill>
                     </Rectangle>
 
-
+                  
                     <!--Btn-->
-                    
+
                     <Button Grid.Column="1" 
                         Style="{StaticResource CustomButtonStyle}" 
+                        Command="{Binding ThayDoiHinhAnhCommand}"
                         Content="Đổi ảnh" 
                         Margin="22,443,22,106"/>
-
-                    <Button Grid.Column="1" 
-                        Style="{StaticResource CustomButtonStyle}" 
-                        Content="Hướng dẫn" 
-                        Margin="23,483,21,66"/>
                     <Button Grid.Column="1" 
                     Style="{StaticResource CustomButtonStyle}" 
                     Content="Đăng xuất" 
-                    Margin="23,523,21,26" Click="Button_Click_1" />
+                    Margin="23,483,22,66" Click="Button_Click_1" />
 
 
 

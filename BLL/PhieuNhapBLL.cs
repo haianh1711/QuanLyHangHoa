@@ -24,8 +24,6 @@ namespace BLL
         {
             using (TransactionScope transaction = new())
             {
-                chiTietPhieuNhapBLL.XoaTatCaChiTietCuaPhieuNhap(maPhieuNhap);
-                
                 if (phieuNhapDAL.XoaPhieuNhap(maPhieuNhap))
                 {
                             transaction.Complete(); return true;
@@ -34,6 +32,11 @@ namespace BLL
 
                 return false;
             }
+        }
+
+        public PhieuNhapDTO TimKiemPN(string tuKhoa)
+        {
+            return phieuNhapDAL.TimKiemPN(tuKhoa);
         }
 
         public List<PhieuNhapDTO> HienThiDanhSachPN()

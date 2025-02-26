@@ -114,8 +114,8 @@ namespace DAL
                         MaHang = row["MaHang"].ToString(),
                         TenHang = row["TenHang"].ToString(),
                         SoLuongNhap = (int)row["SoLuongNhap"],
-                        GiaNhap = Convert.ToDecimal(row["GiaNhap"]),
-                        ThanhTien = Convert.ToDecimal(row["ThanhTien"])
+                        GiaNhap = Convert.ToDouble(row["GiaNhap"]),
+                        ThanhTien = Convert.ToDouble(row["ThanhTien"])
                     };
                     list.Add(thongke);
                 }
@@ -129,26 +129,6 @@ namespace DAL
 
         }
 
-        public bool XoaTatCaCTPNTHeoMaHH(string maHH)
-        {
-            try
-            {
-                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaHang = @maHH";
-
-                SqlParameter[] parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@maHH", maHH)
-                };
-
-                var result = dbHelper.ExecuteNonQuery(query, parameters);
-
-                return result > 0;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
 
 
         public List<ChiTietPhieuNhapDTO> TimKiemCTPN(string info, string maPhieuNhap)
@@ -180,9 +160,9 @@ namespace DAL
                         MaPhieuNhap = row["MaPhieuNhap"].ToString(),
                         MaHang = row["MaHang"].ToString(),
                         TenHang = row["TenHang"].ToString(),
-                        GiaNhap = (decimal)row["GiaNhap"],
+                        GiaNhap = (double)row["GiaNhap"],
                         SoLuongNhap = (int)row["SoLuongNhap"],
-                        ThanhTien = (decimal)row["ThanhTien"]
+                        ThanhTien = (double)row["ThanhTien"]
                     };
                     list.Add(thongke);
                 }
@@ -195,28 +175,6 @@ namespace DAL
             }
 
         }
-
-        public bool XoaTatCaChiTietCuaPhieuNhap(string maPhieuNhap)
-        {
-            try
-            {
-                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaPhieuNhap = @MaPhieuNhap";
-
-                SqlParameter[] parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@MaPhieuNhap", maPhieuNhap)
-                };
-
-                var result = dbHelper.ExecuteNonQuery(query, parameters);
-
-                return result > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi khi xóa chi tiết phiếu nhập: {ex.Message}", ex);
-            }
-        }
-
 
         public int LaySoLuongNhap(string MaCTPN)
         {

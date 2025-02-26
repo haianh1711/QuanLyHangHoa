@@ -72,5 +72,67 @@
         </Setter>
     </Style>
 
+    <!--menu button-->
+    <Style x:Key="MenuButtonTheme" 
+       TargetType="{x:Type RadioButton}">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+                          Background="{TemplateBinding Background}">
+                            <TextBlock Text="{TemplateBinding Content}"
+                                   VerticalAlignment="Center"
+                                   Margin="50,18,0,18" Foreground="White" FontSize="18" HorizontalAlignment="Left" Width="305"
+                                       />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+        </Style.Setters>
+
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value ="#6279B1"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--menuThongKe-->
+    <Style x:Key="MenuBtnThongKe" TargetType="{x:Type RadioButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border Name="border"
+                        Background="Transparent"
+                        Padding="15,10">
+                        <ContentPresenter HorizontalAlignment="Left" 
+                                      VerticalAlignment="Center" 
+                                     
+                                      RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Khi được chọn -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#6279B1"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+
 
 </ResourceDictionary> 

@@ -6,12 +6,16 @@
              xmlns:FormNhap="clr-namespace:GUI.Views.UserControls"
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:local="clr-namespace:GUI.Views"
+               xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                 xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
              d:Height="655.25">
-    <UserControl.DataContext>
-        <viewModels:NhanvienViewModel/>
-    </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+    </UserControl.Resources>
+
+
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -27,8 +31,11 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên nhân viên..." Text="{Binding TuKhoaTimKiem}" Style="{StaticResource SearchTextBox}" />
-                <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemComand}"/>
+                <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên nhân viên..." 
+                     Text="{Binding TuKhoaTimKiem, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource SearchTextBox}" />
+                <Button Grid.Column="1" Style="{StaticResource SearchButton}" 
+                    Command="{Binding TimKiemCommand}" />
             </Grid>
 
             <!-- Bảng chứa thông tin nhân viên-->
@@ -80,7 +87,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã nhân viên" />
-                                    <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.MaNhanVien, Mode=TwoWay}"/>
+                                    <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempNhanVien.MaNhanVien, Mode=TwoWay}"/>
                                 </Grid>
 
                                 <!--TextBox hàng hai-->
@@ -94,7 +101,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Tên nhân viên" />
-                                    <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.TenNhanVien, Mode=TwoWay}"/>
+                                    <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempNhanVien.TenNhanVien, Mode=TwoWay}"/>
                                 </Grid>
                                 <!--TextBox hàng ba-->
                                 <Grid Grid.Row="3">
@@ -109,27 +116,41 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Row="3" Style="{StaticResource SimpleLabelStyle}" Content="Ngày bắt đầu" />
-                                    <TextBox Grid.Row="3" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.NgayBatDau, Mode=TwoWay}"/>
+                                    <TextBox Grid.Row="3" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempNhanVien.NgayBatDau, Mode=TwoWay}"/>
                                     <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Chức vụ" />
                                     <ComboBox Grid.Row="1" Grid.Column="2"
           ItemsSource="{Binding DanhSachChucVu}"  
-          SelectedValue="{Binding SelectedNhanVien.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-          Style="{StaticResource SimpleComboBoxStyle}"/>
+          SelectedItem="{Binding TempNhanVien.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          Style="{StaticResource SimpleComboBoxStyle}"
+          IsEditable="True"/>
                                 </Grid>
                             </Grid>
-
                             <Grid Grid.Column="2" HorizontalAlignment="Right">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Image  Style="{StaticResource ImageDefault}"/>
+                                <Viewbox Grid.Row="0">
+                                <Image Style="{StaticResource ImageDefault}" Cursor="Hand"
+                                   Stretch="UniformToFill" 
+                                   Source ="{Binding TempNhanVien.HinhAnh}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <i:InvokeCommandAction Command="{Binding ThayDoiHinhAnhCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
+                            </Viewbox>
 
 
                                 <!--Nút-->
-                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" >
-                                    <Button Content="Sửa" Style="{StaticResource SimpleRoundedButton}" Command="{Binding SuaNhanVienCommand}"/>
-                                    <Button Content="Xóa" Style="{StaticResource SimpleRoundedButton}" Command="{Binding XoaNhanVienCommand}"/>
+                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                    <Button Content="Sửa" 
+                                            Visibility="{Binding Quyen, Converter={StaticResource BoolToVisConverter}}"
+                                            Style="{StaticResource SimpleRoundedButton}" Command="{Binding SuaNhanVienCommand}"/>
+                                    <Button Content="Xóa" 
+                                            Visibility="{Binding Quyen, Converter={StaticResource BoolToVisConverter}}"
+                                            Style="{StaticResource SimpleRoundedButton}" Command="{Binding XoaNhanVienCommand}"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>

@@ -78,7 +78,7 @@ namespace Tests.DAL
         }
 
         [TestMethod]
-        public void CapNhatHangHoa_DuLieuHopLe_TraVeTrue()
+        public void SuaHangHoa_DuLieuHopLe_TraVeTrue()
         {
             // arange
             HangHoaDTO hangHoaDTO = new HangHoaDTO()
@@ -91,7 +91,7 @@ namespace Tests.DAL
             using (TransactionScope transaction = new TransactionScope())
             {
                 // act
-                var result = dal.CapNhatHangHoa(hangHoaDTO);
+                var result = dal.SuaHangHoa(hangHoaDTO);
                 // assert
                 Assert.IsTrue(result);
             }

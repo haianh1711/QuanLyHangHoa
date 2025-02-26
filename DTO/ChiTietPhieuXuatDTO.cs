@@ -11,9 +11,9 @@ namespace DTO
         public string? MaCTPX { get; set; }
         public string? MaHang { get; set; }
         public string? TenHang { get; set; }
-        public decimal? GiaXuat { get; set; }
+        public double? GiaXuat { get; set; }
         public int SoLuongXuat { get; set; }
         public string? MaPhieuXuat { get; set; }
-        public decimal ThanhTien { get; set; }
+        public double ThanhTien { get; set; }
     }
 }

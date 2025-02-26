@@ -8,16 +8,11 @@
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              mc:Ignorable="d" 
-            d:Height="655.25">
+            d:Height="655.25" d:Width="650">
     <UserControl.DataContext>
         <viewModels:HangHoaViewModel />
     </UserControl.DataContext>
     <Grid>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="PreviewMouseDown">
-                <i:InvokeCommandAction Command="{Binding ClearSelectionCommand}" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
         <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -34,7 +29,7 @@
 
             <TextBox Grid.Column="0" Tag="Nhập mã hoặc tên hàng hóa..." 
              Style="{StaticResource SearchTextBox}"
-             Text="{Binding MaTimKiem, Mode=TwoWay}"/>
+             Text="{Binding TuKhoaTimKiem, Mode=TwoWay}"/>
             <Button Grid.Column="1" Style="{StaticResource SearchButton}" Command="{Binding TimKiemCommand}"/>
         </Grid>
 
@@ -84,7 +79,13 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã hàng hóa" />
-                            <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.MaHang, Mode=TwoWay}"/>
+                            <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempHangHoa.MaHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding MaHangThayDoiCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
                     </Grid>
 
                     <!--TextBox hàng hai-->    
@@ -101,11 +102,11 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Style="{StaticResource SimpleLabelStyle}" Content="Tên hàng hóa" />
-                            <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedHangHoa.TenHang, Mode=TwoWay}"/>
+                            <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempHangHoa.TenHang, Mode=TwoWay}"/>
 
                         <Label Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Số lượng tồn" />
                         <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ReadOnlyTextBoxStyle}"
-                                 Text="{Binding SelectedHangHoa.SoLuong, Mode=TwoWay}"
+                                 Text="{Binding TempHangHoa.SoLuong, Mode=TwoWay}"
                                  IsReadOnly="True"/>
 
                     </Grid>
@@ -120,7 +121,7 @@
                         <Label Style="{StaticResource SimpleLabelStyle}" Content="Mô tả" />
                         <TextBox Grid.Row="1" 
                                  Style="{StaticResource MultilineTextBoxStyle}" 
-                                 Text="{Binding SelectedHangHoa.MoTa, Mode=TwoWay}" />
+                                 Text="{Binding TempHangHoa.MoTa, Mode=TwoWay}" />
                     </Grid>
 
                 </Grid>
@@ -132,18 +133,21 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                        <Image Style="{StaticResource ImageDefault}" Cursor="Hand"
-                                >
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding SelectImageCommand}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Image>
+                        <Viewbox>
+                            <Image Style="{StaticResource ImageDefault}" Cursor="Hand"
+                                   Stretch="UniformToFill" 
+                                   Source ="{Binding TempHangHoa.HinhAnh}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding ThayDoiHinhAnhCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </Viewbox>
 
 
                         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
+                        <Button Content="Thêm" Command="{Binding ThemHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Sửa" Command="{Binding SuaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                         <Button Content="Xóa" Command="{Binding XoaHangHoaCommand}" Style="{StaticResource SimpleRoundedButton}"/>
                     </StackPanel>
@@ -151,6 +155,6 @@
             </Grid>
         </Border>
     </Grid>
-        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
+        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" Loaded="ThongBao_Loaded" />
     </Grid>
 </UserControl>

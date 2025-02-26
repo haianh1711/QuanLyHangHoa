@@ -89,5 +89,7 @@ namespace GUI.ViewModels.UserControls
             IsMessageVisible = false;
             taskCompletionSource?.SetResult(false);
         }
+
+      
     }
 }

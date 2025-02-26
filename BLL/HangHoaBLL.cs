@@ -16,6 +16,36 @@ namespace BLL
         private HangHoaDAL HangHoaDAL = new();
         private ChiTietPhieuNhapBLL ChiTietPhieuNhapBLL = new();
 
+        public async Task<string> LuuHinhAnh(string filePathGoc, string thuMucLuu, string maHH)
+        {
+            try
+            {
+                if (!Directory.Exists(thuMucLuu))
+                {
+                    Directory.CreateDirectory(thuMucLuu);
+                }
+
+                // Tạo tên file mới với timestamp để tránh ghi đè
+                string fileExtension = Path.GetExtension(filePathGoc);
+                string tenFile = $"{maHH}_{DateTime.Now.Ticks}{fileExtension}";
+                string duongDanMoi = Path.Combine(thuMucLuu, tenFile);
+
+                // Sao chép file bằng stream bất đồng bộ
+                using (var sourceStream = new FileStream(filePathGoc, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var destStream = new FileStream(duongDanMoi, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await sourceStream.CopyToAsync(destStream);
+                }
+
+                // Cập nhật đường dẫn ảnh vào DAL
+                return duongDanMoi;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lưu ảnh: {ex.Message}");
+            }
+        }
+
         public List<HangHoaDTO> LayMaVaTenSP()
         {
             return HangHoaDAL.LayMaVaTenSP();
@@ -32,11 +62,11 @@ namespace BLL
         {
             return HangHoaDAL.TimHangHoa(tukhoa);
         }
-        public bool CapnhatHangHoa(HangHoaDTO HangHoa)
+        public bool SuaHangHoa(HangHoaDTO HangHoa)
         {
             if (string.IsNullOrEmpty(HangHoa.MaHang))
                 return false;
-            return HangHoaDAL.CapNhatHangHoa(HangHoa);
+            return HangHoaDAL.SuaHangHoa(HangHoa);
         }
         public bool XoaHangHoa(string? maHangHoa)
         {
@@ -47,7 +77,6 @@ namespace BLL
 
                 using (TransactionScope transaction = new())
                 {
-                    ChiTietPhieuNhapBLL.XoaTatCaCTPNTHeoMaHH(maHangHoa);
 
                     if (HangHoaDAL.XoaHangHoa(maHangHoa))
                     {

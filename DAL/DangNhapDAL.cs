@@ -33,9 +33,10 @@ namespace DAL
                     {
                         return new TaiKhoanDTO
                         {
-                            TaiKhoanID = reader["TaiKhoanID"].ToString(),
+                            MaTaiKhoan = reader["MaTaiKhoan"].ToString(),
                             Gmail = reader["Gmail"].ToString(),
-                            MatKhau = reader["MatKhau"].ToString() // Giữ lại nếu cần kiểm tra
+                            Quyen = reader["Quyen"].ToString(),
+                            MaNhanVien = reader["MaNhanVien"].ToString(),
                         };
                     }
                 }
@@ -43,8 +44,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi, kiểm tra lại email hoặc mật khẩu: " + ex.Message);
-                return null;
+                throw new Exception("Lỗi khi đăng nhập bằng gmail (DAL)" + ex.Message);
             }
         }
     }
