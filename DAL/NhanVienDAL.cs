@@ -12,7 +12,7 @@ namespace DAL
     public class NhanVienDAL
     {
         private DatabaseHelper dbHelper = new DatabaseHelper();
-        public NhanVienDTO? TimNhanVienTheoEmail(string gmail)
+        public NhanVienDTO? TimNhanVienTheoGmail(string gmail)
         {
             string query = @"SELECT NhanVien.*
                             FROM NhanVien INNER JOIN

@@ -34,7 +34,7 @@ namespace GUI.ViewModels
                 await thongBaoVM.MessageOK("Đăng nhập thành công!");
                 Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)?.Hide();
 
-                if ((NhanVien = await dangNhapBLL.TimNhanVienTheoEmail(TaiKhoan.Gmail)) != null)
+                if ((NhanVien = await dangNhapBLL.TimNhanVienTheoGmail(TaiKhoan.Gmail)) != null)
                 {
 
                     var mainWindow = new MainForm(taiKhoan, nhanVien);
