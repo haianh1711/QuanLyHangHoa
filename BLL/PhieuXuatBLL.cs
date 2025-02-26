@@ -20,6 +20,12 @@ namespace BLL
 
         }
 
+        public PhieuXuatDTO TimKiemPN(string tuKhoa)
+        {
+            return phieuXuatDAL.TimKiemPX(tuKhoa);
+        }
+
+
         public bool XoaPhieuXuat(string maPhieuXuat)
         {
             using (TransactionScope transaction = new())

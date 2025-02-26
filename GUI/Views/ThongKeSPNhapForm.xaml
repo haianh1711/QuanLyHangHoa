@@ -4,86 +4,90 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views" 
+             xmlns:userControls="clr-namespace:GUI.Views.UserControls"
              xmlns:viewModels="clr-namespace:GUI.ViewModels"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
-             d:Height="655.25">
+             d:Height="655.25" d:Width="650">
     <UserControl.DataContext>
         <viewModels:ThongKeSPNhapViewModel />
     </UserControl.DataContext>
 
     <!--Sản phẩm tồn kho-->
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        
-        <!-- filter & Nút tìm kiếm -->
-        <Grid Margin="0, 0, 0, 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
-            <ComboBox Style="{StaticResource FilterComboBoxStyle}"  Margin="0, 0, 10, 0"
-                SelectedIndex="0" SelectedItem="{Binding LuaChonLoc}" Text="{Binding HienThiLuaChonLoc}" ItemsSource="{Binding DanhSachLoc}">
-            </ComboBox>
-
-            <Grid Grid.Column="1">
+            <!-- filter & Nút tìm kiếm -->
+            <Grid Margin="0, 0, 0, 10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0"
-                         Text="{Binding ThongTinTimKiem}" 
-                         Tag="Nhập mã hoặc tên hàng hóa..." 
-                         Style="{StaticResource SearchTextBox}" 
-                         HorizontalAlignment="Stretch"/>
+                <ComboBox Style="{StaticResource FilterComboBoxStyle}"  Margin="0, 0, 10, 0"
+            SelectedIndex="0" SelectedItem="{Binding LuaChonLoc}" Text="{Binding HienThiLuaChonLoc}" ItemsSource="{Binding DanhSachLoc}">
+                </ComboBox>
 
-                <Button Grid.Column="1"
-                        Command="{Binding TimKiemCommand}" 
-                        Style="{StaticResource SearchButton}"/>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                     Text="{Binding TuKhoaTimKiem}" 
+                     Tag="Nhập mã hoặc tên hàng hóa..." 
+                     Style="{StaticResource SearchTextBox}" 
+                     HorizontalAlignment="Stretch"/>
+
+                    <Button Grid.Column="1"
+                    Command="{Binding TimKiemCommand}" 
+                    Style="{StaticResource SearchButton}"/>
+                </Grid>
+
             </Grid>
 
+
+            <!-- Bảng chứa thông tin sản phẩm -->
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 
+              Style="{StaticResource DataGridStyle}"
+              Margin="0, 0, 0, 10">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã hàng" Binding="{Binding MaSanPham}" Width="*"  />
+                    <DataGridTextColumn Header="Tên hàng" Binding="{Binding TenSanPham}"  Width="*" />
+                    <DataGridTextColumn Header="Số lượng tồn" Binding="{Binding SoLuong}"  Width="*" />
+                    <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}"  Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--Biểu đồ cột ngang chứa số lượng tồn kho của từng sản phẩm-->
+            <ContentControl Margin="0,10,0,10" Grid.Row="2"
+                        Style="{StaticResource BorderWithHeaderForCharStyle}" Tag="{Binding ThoiGianHienThi}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <lvc:CartesianChart
+                    Series="{Binding BarChartSeries}"
+                    YAxes="{Binding YAxes}" 
+                    XAxes="{Binding XAxes}" 
+                    Height="{Binding ChartHeight}" FontSize="9"/>
+                </ScrollViewer>
+            </ContentControl>
+
+            <Border Grid.Row="3" Style="{StaticResource SimpleBorderStyle}">
+                <lvc:CartesianChart 
+            Series="{Binding LineChartSeries}"
+            XAxes="{Binding XAxesLine}"
+            />
+            </Border>
+
         </Grid>
-
-
-        <!-- Bảng chứa thông tin sản phẩm -->
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Data}" 
-                  Style="{StaticResource DataGridStyle}"
-                  Margin="0, 0, 0, 10">
-
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã hàng" Binding="{Binding MaHang}" Width="*"  />
-                <DataGridTextColumn Header="Tên hàng" Binding="{Binding TenHang}"  Width="*" />
-                <DataGridTextColumn Header="Số lượng tồn" Binding="{Binding SoLuong}"  Width="*" />
-                <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}"  Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
-        
-        <!--Biểu đồ cột ngang chứa số lượng tồn kho của từng sản phẩm-->
-        <ContentControl Margin="0,10,0,10" Grid.Row="2"
-                Style="{StaticResource BorderWithHeaderForCharStyle}" Tag="{Binding ThoiGianHienThi}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <lvc:CartesianChart
-                Series="{Binding BarChartSeries}"
-                YAxes="{Binding YAxes}" 
-                XAxes="{Binding XAxes}" 
-                Height="{Binding ChartHeight}" FontSize="9"/>
-            </ScrollViewer>
-        </ContentControl>
-
-        <Border Grid.Row="3" Style="{StaticResource SimpleBorderStyle}">
-            <lvc:CartesianChart 
-                Series="{Binding LineChartSeries}"
-                XAxes="{Binding XAxesLine}"
-                />
-        </Border>
-
+        <userControls:ThongBao DataContext="{Binding ThongBaoVM }" />
     </Grid>
 </UserControl>
 

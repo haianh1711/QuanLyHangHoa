@@ -31,7 +31,7 @@ namespace GUI.ViewModels
 
         // Tìm kiếm
         [ObservableProperty]
-        private string? tuKhoaTimKiem;
+        private string? maTimKiem;
 
         [ObservableProperty]
         private MainViewModel mainVM;
@@ -124,20 +124,19 @@ namespace GUI.ViewModels
         [RelayCommand]
         private async Task TimKiem()
         {
-            if (string.IsNullOrWhiteSpace(TuKhoaTimKiem))
+            if (string.IsNullOrWhiteSpace(MaTimKiem))
             {
                 await ThongBaoVM.MessageOK("Vui lòng nhập mã phiếu nhập để tìm kiếm.");
                 return;
             }
-
-            if (phieuNhapBLL != null)
+            var phieu = phieuNhapBLL.TimKiemPN(MaTimKiem);
+            if (phieu != null)
             {
-                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == TuKhoaTimKiem.ToUpper());
-                if (SelectedPhieuNhap == null)
-                {
-                    await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + TuKhoaTimKiem.ToUpper());
-                }
+                SelectedPhieuNhap = PhieuNhaps.FirstOrDefault(pn => pn.MaPhieuNhap == phieu.MaPhieuNhap.ToUpper());
 
+            }else
+            {
+                await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
             }
         }
     }

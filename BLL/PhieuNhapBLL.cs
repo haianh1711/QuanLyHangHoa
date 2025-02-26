@@ -34,6 +34,11 @@ namespace BLL
             }
         }
 
+        public PhieuNhapDTO TimKiemPN(string tuKhoa)
+        {
+            return phieuNhapDAL.TimKiemPN(tuKhoa);
+        }
+
         public List<PhieuNhapDTO> HienThiDanhSachPN()
         {
             return phieuNhapDAL.HienThiDanhSachPN();

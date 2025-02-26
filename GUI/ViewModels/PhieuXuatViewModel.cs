@@ -12,6 +12,7 @@ using System.Windows;
 using System.Transactions;
 using GUI.ViewModels.UserControls;
 using GUI.Views.UserControls;
+using DAL;
 
 namespace GUI.ViewModels
 {
@@ -125,7 +126,7 @@ namespace GUI.ViewModels
         [RelayCommand]
         private void XemChiTiet()
         {
-            if(selectedPhieuXuat != null)
+            if(SelectedPhieuXuat != null)
             {
                 MainVM.View = new ChiTietPhieuXuatViewModel(SelectedPhieuXuat, MainVM, this);
             }
@@ -139,15 +140,15 @@ namespace GUI.ViewModels
                 await ThongBaoVM.MessageOK("Vui lòng nhập mã phiếu nhập để tìm kiếm.");
                 return;
             }
-
-            if (phieuXuatBLL != null)
+            var phieu = phieuXuatBLL.TimKiemPN(MaTimKiem);
+            if (phieu != null)
             {
-                SelectedPhieuXuat = PhieuXuats.FirstOrDefault(pn => pn.MaPhieuXuat == MaTimKiem.ToUpper());
-                if (SelectedPhieuXuat == null)
-                {
-                    await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
-                }
+                SelectedPhieuXuat = phieuXuats.FirstOrDefault(pn => pn.MaPhieuXuat == phieu.MaPhieuXuat.ToUpper());
 
+            }
+            else
+            {
+                await ThongBaoVM.MessageOK("Không tìm thấy phiếu nhập có mã " + MaTimKiem.ToUpper());
             }
         }
     }

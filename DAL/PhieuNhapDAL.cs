@@ -48,6 +48,41 @@ namespace DAL
             }
         }
 
+        public PhieuNhapDTO TimKiemPN(string maPN)
+        {
+            try
+            {
+                string query = @"SELECT MaPhieuNhap, MaNhanVien, NgayNhap
+                         FROM PhieuNhap
+                         WHERE MaPhieuNhap = @MaPhieuNhap;";
+
+                SqlParameter[] parameters =
+                [
+                    new SqlParameter("@MaPhieuNhap", maPN)
+                ];
+
+                DataTable dataTable = dbHelper.ExecuteQuery(query, parameters);
+
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    return new PhieuNhapDTO
+                    {
+                        MaPhieuNhap = row["MaPhieuNhap"].ToString(),
+                        MaNhanVien = row["MaNhanVien"].ToString(),
+                        NgayNhap = Convert.ToString(row["NgayNhap"]),
+                    };
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi tìm kiếm phiếu nhap: {ex.Message}", ex);
+            }
+        }
+
         public bool ThemPhieuNhap(PhieuNhapDTO phieuNhapDTO)
         {
             try
