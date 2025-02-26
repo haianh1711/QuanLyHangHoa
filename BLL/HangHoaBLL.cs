@@ -62,11 +62,11 @@ namespace BLL
         {
             return HangHoaDAL.TimHangHoa(tukhoa);
         }
-        public bool CapnhatHangHoa(HangHoaDTO HangHoa)
+        public bool SuaHangHoa(HangHoaDTO HangHoa)
         {
             if (string.IsNullOrEmpty(HangHoa.MaHang))
                 return false;
-            return HangHoaDAL.CapNhatHangHoa(HangHoa);
+            return HangHoaDAL.SuaHangHoa(HangHoa);
         }
         public bool XoaHangHoa(string? maHangHoa)
         {
@@ -77,7 +77,6 @@ namespace BLL
 
                 using (TransactionScope transaction = new())
                 {
-                    ChiTietPhieuNhapBLL.XoaTatCaCTPNTHeoMaHH(maHangHoa);
 
                     if (HangHoaDAL.XoaHangHoa(maHangHoa))
                     {

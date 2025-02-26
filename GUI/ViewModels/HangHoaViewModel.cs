@@ -188,7 +188,7 @@ namespace GUI.ViewModels
             {
                 if (SelectedHangHoa != null)
                 {
-                    bool result = HangHoaBLL.CapnhatHangHoa(TempHangHoa);
+                    bool result = HangHoaBLL.SuaHangHoa(TempHangHoa);
                     if (result)
                     {
                         await ThongBaoVM.MessageOK("Sửa hàng hóa thành công");

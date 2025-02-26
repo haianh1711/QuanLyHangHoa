@@ -129,26 +129,6 @@ namespace DAL
 
         }
 
-        public bool XoaTatCaCTPNTHeoMaHH(string maHH)
-        {
-            try
-            {
-                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaHang = @maHH";
-
-                SqlParameter[] parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@maHH", maHH)
-                };
-
-                var result = dbHelper.ExecuteNonQuery(query, parameters);
-
-                return result > 0;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
 
 
         public List<ChiTietPhieuNhapDTO> TimKiemCTPN(string info, string maPhieuNhap)
@@ -195,28 +175,6 @@ namespace DAL
             }
 
         }
-
-        public bool XoaTatCaChiTietCuaPhieuNhap(string maPhieuNhap)
-        {
-            try
-            {
-                string query = @"DELETE FROM ChiTietPhieuNhap WHERE MaPhieuNhap = @MaPhieuNhap";
-
-                SqlParameter[] parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@MaPhieuNhap", maPhieuNhap)
-                };
-
-                var result = dbHelper.ExecuteNonQuery(query, parameters);
-
-                return result > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi khi xóa chi tiết phiếu nhập: {ex.Message}", ex);
-            }
-        }
-
 
         public int LaySoLuongNhap(string MaCTPN)
         {

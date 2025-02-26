@@ -78,14 +78,23 @@ namespace DAL
         {
             try
             {
-                string query = @"DELETE FROM PhieuXuat WHERE MaPhieuXuat = @MaPhieuXuat";
+                string query1 = @"DELETE FROM ChiTietPhieuXuat WHERE MaPhieuXuat = @MaPhieuXuat";
 
-                SqlParameter[] parameters =
+                SqlParameter[] parameters1 = new SqlParameter[]
+                {
+                    new SqlParameter("@MaPhieuXuat", maPhieuXuat)
+                };
+
+                dbHelper.ExecuteNonQuery(query1, parameters1);
+
+                string query2 = @"DELETE FROM PhieuXuat WHERE MaPhieuXuat = @MaPhieuXuat";
+
+                SqlParameter[] parameters2 =
                 [
                     new SqlParameter("@MaPhieuXuat", maPhieuXuat),
                 ];
 
-                var result = dbHelper.ExecuteNonQuery(query, parameters);
+                var result = dbHelper.ExecuteNonQuery(query2, parameters2);
                 return result > 0;
             }
             catch (Exception ex)

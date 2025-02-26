@@ -61,11 +61,6 @@ namespace BLL
             }
         }
 
-        public bool XoaTatCaCTPXTHeoMaHH(string maHh)
-        {
-            return ChiTietPhieuXuatDAL.XoaTatCaCTPXTHeoMaHH(maHh);
-        }
-
         public bool XoaDanhSachCTPX(List<ChiTietPhieuXuatDTO> ChiTietPhieuXuatDTOs)
         {
             using (TransactionScope transaction = new TransactionScope())
@@ -110,11 +105,6 @@ namespace BLL
         public List<ChiTietPhieuXuatDTO> HienThiDanhSachCTPX(string maPhieuNhap)
         {
             return ChiTietPhieuXuatDAL.HienThiDanhSachCTPX(maPhieuNhap);
-        }
-
-        public bool XoaTatCaChiTietCuaPhieuXuat(string maPhieuNhap)
-        {
-            return ChiTietPhieuXuatDAL.XoaTatCaChiTietCuaPhieuXuat(maPhieuNhap);
         }
 
         public double TinhThanhTien(ChiTietPhieuXuatDTO ChiTietPhieuXuatDTO)

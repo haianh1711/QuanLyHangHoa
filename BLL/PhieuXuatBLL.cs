@@ -24,7 +24,6 @@ namespace BLL
         {
             using (TransactionScope transaction = new())
             {
-                chiTietPhieuXuatBLL.XoaTatCaChiTietCuaPhieuXuat(maPhieuXuat);
 
 
                 if (phieuXuatDAL.XoaPhieuXuat(maPhieuXuat))
