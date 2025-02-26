@@ -84,8 +84,8 @@ namespace GUI.ViewModels
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
             LuaChonLoc = "Tuần";
             OnPropertyChanged(nameof(LuaChonLoc));
+            LoadLineChartSeries(LayDanhSachTuanNam(thongKeBLL.GetThongKePhieuNhapHangTuanData()));
 
-            LoadLineChartSeries(LayDanhSachThangNam(thongKeBLL.GetThongKePhieuNhapHangTuanData()));
         }
 
         [RelayCommand]
@@ -337,7 +337,6 @@ namespace GUI.ViewModels
                     thongKePhieus = LayDanhSachNam(thongKePhieus);
                     break;
                 default:
-                    LuaChonLoc = "Tháng";
                     break;
             }
             HienThiLuaChonLoc = "Lọc theo " + LuaChonLoc;

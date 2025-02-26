@@ -6,7 +6,7 @@
             xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
               xmlns:viewModels="clr-namespace:GUI.ViewModels"
                 xmlns:viewModelsUC="clr-namespace:GUI.ViewModels.UserControls"
-             StartupUri="Views\ThongKeSPXuatForm.xaml">
+             StartupUri="Views\ThongKeSPxuatForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries> 

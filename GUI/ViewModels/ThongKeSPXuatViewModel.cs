@@ -26,6 +26,7 @@ using GUI.Views.UserControls;
 
 namespace GUI.ViewModels
 {
+
     public class DataPoint
     {
         public double Value { get; set; }
@@ -34,14 +35,13 @@ namespace GUI.ViewModels
         public int? Thang { get; set; }
         public int? Nam { get; set; }
     }
-
     partial class ThongKeSPXuatViewModel : ObservableObject
     {
         [ObservableProperty]
         ThongBaoViewModel thongBaoVM = new();
 
         [ObservableProperty]
-        public ObservableCollection<string> danhSachLoc = ["Tuần","Tháng", "Năm"];
+        public ObservableCollection<string> danhSachLoc = ["Tuần", "Tháng", "Năm"];
 
         [ObservableProperty]
         private string luaChonLoc;
@@ -91,7 +91,9 @@ namespace GUI.ViewModels
         public ThongKeSPXuatViewModel()
         {
             Data = new ObservableCollection<HangHoaDTO>(thongKeBLL.GetHangHoaThongKe());
-            luaChonLoc = "Lọc the";
+            LuaChonLoc = "Tuần";
+            OnPropertyChanged(nameof(LuaChonLoc));
+            LoadLineChartSeries(LayDanhSachTuanNam(thongKeBLL.GetThongKePhieuXuatHangTuanData()));
 
         }
 
@@ -118,22 +120,22 @@ namespace GUI.ViewModels
         private void LoadBarChartSeries(List<PhieuXuatDTO> PhieuXuatDTOs)
         {
             string[] dsTenSanPham = PhieuXuatDTOs.Select(PhieuXuat => PhieuXuat.MaHang ?? string.Empty).ToArray();
-            double[] dsSoLuongNhap = PhieuXuatDTOs.Select(PhieuXuat => (double?)PhieuXuat.SoLuongXuat ?? 0).ToArray();
+            double[] dsSoLuongXuat = PhieuXuatDTOs.Select(PhieuXuat => (double?)PhieuXuat.SoLuongXuat ?? 0).ToArray();
 
-            if (dsSoLuongNhap.Length == 0)
+            if (dsSoLuongXuat.Length == 0)
             {
                 ChartHeight = 0;
                 return;
             }
-            double maxSoLuongNhap = dsSoLuongNhap.Max();
-            double[] dsSoLuongNhapMax = dsSoLuongNhap.Select(PhieuXuat => maxSoLuongNhap).ToArray();
+            double maxSoLuongXuat = dsSoLuongXuat.Max();
+            double[] dsSoLuongXuatMax = dsSoLuongXuat.Select(PhieuXuat => maxSoLuongXuat).ToArray();
 
             // biểu đồ cột ngang
             BarChartSeries = [
                 new RowSeries<double>
                 {
                     IsHoverable = false, // disables the series from the tooltips 
-                    Values = dsSoLuongNhapMax,
+                    Values = dsSoLuongXuatMax,
                     Stroke = null,
                     Fill = new SolidColorPaint(new SKColor(30, 30, 30, 30)),
                     IgnoresBarPosition = true
@@ -141,7 +143,7 @@ namespace GUI.ViewModels
                 new RowSeries<double>
                 {
                     IsHoverable = true,
-                    Values = dsSoLuongNhap,
+                    Values = dsSoLuongXuat,
                     Stroke = null,
                     Fill = new SolidColorPaint(SKColors.CornflowerBlue),
                     IgnoresBarPosition = true,
@@ -257,15 +259,13 @@ namespace GUI.ViewModels
             return danhSachTuanNam;
         }
 
-
-
-
         private void LoadLineChartSeries(List<ThongKePhieuXuatDTO> thongKePhieus)
         {
             DataPoint[] dataPoints = thongKePhieus.Select(tk => new DataPoint()
             {
                 Value = tk.TongSoLuongXuat ?? 0,
                 Label = tk.HienThi ?? "",
+                Tuan = tk.Tuan,
                 Nam = tk.Nam,
                 Thang = tk.Thang,
             }).ToArray();
@@ -298,6 +298,7 @@ namespace GUI.ViewModels
 
         private void OnPointerDown(IChartView chart, ChartPoint<DataPoint, CircleGeometry, LabelGeometry> point)
         {
+
             List<PhieuXuatDTO> PhieuXuatDTOs;
 
             switch (LuaChonLoc)
@@ -321,6 +322,7 @@ namespace GUI.ViewModels
                     LoadBarChartSeries(PhieuXuatDTOs);
                     break;
                 default:
+                    LuaChonLoc = "Tháng";
                     break;
             }
 
