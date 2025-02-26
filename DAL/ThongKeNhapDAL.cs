@@ -182,7 +182,7 @@ namespace DAL
 
             try
             {
-                var reader = dbHelper.ExecuteReader(query);
+                var reader = dbHelper.ExecuteReader(query, parameters);
                 while (reader.Read())
                 {
                     data.Add(new PhieuNhapDTO
