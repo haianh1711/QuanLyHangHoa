@@ -85,7 +85,7 @@ namespace DAL
         public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaData()
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
-            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap from PhieuNhap pn left join ChiTietPhieuXuat ct
+            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap from PhieuNhap pn inner join ChiTietPhieuXuat ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
                             Group By MaHang";
             try
@@ -109,7 +109,7 @@ namespace DAL
         public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoTuanData(string tuan, string thang,string nam )
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
-            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap from PhieuNhap pn left join ChiTietPhieuNhap ct
+            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap from PhieuNhap pn inner join ChiTietPhieuNhap ct
                              On pn.MaPhieuNhap = ct.MaPhieuNhap
                              Where @Tuan = DATEPART(WEEK,pn.NgayNhap) and @Thang = DATEPART(MONTH, pn.NgayNhap) and @nam = DATEPART(YEAR, pn.NgayNhap)
                              Group By MaHang";
@@ -141,7 +141,7 @@ namespace DAL
         public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoThangData(string thang, string nam )
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
-            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn left join ChiTietPhieuNhap ct
+            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn inner join ChiTietPhieuNhap ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
                             Where @Thang = DATEPART(MONTH, pn.NgayNhap) and @Nam = DATEPART(YEAR, pn.NgayNhap)
                             Group By MaHang";
@@ -171,7 +171,7 @@ namespace DAL
         public List<PhieuNhapDTO> GetThongKePhieuNhapHangHoaTheoNamData(string nam)
         {
             List<PhieuNhapDTO> data = new List<PhieuNhapDTO>();
-            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn left join ChiTietPhieuNhap ct
+            string query = @"Select ct.MaHang, SUM(ISNULL(ct.SoLuongNhap, 0)) AS TongSoLuongNhap FROM PhieuNhap pn inner join ChiTietPhieuNhap ct
                             On pn.MaPhieuNhap = ct.MaPhieuNhap
                             Where @Nam = DATEPART(YEAR, pn.NgayNhap)
                             Group By MaHang";
