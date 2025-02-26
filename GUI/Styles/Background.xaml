@@ -41,4 +41,40 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="BorderWithHeaderForCharStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid>
+                        <!-- Header -->
+                        <Border Background="#DFEBF8"
+                        Height="auto"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Width="auto"
+                        CornerRadius="4"
+                        Panel.ZIndex="1"
+                        Padding="3"
+                        Margin="20, -12, 0, 0">
+                            <TextBlock Text="{TemplateBinding Tag}" 
+                               Foreground="Black" 
+                               FontSize="14"
+                               HorizontalAlignment="Center"
+                               Padding="10, 0"/>
+                        </Border>
+
+                        <!-- Nội dung -->
+                        <Border Background="#A7BFFC" 
+                        BorderBrush="#7090DD"
+                        BorderThickness="1"
+                        CornerRadius="13.36"
+                        Padding="20">
+                            <ContentPresenter />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

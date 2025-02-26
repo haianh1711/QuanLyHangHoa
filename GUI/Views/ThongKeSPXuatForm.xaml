@@ -63,16 +63,16 @@
         </DataGrid>
         
         <!--Biểu đồ cột ngang chứa số lượng tồn kho của từng sản phẩm-->
-        <Border Margin="0, 0, 0, 10" Grid.Row="2" Style="{StaticResource SimpleBorderStyle}">
-           
+        <ContentControl Margin="0,10,0,10" Grid.Row="2"
+                        Style="{StaticResource BorderWithHeaderForCharStyle}" Tag="{Binding ThoiGianHienThi}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <lvc:CartesianChart
-                    Series="{Binding Series}"
+                    Series="{Binding BarChartSeries}"
                     YAxes="{Binding YAxes}" 
+                    XAxes="{Binding XAxes}" 
                     Height="{Binding ChartHeight}" FontSize="9"/>
-                            <!-- Đặt chiều cao cố định lớn hơn khung hiển thị -->
             </ScrollViewer>
-        </Border>
+        </ContentControl>
 
         <Border Grid.Row="3" Style="{StaticResource SimpleBorderStyle}">
             <lvc:CartesianChart 
