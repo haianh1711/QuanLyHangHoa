@@ -60,8 +60,8 @@
               Margin="0, 0, 0, 10">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mã hàng" Binding="{Binding MaSanPham}" Width="*"  />
-                    <DataGridTextColumn Header="Tên hàng" Binding="{Binding TenSanPham}"  Width="*" />
+                    <DataGridTextColumn Header="Mã hàng" Binding="{Binding MaHang}" Width="*"  />
+                    <DataGridTextColumn Header="Tên hàng" Binding="{Binding TenHang}"  Width="*" />
                     <DataGridTextColumn Header="Số lượng tồn" Binding="{Binding SoLuong}"  Width="*" />
                     <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}"  Width="*" />
                 </DataGrid.Columns>

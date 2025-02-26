@@ -9,7 +9,7 @@
              StartupUri="Views\DangNhapForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries> 
                 <ResourceDictionary Source="Styles/SearchBar.xaml"/>
                 <ResourceDictionary Source="Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/LabelBox.xaml"/>
