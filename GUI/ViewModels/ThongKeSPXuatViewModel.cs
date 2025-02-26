@@ -221,18 +221,26 @@ namespace GUI.ViewModels
             if (danhSach == null || danhSach.Count == 0)
                 return new List<ThongKePhieuXuatDTO>();
 
+            // Tìm năm và tuần nhỏ nhất từ dữ liệu
             int minNam = danhSach.Min(tk => tk.Nam ?? int.MaxValue);
-            int maxNam = danhSach.Max(tk => tk.Nam ?? int.MinValue);
+            int minTuan = danhSach.Where(tk => tk.Nam == minNam).Min(tk => tk.Tuan ?? int.MaxValue);
 
-            if (minNam == int.MaxValue || maxNam == int.MinValue)
+            // Tìm năm và tuần lớn nhất từ dữ liệu
+            int maxNam = danhSach.Max(tk => tk.Nam ?? int.MinValue);
+            int maxTuan = danhSach.Where(tk => tk.Nam == maxNam).Max(tk => tk.Tuan ?? int.MinValue);
+
+            if (minNam == int.MaxValue || maxNam == int.MinValue || minTuan == int.MaxValue || maxTuan == int.MinValue)
                 return new List<ThongKePhieuXuatDTO>();
 
             var danhSachTuanNam = new List<ThongKePhieuXuatDTO>();
 
-            // Lặp qua từng năm
+            // Lặp từ năm nhỏ nhất đến năm lớn nhất
             for (int nam = minNam; nam <= maxNam; nam++)
             {
-                for (int tuan = 1; tuan <= 52; tuan++) // 52 tuần/năm
+                int startTuan = (nam == minNam) ? minTuan : 1; // Bắt đầu từ tuần nhỏ nhất nếu là năm minNam
+                int endTuan = (nam == maxNam) ? maxTuan : 52;  // Kết thúc ở tuần lớn nhất nếu là năm maxNam
+
+                for (int tuan = startTuan; tuan <= endTuan; tuan++)
                 {
                     var data = danhSach.FirstOrDefault(tk => tk.Nam == nam && tk.Tuan == tuan);
 
@@ -240,8 +248,8 @@ namespace GUI.ViewModels
                     {
                         Nam = nam,
                         Tuan = tuan,
-                        Thang = data?.Thang ?? 1, // Gán tháng mặc định nếu không có (có thể bỏ nếu không cần)
-                        TongSoLuongXuat = data?.TongSoLuongXuat ?? 0, // Nếu không có, đặt bằng 0
+                        Thang = data?.Thang ?? 1, // Giữ mặc định nếu cần
+                        TongSoLuongXuat = data?.TongSoLuongXuat ?? 0,
                         HienThi = $"Tuần {tuan}/{nam}"
                     });
                 }
@@ -249,6 +257,8 @@ namespace GUI.ViewModels
 
             return danhSachTuanNam;
         }
+
+
 
 
         private void LoadLineChartSeries(List<ThongKePhieuXuatDTO> thongKePhieus)

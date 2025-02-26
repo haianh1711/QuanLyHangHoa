@@ -49,7 +49,6 @@
                     <DataGridTextColumn Header="Tên nhân viên" Binding="{Binding TenNhanVien}"  Width="*" />
                     <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding NgayBatDau}"  Width="*" />
                     <DataGridTextColumn Header="Chức vụ" Binding="{Binding ChucVu}"  Width="*" />
-                    <DataGridTextColumn Header="Hình ảnh" Binding="{Binding HinhAnh}"  Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
 

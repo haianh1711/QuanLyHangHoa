@@ -6,10 +6,10 @@
             xmlns:viewsUC="clr-namespace:GUI.Views.UserControls"
               xmlns:viewModels="clr-namespace:GUI.ViewModels"
                 xmlns:viewModelsUC="clr-namespace:GUI.ViewModels.UserControls"
-             StartupUri="Views\DangNhapForm.xaml">
+             StartupUri="Views\KhoiDongForm.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries> 
                 <ResourceDictionary Source="Styles/SearchBar.xaml"/>
                 <ResourceDictionary Source="Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/LabelBox.xaml"/>
