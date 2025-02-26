@@ -198,7 +198,7 @@ namespace DAL
         {
             List<ThongKePhieuXuatDTO> data = new List<ThongKePhieuXuatDTO>();
             string query = @"Select DATEPART(YEAR,px.NgayNhap) AS Nam,
-                            (MONTH,px.NgayNhap) AS Thang,
+                            DATAPART(MONTH,px.NgayNhap) AS Thang,
                             DATEPART(WEEK,px.NgayNhap) AS Tuan, 
                             SUM(ISNULL(ct.SoLuongXuat, 0)) AS TongSoLuongXuat
                             from PhieuXuat px left join ChiTietPhieuXuat ct
