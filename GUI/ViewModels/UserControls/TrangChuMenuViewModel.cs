@@ -33,7 +33,7 @@ namespace GUI.ViewModels.UserControls
         [RelayCommand]
         private void QlNhanVien()
         {
-            MainViewModel.View = new NhanvienViewModel();
+            MainViewModel.View = new NhanvienViewModel(mainViewModel);
         }
 
         [RelayCommand]

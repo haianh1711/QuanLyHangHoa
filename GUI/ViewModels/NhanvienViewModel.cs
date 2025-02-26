@@ -44,15 +44,32 @@ namespace GUI.ViewModels
 
         private string hinhAnhDefault = @"pack://application:,,,/Images/ImageDefault.png";
 
-        public NhanvienViewModel()
+        public NhanvienViewModel(MainViewModel mainViewModel)
         {
             LoadDanhSachNhanVien();
             SelectedNhanVien = new();
             TempNhanVien = new();
             TempNhanVien.HinhAnh = hinhAnhDefault; // Hình mặc định khi chưa chọn
+            quyen = mainViewModel.TaiKhoan.Quyen.ToLower() == "admin";
         }
         [ObservableProperty]
         private ObservableCollection<string> danhSachChucVu = [];
+
+        partial void OnSelectedNhanVienChanged(NhanVienDTO? value)
+        {
+            if (value != null)
+            {
+                TempNhanVien = new NhanVienDTO()
+                {
+                    MaNhanVien = value.MaNhanVien,
+                    TenNhanVien = value.TenNhanVien,
+                    NgayBatDau = value.NgayBatDau,
+                    ChucVu = value.ChucVu,
+                    HinhAnh = string.IsNullOrEmpty(value.HinhAnh) ? hinhAnhDefault : value.HinhAnh
+                };
+                OnPropertyChanged(nameof(TempNhanVien));
+            }
+        }
         private void LoadDanhSachNhanVien()
         {
             NhanVienDTOs.Clear();
@@ -76,38 +93,32 @@ namespace GUI.ViewModels
         {
             try
             {
-                if (string.IsNullOrEmpty(selectedNhanVien.MaNhanVien) || string.IsNullOrEmpty(selectedNhanVien.TenNhanVien))
+                if (SelectedNhanVien == null || TempNhanVien == null)
                 {
-                    await ThongBaoVM.MessageOK("Vui lòng chọn nhân viên cần sửa");
+                    await thongBaoVM.MessageOK("Vui lòng chọn nhân viên cần sửa");
                     return;
                 }
-                if (SelectedNhanVien != null)
-                {
-                    // Chỉ truyền dữ liệu có trong bảng NhanVien
-                    var nhanVienCapNhat = new NhanVienDTO
-                    {
-                        MaNhanVien = SelectedNhanVien.MaNhanVien,
-                        TenNhanVien = SelectedNhanVien.TenNhanVien,
-                        NgayBatDau = SelectedNhanVien.NgayBatDau,
-                        ChucVu = SelectedNhanVien.ChucVu,
-                        HinhAnh = SelectedNhanVien.HinhAnh
-                    };
 
-                    bool result = nhanVienBLL.SuaNhanVien(nhanVienCapNhat);
-                    if (result)
-                    {
-                        await ThongBaoVM.MessageOK("Sửa nhân viên thành công");
-                        LoadDanhSachNhanVien();
-                    }
+                if (string.IsNullOrEmpty(TempNhanVien.MaNhanVien) || string.IsNullOrEmpty(TempNhanVien.TenNhanVien))
+                {
+                    await thongBaoVM.MessageOK("Vui lòng nhập đầy đủ thông tin nhân viên");
+                    return;
+                }
+
+                bool result = nhanVienBLL.SuaNhanVien(TempNhanVien);
+                if (result)
+                {
+                    await ThongBaoVM.MessageOK("Sửa nhân viên thành công");
+                    LoadDanhSachNhanVien();
                 }
                 else
                 {
-                    await ThongBaoVM.MessageOK("Vui lòng chọn nhân viên cần sửa");
+                    await ThongBaoVM.MessageOK("Sửa nhân viên thất bại");
                 }
             }
             catch (Exception ex)
             {
-                await thongBaoVM.MessageOK(ex.ToString());
+                await ThongBaoVM.MessageOK(ex.ToString());
             }
 
         }

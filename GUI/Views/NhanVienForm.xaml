@@ -15,6 +15,7 @@
     </UserControl.Resources>
 
 
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -86,7 +87,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Style="{StaticResource SimpleLabelStyle}" Content="Mã nhân viên" />
-                                    <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.MaNhanVien, Mode=TwoWay}"/>
+                                    <TextBox Grid.Row="1" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempNhanVien.MaNhanVien, Mode=TwoWay}"/>
                                 </Grid>
 
                                 <!--TextBox hàng hai-->
@@ -100,7 +101,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Tên nhân viên" />
-                                    <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.TenNhanVien, Mode=TwoWay}"/>
+                                    <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempNhanVien.TenNhanVien, Mode=TwoWay}"/>
                                 </Grid>
                                 <!--TextBox hàng ba-->
                                 <Grid Grid.Row="3">
@@ -115,11 +116,11 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Row="3" Style="{StaticResource SimpleLabelStyle}" Content="Ngày bắt đầu" />
-                                    <TextBox Grid.Row="3" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding SelectedNhanVien.NgayBatDau, Mode=TwoWay}"/>
+                                    <TextBox Grid.Row="3" Style="{StaticResource SimpleTextBoxStyle}" Text="{Binding TempNhanVien.NgayBatDau, Mode=TwoWay}"/>
                                     <Label Grid.Row="3" Grid.Column="2" Style="{StaticResource SimpleLabelStyle}" Content="Chức vụ" />
                                     <ComboBox Grid.Row="1" Grid.Column="2"
           ItemsSource="{Binding DanhSachChucVu}"  
-          SelectedItem="{Binding SelectedNhanVien.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          SelectedItem="{Binding TempNhanVien.ChucVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
           Style="{StaticResource SimpleComboBoxStyle}"
           IsEditable="True"/>
                                 </Grid>
