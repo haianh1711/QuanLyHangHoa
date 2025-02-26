@@ -122,7 +122,6 @@ namespace BLL
             return nhanVienDAL.CapNhatHinhAnh(maNhanVien, hinhAnhPath);
         }
 
-
         public async Task<string> LuuHinhAnh(string filePathGoc, string thuMucLuu, string maNV)
         {
             try

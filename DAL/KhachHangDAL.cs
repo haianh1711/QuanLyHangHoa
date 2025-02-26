@@ -81,7 +81,7 @@ namespace DAL
                 if (result)
                 {
                     // Chỉ load lại danh sách nếu cập nhật thành công
-                    LoadDanhSachKhachHang();
+                    HienThiDanhSachKH();
                 }
 
                 return result;
@@ -93,28 +93,6 @@ namespace DAL
             }
         }
 
-        private List<KhachHangDTO> LoadDanhSachKhachHang()
-        {
-            List<KhachHangDTO> danhSachKhachHang = new List<KhachHangDTO>();
-            string query = "SELECT MaKhachHang, TenKhachHang, SoDienThoai, DiaChi, Gmail FROM KhachHang";
-
-            DataTable dt = dbHelper.ExecuteQuery(query);
-            foreach (DataRow row in dt.Rows)
-            {
-                KhachHangDTO kh = new KhachHangDTO
-                {
-                    MaKhachHang = row["MaKhachHang"].ToString() ?? "",
-                    TenKhachHang = row["TenKhachHang"].ToString() ?? "",
-                    SoDienThoai = row["SoDienThoai"].ToString() ?? "",
-                    Gmail = row["Gmail"].ToString() ?? "",
-                    DiaChi = row["DiaChi"].ToString() ?? ""
-                };
-                danhSachKhachHang.Add(kh);
-            }
-
-            Console.WriteLine("Danh sách khách hàng đã được cập nhật!");
-            return danhSachKhachHang;
-        }
 
 
         // Xóa khách hàng

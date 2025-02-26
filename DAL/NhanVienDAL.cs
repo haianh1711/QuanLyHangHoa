@@ -143,10 +143,11 @@ namespace DAL
         public bool CapNhatHinhAnh(string maNhanVien, string hinhAnhPath)
         {
             string query = "UPDATE NhanVien SET HinhAnh=@HinhAnh WHERE MaNhanVien=@Ma";
-            SqlParameter[] parameters = {
-        new SqlParameter("@Ma", maNhanVien),
-        new SqlParameter("@HinhAnh", hinhAnhPath)
-    };
+            SqlParameter[] parameters = 
+            {
+                new SqlParameter("@Ma", maNhanVien),
+                new SqlParameter("@HinhAnh", hinhAnhPath)
+            };
             return dbHelper.ExecuteNonQuery(query, parameters) > 0;
         }
         public NhanVienDTO LayNhanVienBangMa(string maNhanVien)
