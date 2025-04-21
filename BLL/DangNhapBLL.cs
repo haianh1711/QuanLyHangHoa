@@ -29,13 +29,14 @@ namespace BLL
         }
 
         // Hàm đăng nhập Gmail bất đồng bộ
-        public async Task<TaiKhoanDTO?> DangNhapGmail()
+        public async Task<TaiKhoanDTO?> DangNhapGmail(string GoogleClientId, string GoogleClientSecret)
         {
+            
             ClientSecrets clientSecrets = new ClientSecrets
             {
-                ClientId = "561350745742-iugftt8jlt86vnn2at518cbqq1f7tov3.apps.googleusercontent.com",
-                ClientSecret = "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"
-            };
+				ClientId = GoogleClientId,
+				ClientSecret = GoogleClientSecret
+			};
 
             string[] Scopes = { GmailService.Scope.GmailReadonly };
             string ApplicationName = "WPF Gmail Login Example";
